@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Jason Wong | JayWMagic</title>
+  <meta name="description" content="Email, call or message Edmonton magician Jason Wong about bookings, merch orders, lessons or collaborations.">
+  <link rel="canonical" href="https://www.jaywmagic.com/contact.html">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:title" content="Contact Jason Wong | JayWMagic">
+  <meta property="og:description" content="Email, call or message Edmonton magician Jason Wong about bookings, merch orders, lessons or collaborations.">
+  <meta property="og:image" content="https://www.jaywmagic.com/assets/img/og.png">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="contact">
+  <a class="skip" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow reveal">Contact</span>
+        <h1 class="reveal d1">Say <span class="hl">hello.</span></h1>
+        <p class="lead reveal d2">Booking questions, merch orders, lessons, media or collaborations — drop me a line. I read every message and reply fast.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split" style="align-items:start">
+        <div>
+          <div class="contact-cards">
+            <a class="contact-card reveal" data-mailto href="mailto:jaywmagic@gmail.com">
+              <span class="ico" data-icon="mail"></span><span><small>Email</small><strong data-email>jaywmagic@gmail.com</strong></span>
+            </a>
+            <a class="contact-card reveal d1" data-tel href="tel:7807298383">
+              <span class="ico" data-icon="phone"></span><span><small>Call or text</small><strong data-phone>780-729-8383</strong></span>
+            </a>
+            <a class="contact-card reveal d2" data-ig href="https://www.instagram.com/jaywmagic" target="_blank" rel="noopener">
+              <span class="ico" data-icon="ig"></span><span><small>Instagram</small><strong>@jaywmagic</strong></span>
+            </a>
+            <div class="contact-card reveal d3" style="cursor:default">
+              <span class="ico" data-icon="pin"></span><span><small>Based in</small><strong>Edmonton, Alberta</strong><br><span class="muted" style="font-size:.9rem">Performing across Canada</span></span>
+            </div>
+          </div>
+          <div class="form-card reveal" style="margin-top:20px;background:var(--yellow);color:var(--black);border-color:var(--yellow)">
+            <h3>Booking an event?</h3>
+            <p style="color:#2b2b2b">The booking form gets you a quote fastest — it asks for everything I need up front.</p>
+            <a class="btn btn-dark" href="corporate.html#book">Go to booking form <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="form-card reveal d1">
+          <h3 style="margin-bottom:24px">Send a message</h3>
+          <form id="contact-form" data-form="contact" novalidate>
+            <div class="form-grid">
+              <div class="field"><label for="c-name">Name <span class="req">*</span></label><input id="c-name" name="name" autocomplete="name" required><div class="error-msg">Please add your name.</div></div>
+              <div class="field"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" type="email" name="email" autocomplete="email" required><div class="error-msg">Please add a valid email.</div></div>
+              <div class="field full"><label for="c-subject">What's it about?</label>
+                <select id="c-subject" name="subject">
+                  <option>General question</option>
+                  <option value="Event booking">Event booking</option>
+                  <option value="Merch order">Merch order</option>
+                  <option value="Bulk / corporate gift order">Bulk / corporate gift order</option>
+                  <option value="Magic lessons">Magic lessons</option>
+                  <option value="Media / collaboration">Media / collaboration</option>
+                </select></div>
+              <div class="field full"><label for="c-msg">Message <span class="req">*</span></label><textarea id="c-msg" name="message" required placeholder="What's on your mind?"></textarea><div class="error-msg">Don't forget your message.</div></div>
+              <div class="field full"><label class="check"><input type="checkbox" name="newsletter" value="Yes"> Subscribe me to the mailing list.</label></div>
+              <div class="field full"><label class="check"><input type="checkbox" name="terms" value="Agreed" required> I agree to the <a href="terms.html" style="color:var(--yellow)">terms &amp; conditions</a> and <a href="privacy.html" style="color:var(--yellow)">privacy policy</a>.</label><div class="error-msg">Please accept to continue.</div></div>
+              <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <div class="full"><button class="btn btn-block" type="submit">Send message <span class="arrow">→</span></button></div>
+            </div>
+          </form>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // Preselect subject from ?subject=bulk|merch|lessons|booking
+      (function () {
+        var map = { bulk: "Bulk / corporate gift order", merch: "Merch order", lessons: "Magic lessons", booking: "Event booking" };
+        var q = new URLSearchParams(location.search).get("subject");
+        if (q && map[q]) document.getElementById("c-subject").value = map[q];
+      })();
+    </script>
+  </main>
+
+  <footer id="site-footer"></footer>
+  <a class="btn fab" href="corporate.html#book">Book a show</a>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
