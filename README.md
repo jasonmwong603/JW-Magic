@@ -45,5 +45,22 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Deploy
-**Netlify (easiest):** connect this GitHub repo at app.netlify.com, leave the build command empty and set the publish directory to `/`. Then add `jaywmagic.com` under Domain settings and update your DNS at the registrar.
+## Deploy (GitHub Pages)
+Every push to `main` publishes the site automatically through `.github/workflows/pages.yml`, the same hosting the steadybudgeting project uses.
+
+**One-time setup**
+1. **Repo → Settings → Pages → Build and deployment → Source: GitHub Actions.** On a free GitHub plan, Pages only works on public repos. Either make this repo public (Settings → General → Danger Zone; nothing in it is secret) or upgrade to GitHub Pro.
+2. **Settings → Pages → Custom domain:** enter `www.jaywmagic.com` (the `CNAME` file sets this too).
+3. In **Wix → Domains → jaywmagic.com → Manage DNS Records**, replace the old Wix records with:
+
+   | Type | Host | Value |
+   |---|---|---|
+   | A | @ | 185.199.108.153 |
+   | A | @ | 185.199.109.153 |
+   | A | @ | 185.199.110.153 |
+   | A | @ | 185.199.111.153 |
+   | CNAME | www | jasonmwong603.github.io |
+
+4. Once the domain shows a green check in Settings → Pages, tick **Enforce HTTPS**.
+
+Keep the domain registration active at Wix (it renews in July 2027). Only cancel the Wix site plan, and only once the new site is live.
