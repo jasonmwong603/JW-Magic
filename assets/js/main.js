@@ -12,7 +12,7 @@
   };
   window.JW_ICONS = ICONS;
 
-  var LOGO = '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="10" width="44" height="44" rx="4" transform="rotate(45 32 32)" fill="#0a0a0a" stroke="#ffd60a" stroke-width="3"/><text x="32" y="40.5" text-anchor="middle" font-family="Anton, Impact, sans-serif" font-size="22" fill="#ffd60a" letter-spacing="-.5">JW</text></svg>';
+  var LOGO = '<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#ffd60a" stroke-width="1.9"><path d="M32 2 62 32 32 62 2 32Z"/><path d="M32 10.5 53.5 32 32 53.5 10.5 32Z"/><path d="M2 32h8.5M53.5 32H62"/></g><text x="32" y="38.1" text-anchor="middle" font-family="Inter,Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="300" font-size="17" fill="#ffd60a">JW</text></svg>';
   window.JW_LOGO = LOGO;
 
   /* ---------- Header ---------- */
@@ -62,6 +62,7 @@
     footer.className = "site-footer";
     footer.innerHTML =
       '<div class="container">' +
+        '<div class="logo-line" aria-hidden="true"><span></span>' + LOGO + '<span></span></div>' +
         '<div class="footer-big" aria-hidden="true">Pick a <span>card.</span></div>' +
         '<div class="footer-grid">' +
           "<div>" +
@@ -232,9 +233,9 @@
 
   /* ---------- Shop ---------- */
   var ART = {
-    deck: '<svg viewBox="0 0 200 200"><rect x="58" y="34" width="96" height="136" rx="10" fill="#1a1a1a" stroke="#ffd60a" stroke-width="3" transform="rotate(10 106 102)"/><rect x="46" y="30" width="96" height="136" rx="10" fill="#0a0a0a" stroke="#ffd60a" stroke-width="3"/><rect x="56" y="40" width="76" height="116" rx="6" fill="none" stroke="#ffd60a" stroke-opacity=".4"/><rect x="78" y="80" width="32" height="32" transform="rotate(45 94 96)" fill="none" stroke="#ffd60a" stroke-width="3"/><text x="94" y="103" text-anchor="middle" font-family="Anton,Impact" font-size="16" fill="#ffd60a">JW</text></svg>',
+    deck: '<svg viewBox="0 0 200 200"><rect x="58" y="34" width="96" height="136" rx="10" fill="#1a1a1a" stroke="#ffd60a" stroke-width="3" transform="rotate(10 106 102)"/><rect x="46" y="30" width="96" height="136" rx="10" fill="#0a0a0a" stroke="#ffd60a" stroke-width="3"/><rect x="56" y="40" width="76" height="116" rx="6" fill="none" stroke="#ffd60a" stroke-opacity=".4"/><g transform="translate(70 72) scale(.75)"><g fill="none" stroke="#ffd60a" stroke-width="1.9"><path d="M32 2 62 32 32 62 2 32Z"/><path d="M32 10.5 53.5 32 32 53.5 10.5 32Z"/><path d="M2 32h8.5M53.5 32H62"/></g><text x="32" y="38.1" text-anchor="middle" font-family="Inter,Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="300" font-size="17" fill="#ffd60a">JW</text></g></svg>',
     tee: '<svg viewBox="0 0 200 200"><path d="M70 30l-40 22 14 30 16-8v96h80V74l16 8 14-30-40-22c-4 12-16 20-30 20S74 42 70 30z" fill="#0a0a0a" stroke="#333" stroke-width="2"/><text x="100" y="98" text-anchor="middle" font-family="Anton,Impact" font-size="17" fill="#ffd60a">PICK A</text><text x="100" y="122" text-anchor="middle" font-family="Anton,Impact" font-size="26" fill="#ffd60a">CARD</text><text x="100" y="146" text-anchor="middle" font-size="16" fill="#ffd60a">♠ ♦</text></svg>',
-    hoodie: '<svg viewBox="0 0 200 200"><path d="M74 34c6-10 46-10 52 0l38 20 10 70-20 4-4-40v92H50V88l-4 40-20-4 10-70z" fill="#0a0a0a" stroke="#333" stroke-width="2"/><path d="M78 36c4 18 40 18 44 0" fill="none" stroke="#333" stroke-width="3"/><rect x="88" y="86" width="24" height="24" transform="rotate(45 100 98)" fill="none" stroke="#ffd60a" stroke-width="3"/><text x="100" y="104" text-anchor="middle" font-family="Anton,Impact" font-size="13" fill="#ffd60a">JW</text><path d="M70 150h60" stroke="#333" stroke-width="3"/></svg>',
+    hoodie: '<svg viewBox="0 0 200 200"><path d="M74 34c6-10 46-10 52 0l38 20 10 70-20 4-4-40v92H50V88l-4 40-20-4 10-70z" fill="#0a0a0a" stroke="#333" stroke-width="2"/><path d="M78 36c4 18 40 18 44 0" fill="none" stroke="#333" stroke-width="3"/><g transform="translate(82 80) scale(.56)"><g fill="none" stroke="#ffd60a" stroke-width="1.9"><path d="M32 2 62 32 32 62 2 32Z"/><path d="M32 10.5 53.5 32 32 53.5 10.5 32Z"/><path d="M2 32h8.5M53.5 32H62"/></g><text x="32" y="38.1" text-anchor="middle" font-family="Inter,Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="300" font-size="17" fill="#ffd60a">JW</text></g><path d="M70 150h60" stroke="#333" stroke-width="3"/></svg>',
     kit: '<svg viewBox="0 0 200 200"><rect x="34" y="70" width="132" height="90" rx="10" fill="#ffd60a"/><rect x="34" y="56" width="132" height="26" rx="8" fill="#e6bf00"/><text x="100" y="126" text-anchor="middle" font-family="Anton,Impact" font-size="22" fill="#0a0a0a">MAGIC KIT</text><path d="M100 30l6 14 15 1-11 10 4 15-14-8-14 8 4-15-11-10 15-1z" fill="#f7f5ef"/></svg>',
     lesson: '<svg viewBox="0 0 200 200"><rect x="28" y="46" width="144" height="96" rx="10" fill="#0a0a0a" stroke="#ffd60a" stroke-width="3"/><path d="M88 74v40l32-20z" fill="#ffd60a"/><rect x="80" y="150" width="40" height="8" rx="4" fill="#333"/><text x="100" y="180" text-anchor="middle" font-family="Anton,Impact" font-size="14" fill="#a3a09a">1-ON-1 · 60 MIN</text></svg>',
     gift: '<svg viewBox="0 0 200 200"><rect x="26" y="56" width="148" height="92" rx="12" fill="#ffd60a"/><path d="M26 92h148" stroke="#0a0a0a" stroke-width="10"/><path d="M128 56v92" stroke="#0a0a0a" stroke-width="10"/><text x="70" y="128" text-anchor="middle" font-family="Anton,Impact" font-size="26" fill="#0a0a0a">$50</text><circle cx="128" cy="92" r="10" fill="#0a0a0a"/></svg>'

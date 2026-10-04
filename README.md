@@ -29,12 +29,14 @@ Until you do this, the booking, contact and newsletter forms open the visitor's 
 
 The button then changes from **Order by email** to **Buy now**. To use a real product photo, add `image: "assets/img/deck.jpg"` to the product.
 
+## Brand
+Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` on black `#0a0a0a`. It is drawn as inline SVG (`LOGO` in `assets/js/main.js`), with `assets/img/favicon.svg` for the browser tab and `assets/img/og.png` as the image shown when the link is shared.
+
 ## Add your content before launch
 - [ ] **Your photo:** save it as `assets/img/jason.jpg`. It appears in the About section automatically.
 - [ ] **Showreel:** in `index.html`, put a YouTube embed URL in `data-video=""` (for example `https://www.youtube.com/embed/VIDEO_ID`).
 - [ ] **Testimonials:** replace the three sample reviews in `index.html` (look for the `TODO` comment) with real client quotes.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
-- [ ] **Social preview image:** add `assets/img/og.png` (1200×630). It's the picture shown when the link is shared.
 - [ ] Review the policy pages and the package wording.
 
 ## Run it locally
