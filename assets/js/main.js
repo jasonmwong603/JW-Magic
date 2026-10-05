@@ -273,6 +273,26 @@
     });
   }
 
+  /* ---------- Showreel from config (Instagram reel/post or YouTube link) ---------- */
+  var reelFrame = document.querySelector(".video-frame");
+  if (reelFrame && C.showreel) {
+    var link = String(C.showreel).trim();
+    var ig = link.match(/instagram\.com\/(?:[\w.]+\/)?(reel|reels|p|tv)\/([\w-]+)/i);
+    var yt = link.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/i);
+    if (ig) {
+      var kind = ig[1].toLowerCase() === "p" ? "p" : "reel";
+      reelFrame.classList.add("ig");
+      reelFrame.innerHTML = '<iframe src="https://www.instagram.com/' + kind + "/" + ig[2] + '/embed/" title="JW Magic showreel on Instagram" loading="lazy" allowtransparency="true" allow="encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe>';
+      var more = document.createElement("p");
+      more.className = "reel-link";
+      more.innerHTML = '<a class="btn btn-ghost btn-sm" href="' + link + '" target="_blank" rel="noopener">Watch on Instagram <span class="arrow">→</span></a>';
+      reelFrame.insertAdjacentElement("afterend", more);
+    } else if (yt) {
+      var playBtn = reelFrame.querySelector("[data-video]");
+      if (playBtn) playBtn.setAttribute("data-video", "https://www.youtube-nocookie.com/embed/" + yt[1]);
+    }
+  }
+
   /* ---------- Video lightbox (YouTube/Vimeo URL on data-video) ---------- */
   document.querySelectorAll("[data-video]").forEach(function (btn) {
     btn.addEventListener("click", function () {

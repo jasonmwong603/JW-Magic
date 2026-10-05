@@ -36,10 +36,38 @@ Original, full-resolution photos live in `assets/img/photos/`. They are used in 
 Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` on black `#0a0a0a`. It is drawn as inline SVG (`LOGO` in `assets/js/main.js`), with `assets/img/favicon.svg` for the browser tab and `assets/img/og.png` as the image shown when the link is shared.
 
 ## Add your content before launch
-- [ ] **Showreel:** in `index.html`, put a YouTube embed URL in `data-video=""` (for example `https://www.youtube.com/embed/VIDEO_ID`).
+- [ ] **Showreel:** paste your Instagram reel (or YouTube) link into `showreel` in `assets/js/config.js`.
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages and the package wording.
+
+## How to edit the website
+
+**Easiest:** tell Claude what to change, then review and merge the pull request it opens.
+
+**Do it yourself on GitHub** (computer, or a phone browser in desktop mode):
+1. Go to github.com/jasonmwong603/JW-Magic and tap the file you want to change (see the table below).
+2. Tap the **pencil icon** (Edit this file).
+3. Change the words. Only touch text between tags, like `<p>this text</p>`, and leave the `<…>` parts alone.
+4. Tap **Commit changes…** → keep "Commit directly to the main branch" → **Commit changes**.
+5. The live site updates in about 1–2 minutes. If it still looks old, open it in a private/incognito tab.
+
+Tip: in the editor, use your browser's Find (Ctrl/Cmd+F) to jump to the sentence you want to change.
+
+| To change… | Edit this file |
+|---|---|
+| Email, phone, Instagram, showreel link, form delivery | `assets/js/config.js` |
+| Merch products, prices, descriptions, Stripe links | `assets/js/config.js` (the `products` list) |
+| Home page text: headline, shows, about, gallery captions, FAQ-style blurbs | `index.html` |
+| Corporate packages, booking form options, FAQ | `corporate.html` |
+| Contact page text | `contact.html` |
+| Shop page headings and the bulk-order blurb | `shop.html` |
+| Menu links, footer text | `assets/js/main.js` (search for `nav` or `footer`) |
+| Policies | `privacy.html`, `terms.html`, `shipping.html`, `refunds.html` |
+| Colours and fonts | `assets/css/styles.css` (top of the file, under `:root`) |
+| Photos | upload to `assets/img/photos/` (Add file → Upload files), then reference the file name |
+
+If an edit breaks something, open the file's **History**, pick the previous version, and copy it back. Or ask Claude to undo it.
 
 ## Run it locally
 ```bash
