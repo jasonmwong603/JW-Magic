@@ -287,6 +287,10 @@
       more.className = "reel-link";
       more.innerHTML = '<a class="btn btn-ghost btn-sm" href="' + link + '" target="_blank" rel="noopener">Watch on Instagram <span class="arrow">→</span></a>';
       reelFrame.insertAdjacentElement("afterend", more);
+      var head = document.createElement("div");
+      head.className = "reel-head";
+      head.innerHTML = '<span class="eyebrow">Showreel</span><h2>See it <span class="hl">live.</span></h2>';
+      reelFrame.insertAdjacentElement("beforebegin", head);
     } else if (yt) {
       var playBtn = reelFrame.querySelector("[data-video]");
       if (playBtn) playBtn.setAttribute("data-video", "https://www.youtube-nocookie.com/embed/" + yt[1]);
