@@ -135,7 +135,7 @@
     newsletter: "Mailing list sign-up"
   };
   var LABELS = {
-    name: "Name", email: "Email", phone: "Phone", company: "Company / organization",
+    name: "Name", contact: "Email or phone", email: "Email", phone: "Phone", company: "Company / organization",
     event_type: "Event type", date: "Event date", time: "Start time", location: "City / venue",
     guests: "Guest count", style: "Style of magic", duration: "Length", budget: "Budget", heard: "How they heard",
     message: "Message", subject: "Subject", newsletter: "Join mailing list"
@@ -154,7 +154,10 @@
     var ok = true, first = null;
     form.querySelectorAll("[required]").forEach(function (input) {
       var field = input.closest(".field");
-      var valid = input.type === "checkbox" ? input.checked : input.checkValidity() && String(input.value).trim() !== "";
+      var val = String(input.value).trim();
+      var valid = input.type === "checkbox" ? input.checked : input.checkValidity() && val !== "";
+      // "Email or phone" accepts either: something@something.tld, or 7+ digits
+      if (valid && input.hasAttribute("data-contact")) valid = /\S+@\S+\.\S+/.test(val) || val.replace(/\D/g, "").length >= 7;
       if (field) field.classList.toggle("invalid", !valid);
       if (!valid) { ok = false; first = first || input; }
     });
@@ -193,6 +196,7 @@
       var original = btn.innerHTML;
       btn.textContent = "Sending…";
       var payload = Object.assign({ _subject: subject, form: type }, data);
+      if (data.contact && data.contact.indexOf("@") > -1) payload.email = payload._replyto = data.contact.trim();
       fetch(C.formEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -217,14 +221,6 @@
   document.addEventListener("input", function (e) {
     var field = e.target.closest && e.target.closest(".field.invalid");
     if (field) field.classList.remove("invalid");
-  });
-
-  /* Prefill booking form from package buttons: <a data-package="..."> */
-  document.querySelectorAll("[data-package]").forEach(function (a) {
-    a.addEventListener("click", function () {
-      var sel = document.querySelector('#booking-form [name="style"]');
-      if (sel) sel.value = a.getAttribute("data-package");
-    });
   });
 
   /* Min date on date pickers = today */
