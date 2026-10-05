@@ -29,11 +29,13 @@ Until you do this, the booking, contact and newsletter forms open the visitor's 
 
 The button then changes from **Order by email** to **Buy now**. To use a real product photo, add `image: "assets/img/deck.jpg"` to the product.
 
+## Photos
+Original, full-resolution photos live in `assets/img/photos/`. They are used in the home page hero (`card-throw-festival.jpg`), the About section (`jason-portrait.jpg`), the "In action" gallery (tap to view full size), and the Corporate and Contact page headers. To add one to the gallery, copy any `<figure class="g-item">` block in `index.html` and change the file name, size and caption.
+
 ## Brand
 Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` on black `#0a0a0a`. It is drawn as inline SVG (`LOGO` in `assets/js/main.js`), with `assets/img/favicon.svg` for the browser tab and `assets/img/og.png` as the image shown when the link is shared.
 
 ## Add your content before launch
-- [ ] **Your photo:** save it as `assets/img/jason.jpg`. It appears in the About section automatically.
 - [ ] **Showreel:** in `index.html`, put a YouTube embed URL in `data-video=""` (for example `https://www.youtube.com/embed/VIDEO_ID`).
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.

@@ -283,6 +283,48 @@
     });
   });
 
+  /* ---------- Lightbox for [data-lightbox] photos ---------- */
+  var shots = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox]"));
+  if (shots.length) {
+    var lb = document.createElement("div");
+    lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", "Photo viewer");
+    lb.innerHTML = '<img alt=""><p></p><button class="lb-close" aria-label="Close">✕</button>' +
+      '<button class="lb-prev" aria-label="Previous photo">←</button><button class="lb-next" aria-label="Next photo">→</button>';
+    document.body.appendChild(lb);
+    var lbImg = lb.querySelector("img"), lbCap = lb.querySelector("p"), current = 0, lastFocus = null;
+    var show = function (i) {
+      current = (i + shots.length) % shots.length;
+      var a = shots[current], img = a.querySelector("img"), cap = a.parentNode.querySelector("figcaption");
+      lbImg.src = a.getAttribute("href"); lbImg.alt = img ? img.alt : "";
+      lbCap.textContent = cap ? cap.textContent : "";
+    };
+    var close = function () { lb.classList.remove("open"); document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); };
+    shots.forEach(function (a, i) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault(); lastFocus = a; show(i);
+        lb.classList.add("open"); document.body.style.overflow = "hidden";
+        lb.querySelector(".lb-close").focus();
+      });
+    });
+    lb.querySelector(".lb-close").addEventListener("click", close);
+    lb.querySelector(".lb-prev").addEventListener("click", function () { show(current - 1); });
+    lb.querySelector(".lb-next").addEventListener("click", function () { show(current + 1); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") show(current - 1);
+      if (e.key === "ArrowRight") show(current + 1);
+    });
+    var touchX = null;
+    lb.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener("touchend", function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX; touchX = null;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    });
+  }
+
   /* ---------- Spotlight follows cursor ---------- */
   var hero = document.querySelector(".hero");
   if (hero && window.matchMedia("(pointer: fine)").matches) {
