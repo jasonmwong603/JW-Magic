@@ -436,22 +436,6 @@ section { position: relative; }
 }
 .page-hero h1 { font-size: clamp(3rem, 9vw, 7rem); }
 
-/* ---------- Packages ---------- */
-.packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
-.package {
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px 30px;
-  display: flex; flex-direction: column; position: relative;
-}
-.package.popular { border: 2px solid var(--yellow); transform: translateY(-12px); }
-.package .ribbon { position: absolute; top: -14px; left: 30px; background: var(--yellow); color: var(--black); font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
-.package .dur { color: var(--yellow); font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; }
-.package .for { color: var(--muted); font-size: .95rem; }
-.package ul { list-style: none; padding: 0; margin: 20px 0 30px; display: grid; gap: 12px; }
-.package li { padding-left: 28px; position: relative; font-size: .95rem; }
-.package li::before { content: "♦"; position: absolute; left: 0; color: var(--yellow); }
-.package .btn { margin-top: auto; }
-@media (max-width: 900px) { .packages { grid-template-columns: 1fr; } .package.popular { transform: none; } }
-
 /* ---------- Forms ---------- */
 .form-card { background: var(--panel); border: 1px solid var(--line); border-radius: calc(var(--radius) + 6px); padding: clamp(24px, 4vw, 48px); }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }

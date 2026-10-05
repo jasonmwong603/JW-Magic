@@ -51,33 +51,17 @@
               <span class="ico" data-icon="pin"></span><span><small>Based in</small><strong>Edmonton, Alberta</strong><br><span class="muted" style="font-size:.9rem">Performing across Canada</span></span>
             </div>
           </div>
-          <div class="form-card reveal" style="margin-top:20px;background:var(--yellow);color:var(--black);border-color:var(--yellow)">
-            <h3>Booking an event?</h3>
-            <p style="color:#2b2b2b">The booking form gets you a quote fastest — it asks for everything I need up front.</p>
-            <a class="btn btn-dark" href="corporate.html#book">Go to booking form <span class="arrow">→</span></a>
-          </div>
         </div>
 
         <div class="form-card reveal d1">
           <h3 style="margin-bottom:24px">Send a message</h3>
           <form id="contact-form" data-form="contact" novalidate>
             <div class="form-grid">
-              <div class="field"><label for="c-name">Name <span class="req">*</span></label><input id="c-name" name="name" autocomplete="name" required><div class="error-msg">Please add your name.</div></div>
-              <div class="field"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" type="email" name="email" autocomplete="email" required><div class="error-msg">Please add a valid email.</div></div>
-              <div class="field full"><label for="c-subject">What's it about?</label>
-                <select id="c-subject" name="subject">
-                  <option>General question</option>
-                  <option value="Event booking">Event booking</option>
-                  <option value="Merch order">Merch order</option>
-                  <option value="Bulk / corporate gift order">Bulk / corporate gift order</option>
-                  <option value="Magic lessons">Magic lessons</option>
-                  <option value="Media / collaboration">Media / collaboration</option>
-                </select></div>
-              <div class="field full"><label for="c-msg">Message <span class="req">*</span></label><textarea id="c-msg" name="message" required placeholder="What's on your mind?"></textarea><div class="error-msg">Don't forget your message.</div></div>
-              <div class="field full"><label class="check"><input type="checkbox" name="newsletter" value="Yes"> Subscribe me to the mailing list.</label></div>
-              <div class="field full"><label class="check"><input type="checkbox" name="terms" value="Agreed" required> I agree to the <a href="terms.html" style="color:var(--yellow)">terms &amp; conditions</a> and <a href="privacy.html" style="color:var(--yellow)">privacy policy</a>.</label><div class="error-msg">Please accept to continue.</div></div>
+              <div class="field full"><label for="c-name">Name <span class="req">*</span></label><input id="c-name" name="name" autocomplete="name" required><div class="error-msg">Please add your name.</div></div>
+              <div class="field full"><label for="c-contact">Email or phone <span class="req">*</span></label><input id="c-contact" name="contact" autocomplete="email" placeholder="So I can get back to you" required data-contact><div class="error-msg">Add an email or phone number so I can reply.</div></div>
+              <div class="field full"><label for="c-msg">What are you looking for? <span class="req">*</span></label><textarea id="c-msg" name="message" rows="4" placeholder="e.g. Holiday party for 80 people on Dec 12, magic during cocktails" required></textarea><div class="error-msg">Tell me a little about what you have in mind.</div></div>
               <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <div class="full"><button class="btn btn-block" type="submit">Send message <span class="arrow">→</span></button></div>
+              <div class="full"><button class="btn btn-block" type="submit">Send <span class="arrow">→</span></button></div>
             </div>
           </form>
           <div class="form-status" role="status" aria-live="polite"></div>
@@ -85,11 +69,11 @@
       </div>
     </section>
     <script>
-      // Preselect subject from ?subject=bulk|merch|lessons|booking
+      // Links like contact.html?subject=bulk start the message for the visitor
       (function () {
-        var map = { bulk: "Bulk / corporate gift order", merch: "Merch order", lessons: "Magic lessons", booking: "Event booking" };
+        var map = { bulk: "I'm interested in a bulk / corporate gift order.", merch: "I have a question about merch.", lessons: "I'm interested in magic lessons." };
         var q = new URLSearchParams(location.search).get("subject");
-        if (q && map[q]) document.getElementById("c-subject").value = map[q];
+        if (q && map[q]) document.getElementById("c-msg").value = map[q] + " ";
       })();
     </script>
   </main>

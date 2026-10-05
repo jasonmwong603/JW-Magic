@@ -7,7 +7,7 @@ The website for Jason Wong, corporate and comedy magician in Edmonton. It's a pl
 | Page | Purpose |
 |---|---|
 | `index.html` | Home page: hero, shows, about, showreel, booking steps, reviews, merch teaser, Instagram |
-| `corporate.html` | Corporate packages, the full **booking form** (`#book`) and the FAQ |
+| `corporate.html` | Why book Jason, the short **quote form** (`#book`) and the FAQ |
 | `shop.html` | Merch shop. Products come from `assets/js/config.js` |
 | `contact.html` | Contact cards and a general message form |
 | `privacy` / `terms` / `shipping` / `refunds.html` | Policy pages |
@@ -39,7 +39,7 @@ Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` o
 - [x] **Showreel:** set in `showreel` in `assets/js/config.js` (Instagram post DdrBQpQhWaQ). Paste a new link there to change it.
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
-- [ ] Review the policy pages and the package wording.
+- [ ] Review the policy pages.
 
 ## How to edit the website
 
@@ -59,7 +59,7 @@ Tip: in the editor, use your browser's Find (Ctrl/Cmd+F) to jump to the sentence
 | Email, phone, Instagram, showreel link, form delivery | `assets/js/config.js` |
 | Merch products, prices, descriptions, Stripe links | `assets/js/config.js` (the `products` list) |
 | Home page text: headline, shows, about, gallery captions, FAQ-style blurbs | `index.html` |
-| Corporate packages, booking form options, FAQ | `corporate.html` |
+| Corporate page text, quote form, FAQ | `corporate.html` |
 | Contact page text | `contact.html` |
 | Shop page headings and the bulk-order blurb | `shop.html` |
 | Menu links, footer text | `assets/js/main.js` (search for `nav` or `footer`) |
