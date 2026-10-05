@@ -1,4 +1,4 @@
-# JayWMagic — jaywmagic.com
+# JW Magic — jaywmagic.com
 
 The website for Jason Wong, corporate and comedy magician in Edmonton. It's a plain static site (HTML, CSS and JS) with no build step, so it runs free on Netlify, Cloudflare Pages or GitHub Pages.
 

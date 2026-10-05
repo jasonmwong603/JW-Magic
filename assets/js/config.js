@@ -6,11 +6,11 @@
  */
 window.JW_CONFIG = {
   name: "Jason Wong",
-  brand: "JayWMagic",
+  brand: "JW Magic",
   email: "jaywmagic@gmail.com",
   phone: "780-729-8383",
   city: "Edmonton, Alberta",
-  instagram: "https://www.instagram.com/jaywmagic",
+  instagram: "https://www.instagram.com/jwmagic_",
 
   /*
    * FORMS (booking + contact + mailing list)
