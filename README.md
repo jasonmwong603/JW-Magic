@@ -35,7 +35,7 @@ Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` o
 ## Add your content before launch
 - [ ] **Your photo:** save it as `assets/img/jason.jpg`. It appears in the About section automatically.
 - [ ] **Showreel:** in `index.html`, put a YouTube embed URL in `data-video=""` (for example `https://www.youtube.com/embed/VIDEO_ID`).
-- [ ] **Testimonials:** replace the three sample reviews in `index.html` (look for the `TODO` comment) with real client quotes.
+- [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages and the package wording.
 
