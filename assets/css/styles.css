@@ -401,6 +401,8 @@ section { position: relative; }
 .video-frame.ig { aspect-ratio: auto; width: min(360px, 100%); height: auto; margin-inline: auto; background: #fff; border-color: var(--yellow); }
 .video-frame.ig iframe { position: static; display: block; width: 100%; aspect-ratio: 9 / 18.5; height: auto; border: 0; }
 .reel-link { text-align: center; margin: 22px 0 0; }
+.reel-head { text-align: center; margin-bottom: 30px; }
+.reel-head .eyebrow { justify-content: center; }
 @keyframes pulse { from { transform: scale(.85); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
 
 /* FAQ */

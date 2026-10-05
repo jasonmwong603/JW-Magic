@@ -20,7 +20,7 @@ window.JW_CONFIG = {
    * On Instagram: open the reel → ⋯ / paper-plane icon → Copy link.
    * The post must be public. Left empty, the section says "coming soon".
    */
-  showreel: "",
+  showreel: "https://www.instagram.com/p/DdrBQpQhWaQ/",
 
   /*
    * FORMS (booking + contact + mailing list)

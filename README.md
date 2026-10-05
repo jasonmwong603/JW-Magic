@@ -36,7 +36,7 @@ Original, full-resolution photos live in `assets/img/photos/`. They are used in 
 Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` on black `#0a0a0a`. It is drawn as inline SVG (`LOGO` in `assets/js/main.js`), with `assets/img/favicon.svg` for the browser tab and `assets/img/og.png` as the image shown when the link is shared.
 
 ## Add your content before launch
-- [ ] **Showreel:** paste your Instagram reel (or YouTube) link into `showreel` in `assets/js/config.js`.
+- [x] **Showreel:** set in `showreel` in `assets/js/config.js` (Instagram post DdrBQpQhWaQ). Paste a new link there to change it.
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages and the package wording.
