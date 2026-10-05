@@ -28,8 +28,8 @@
     header.className = "site-header";
     header.innerHTML =
       '<div class="container nav">' +
-        '<a class="logo" href="index.html" aria-label="JayWMagic home">' + LOGO +
-          '<span class="logo-word">Jay<span>W</span>Magic</span></a>' +
+        '<a class="logo" href="index.html" aria-label="JW Magic home">' + LOGO +
+          '<span class="logo-word"><span>JW</span> Magic</span></a>' +
         '<button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>' +
         '<ul class="nav-links" id="nav-links">' +
           nav.map(function (n) {
@@ -66,7 +66,7 @@
         '<div class="footer-big" aria-hidden="true">Pick a <span>card.</span></div>' +
         '<div class="footer-grid">' +
           "<div>" +
-            '<a class="logo" href="index.html" aria-label="JayWMagic home">' + LOGO + '<span class="logo-word">Jay<span>W</span>Magic</span></a>' +
+            '<a class="logo" href="index.html" aria-label="JW Magic home">' + LOGO + '<span class="logo-word"><span>JW</span> Magic</span></a>' +
             '<p class="muted" style="margin-top:18px;max-width:34ch">Corporate &amp; comedy magic by ' + C.name + '. Based in ' + C.city + ', performing across Canada.</p>' +
             '<form class="newsletter" data-form="newsletter" novalidate>' +
               '<label class="sr-only" for="nl-email" style="position:absolute;left:-9999px">Email</label>' +
@@ -137,7 +137,7 @@
   var LABELS = {
     name: "Name", email: "Email", phone: "Phone", company: "Company / organization",
     event_type: "Event type", date: "Event date", time: "Start time", location: "City / venue",
-    guests: "Guest count", style: "Style of magic", budget: "Budget", heard: "How they heard",
+    guests: "Guest count", style: "Style of magic", duration: "Length", budget: "Budget", heard: "How they heard",
     message: "Message", subject: "Subject", newsletter: "Join mailing list"
   };
 
@@ -278,8 +278,8 @@
     btn.addEventListener("click", function () {
       var url = btn.getAttribute("data-video");
       var frame = btn.closest(".video-frame");
-      if (!url) { toast("Showreel coming soon — follow @jaywmagic for clips!"); return; }
-      frame.innerHTML = '<iframe src="' + url + (url.indexOf("?") > -1 ? "&" : "?") + 'autoplay=1" title="JayWMagic showreel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      if (!url) { toast("Showreel coming soon — follow @jwmagic_ for clips!"); return; }
+      frame.innerHTML = '<iframe src="' + url + (url.indexOf("?") > -1 ? "&" : "?") + 'autoplay=1" title="JW Magic showreel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
     });
   });
 
