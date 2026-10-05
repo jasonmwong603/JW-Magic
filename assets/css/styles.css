@@ -93,11 +93,16 @@ p { margin: 0 0 1em; }
   transition: background .3s, border-color .3s, backdrop-filter .3s;
   border-bottom: 1px solid transparent;
 }
-.site-header.scrolled {
-  background: rgba(10, 10, 10, .82);
+/* Blur lives on a pseudo-element: backdrop-filter on the header itself would
+   trap the fixed mobile menu inside the 76px bar once the page is scrolled. */
+.site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: rgba(10, 10, 10, .94); opacity: 0; transition: opacity .3s;
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-color: var(--line);
 }
+.site-header.scrolled { border-color: var(--line); }
+.site-header.scrolled::before { opacity: 1; }
+.menu-open .site-header::before { opacity: 1; background: var(--black); }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 76px; }
 .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
 .logo svg { width: 48px; height: 48px; }
@@ -133,7 +138,7 @@ p { margin: 0 0 1em; }
   .menu-toggle { display: block; }
   .nav-links {
     position: fixed; inset: 76px 0 0; flex-direction: column; justify-content: center; gap: 26px;
-    background: var(--black); transform: translateX(100%); transition: transform .4s var(--ease);
+    background: var(--black); overflow-y: auto; transform: translateX(100%); transition: transform .4s var(--ease);
   }
   .nav-links a:not(.btn) { font-family: var(--display); font-size: 2.4rem; text-transform: uppercase; font-weight: 400; }
   .menu-open .nav-links { transform: none; }
@@ -392,6 +397,10 @@ section { position: relative; }
   display: grid; place-items: center; margin: 0 auto 18px; cursor: pointer; position: relative;
 }
 .play::before { content: ""; position: absolute; inset: -12px; border-radius: 50%; border: 2px solid var(--yellow); animation: pulse 2s infinite; }
+/* Instagram reels are portrait: show them phone-shaped and centred */
+.video-frame.ig { aspect-ratio: auto; width: min(360px, 100%); height: auto; margin-inline: auto; background: #fff; border-color: var(--yellow); }
+.video-frame.ig iframe { position: static; display: block; width: 100%; aspect-ratio: 9 / 18.5; height: auto; border: 0; }
+.reel-link { text-align: center; margin: 22px 0 0; }
 @keyframes pulse { from { transform: scale(.85); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
 
 /* FAQ */

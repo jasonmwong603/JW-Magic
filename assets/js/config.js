@@ -13,6 +13,16 @@ window.JW_CONFIG = {
   instagram: "https://www.instagram.com/jwmagic_",
 
   /*
+   * SHOWREEL (home page)
+   * Paste the link to your video. Either kind works:
+   *   Instagram: "https://www.instagram.com/reel/ABC123xyz/"  (or a /p/ post link)
+   *   YouTube:   "https://www.youtube.com/watch?v=ABC123xyz"
+   * On Instagram: open the reel → ⋯ / paper-plane icon → Copy link.
+   * The post must be public. Left empty, the section says "coming soon".
+   */
+  showreel: "",
+
+  /*
    * FORMS (booking + contact + mailing list)
    * Paste a Formspree endpoint here (free at https://formspree.io), e.g.
    *   "https://formspree.io/f/abcdwxyz"
