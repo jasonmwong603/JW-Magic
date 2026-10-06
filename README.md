@@ -35,7 +35,7 @@ Original, full-resolution photos live in `assets/img/photos/`. They are used in 
 ## Brand
 Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` on black `#0a0a0a`. It is drawn as inline SVG (`LOGO` in `assets/js/main.js`), with `assets/img/favicon.svg` for the browser tab and `assets/img/og.png` as the image shown when the link is shared.
 
-Print-ready logo files in `assets/brand/`, for Canva, business cards and merch: a double diamond with the line only in the gaps between the diamonds, 2.4-unit strokes, and "JW" in Montserrat SemiBold converted to shapes, so it looks the same everywhere. Colour #ffd60a, transparent background.
+Print-ready logo files in `assets/brand/`, for Canva, business cards and merch: a double diamond with the line only in the gaps between the diamonds, 2.4-unit strokes, and "JW" in Lato Bold converted to shapes, so it looks the same everywhere. Colour #ffd60a, transparent background.
 - `jw-magic-logo-transparent.png`: 4000×4000 PNG
 - `jw-magic-logo.svg`: vector version
 
