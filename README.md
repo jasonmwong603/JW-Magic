@@ -40,7 +40,6 @@ Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` o
 - [x] **Showreel:** plays full-screen from `assets/video/showreel.mp4` (the Comic Strip reel, Instagram post DdrBQpQhWaQ). To swap it, upload a new portrait `.mp4` to `assets/video/` and update `showreelVideo` (and the `showreel` Instagram link) in `assets/js/config.js`. Keep it under about 25 MB so it loads quickly on phones.
 - [x] **Recent Instagram posts:** the home page grid shows your 6 latest public posts. It refreshes itself every morning (`.github/workflows/instagram.yml`), so there's nothing to update. To refresh right away: GitHub → **Actions** → **Refresh Instagram posts** → **Run workflow**.
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
-- [ ] **Starting prices:** add your "from" prices to `startingPrices` in `config.js` (numbers only, CAD). They show on the Corporate and Weddings & parties pages; empty ones stay hidden.
 - [ ] **Trusted by:** add companies or venues you've performed for (with their OK) to `trustedBy` in `config.js`. The row appears on the home page once there's at least one.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages.

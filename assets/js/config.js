@@ -32,18 +32,6 @@ window.JW_CONFIG = {
   showreel: "https://www.instagram.com/p/DdrBQpQhWaQ/",
 
   /*
-   * "STARTING FROM" PRICES (CAD, numbers only, e.g. "250")
-   * Each one shows on the Corporate or Weddings & parties page as
-   * "From $250". Left empty, that price (and the whole pricing
-   * section, if all are empty) stays hidden.
-   */
-  startingPrices: {
-    roving: "",       // Roving magic, per 30-minute block
-    stageShow: "",    // Corporate comedy stage show
-    privateShow: ""   // Private party show
-  },
-
-  /*
    * "TRUSTED BY" (home page, under the scrolling banner)
    * Companies, venues or events you've performed for, with their OK.
    * e.g. ["The Comic Strip", "Acme Corp holiday party"]

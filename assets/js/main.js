@@ -175,16 +175,6 @@
     });
   });
 
-  /* ---------- "Starting from" prices (config.js), hidden until a price is set ---------- */
-  var prices = C.startingPrices || {};
-  document.querySelectorAll("[data-price]").forEach(function (el) {
-    var v = prices[el.getAttribute("data-price")];
-    if (!v) return;
-    el.textContent = "$" + v;
-    el.closest(".price-card").hidden = false;
-    el.closest("[data-prices]").hidden = false;
-  });
-
   /* ---------- "Trusted by" row (config.js), hidden until names are added ---------- */
   var trusted = (C.trustedBy || []).filter(Boolean);
   document.querySelectorAll("[data-trusted]").forEach(function (el) {
