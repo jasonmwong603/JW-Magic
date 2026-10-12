@@ -290,27 +290,95 @@
     });
   }
 
-  /* ---------- Showreel from config (Instagram reel/post or YouTube link) ---------- */
-  var reelFrame = document.querySelector(".video-frame");
-  if (reelFrame && C.showreel) {
-    var link = String(C.showreel).trim();
-    var ig = link.match(/instagram\.com\/(?:[\w.]+\/)?(reel|reels|p|tv)\/([\w-]+)/i);
-    var yt = link.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/i);
-    if (ig) {
-      var kind = ig[1].toLowerCase() === "p" ? "p" : "reel";
-      reelFrame.classList.add("ig");
-      reelFrame.innerHTML = '<iframe src="https://www.instagram.com/' + kind + "/" + ig[2] + '/embed/" title="JW Magic showreel on Instagram" loading="lazy" allowtransparency="true" allow="encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe>';
-      var more = document.createElement("p");
-      more.className = "reel-link";
-      more.innerHTML = '<a class="btn btn-ghost btn-sm" href="' + link + '" target="_blank" rel="noopener">Watch on Instagram <span class="arrow">→</span></a>';
-      reelFrame.insertAdjacentElement("afterend", more);
-      var head = document.createElement("div");
-      head.className = "reel-head";
-      head.innerHTML = '<span class="eyebrow">Showreel</span><h2>See it <span class="hl">live.</span></h2>';
-      reelFrame.insertAdjacentElement("beforebegin", head);
-    } else if (yt) {
-      var playBtn = reelFrame.querySelector("[data-video]");
-      if (playBtn) playBtn.setAttribute("data-video", "https://www.youtube-nocookie.com/embed/" + yt[1]);
+  /* ---------- Showreel: full-screen video with ambient glow ---------- */
+  var reel = document.querySelector(".reel");
+  if (reel) {
+    var reelLink = String(C.showreel || "").trim();
+    var igLinkBtn = reel.querySelector(".reel-ig");
+    if (igLinkBtn) {
+      if (/instagram\.com/i.test(reelLink)) igLinkBtn.href = reelLink;
+      else if (C.instagram) igLinkBtn.href = C.instagram;
+    }
+    var stage = reel.querySelector(".reel-stage");
+    var vid = reel.querySelector(".reel-video");
+    var soundBtn = reel.querySelector("[data-reel-sound]");
+
+    if (C.showreelVideo && vid) {
+      vid.src = C.showreelVideo;
+      if (C.showreelPoster) vid.poster = C.showreelPoster;
+      var toggle = reel.querySelector(".reel-toggle");
+      var muteBtn = reel.querySelector(".reel-mute");
+      var bar = reel.querySelector(".reel-progress span");
+      var canvas = reel.querySelector(".reel-ambient");
+      var ctx2d = canvas && canvas.getContext ? canvas.getContext("2d") : null;
+      var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        (navigator.connection && navigator.connection.saveData);
+      var userPaused = false, heardSound = false, lastPaint = 0;
+
+      var paintAmbient = function (src) {
+        if (!ctx2d) return;
+        try { ctx2d.drawImage(src, 0, 0, canvas.width, canvas.height); } catch (e) { /* frame not ready yet */ }
+      };
+      if (ctx2d && vid.poster) {
+        var posterImg = new Image();
+        posterImg.onload = function () { if (vid.paused) paintAmbient(posterImg); };
+        posterImg.src = vid.poster;
+      }
+      var tick = function (t) {
+        if (vid.paused) return;
+        if (t - lastPaint > 90) { paintAmbient(vid); lastPaint = t; }
+        if (bar && vid.duration) bar.style.transform = "scaleX(" + (vid.currentTime / vid.duration) + ")";
+        requestAnimationFrame(tick);
+      };
+      var sync = function () {
+        stage.classList.toggle("playing", !vid.paused);
+        toggle.setAttribute("aria-label", vid.paused ? "Play showreel" : "Pause showreel");
+        muteBtn.setAttribute("aria-pressed", String(!vid.muted));
+        muteBtn.setAttribute("aria-label", vid.muted ? "Turn sound on" : "Turn sound off");
+        stage.classList.toggle("sound-on", !vid.muted);
+      };
+      var play = function () { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () { sync(); }); };
+      vid.addEventListener("play", function () { sync(); requestAnimationFrame(tick); });
+      vid.addEventListener("pause", sync);
+      vid.addEventListener("volumechange", sync);
+
+      var withSound = function () {
+        if (!heardSound) { heardSound = true; vid.currentTime = 0; }
+        vid.muted = false; userPaused = false; play();
+      };
+      toggle.addEventListener("click", function () {
+        if (vid.paused) { userPaused = false; play(); } else { userPaused = true; vid.pause(); }
+      });
+      muteBtn.addEventListener("click", function () {
+        if (vid.muted) withSound(); else vid.muted = true;
+      });
+      if (soundBtn) soundBtn.addEventListener("click", function () {
+        withSound();
+        if (window.innerWidth < 761) stage.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "center" });
+      });
+
+      // Play quietly while the section is on screen; pause when it isn't.
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { if (!calm && !userPaused) play(); }
+            else if (!vid.paused) vid.pause();
+          });
+        }, { threshold: 0.35 }).observe(stage);
+      }
+      sync();
+    } else {
+      // No video file: fall back to embedding the Instagram/YouTube link.
+      var ig = reelLink.match(/instagram\.com\/(?:[\w.]+\/)?(reel|reels|p|tv)\/([\w-]+)/i);
+      var yt = reelLink.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/i);
+      reel.classList.add("reel-embed");
+      if (ig) {
+        var kind = ig[1].toLowerCase() === "p" ? "p" : "reel";
+        stage.innerHTML = '<div class="video-frame ig"><iframe src="https://www.instagram.com/' + kind + "/" + ig[2] + '/embed/" title="JW Magic showreel on Instagram" loading="lazy" allowtransparency="true" allow="encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe></div>';
+      } else {
+        stage.innerHTML = '<div class="video-frame"><div><button class="play" data-video="' + (yt ? "https://www.youtube-nocookie.com/embed/" + yt[1] : "") + '" aria-label="Play showreel"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button></div></div>';
+      }
+      if (soundBtn) soundBtn.style.display = "none";
     }
   }
 
@@ -323,6 +391,27 @@
       frame.innerHTML = '<iframe src="' + url + (url.indexOf("?") > -1 ? "&" : "?") + 'autoplay=1" title="JW Magic showreel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
     });
   });
+
+  /* ---------- Recent Instagram posts (assets/js/instagram-feed.js) ---------- */
+  var feedGrid = document.querySelector("[data-ig-feed]");
+  var feed = window.JW_INSTAGRAM;
+  if (feedGrid && feed && feed.posts && feed.posts.length) {
+    var esc = function (t) { return String(t || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var badge = {
+      video: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+      carousel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="7" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>'
+    };
+    var kindLabel = { video: "Reel", carousel: "Photos", photo: "Photo" };
+    feedGrid.classList.add("ig-live");
+    feedGrid.innerHTML = feed.posts.map(function (p) {
+      var label = (kindLabel[p.type] || "Post") + " on Instagram" + (p.caption ? ": " + p.caption : "");
+      return '<a class="ig-tile ig-post" href="' + esc(p.url) + '" target="_blank" rel="noopener" aria-label="' + esc(label) + '">' +
+        '<img src="' + esc(p.image) + '" alt="" loading="lazy" decoding="async">' +
+        (badge[p.type] ? '<span class="ig-kind">' + badge[p.type] + "</span>" : "") +
+        (p.caption ? '<span class="ig-cap">' + esc(p.caption) + "</span>" : "") +
+        "</a>";
+    }).join("");
+  }
 
   /* ---------- Lightbox for [data-lightbox] photos ---------- */
   var shots = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox]"));

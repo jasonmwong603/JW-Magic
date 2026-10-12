@@ -213,17 +213,29 @@
     </section>
 
     <!-- ================= SHOWREEL ================= -->
-    <section class="section bg-panel" style="padding-top:0;background:linear-gradient(var(--black) 0 30%, var(--ink) 30%)">
-      <div class="container">
-        <div class="video-frame reveal">
-          <!-- Paste a YouTube embed URL in data-video, e.g. https://www.youtube.com/embed/VIDEO_ID -->
-          <div>
-            <button class="play" data-video="" aria-label="Play showreel">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <h3>Watch the showreel</h3>
-            <p class="muted" style="margin:0">Take a look.</p>
+    <!-- The video and its Instagram link are set in assets/js/config.js (showreelVideo / showreel). -->
+    <section class="reel" id="showreel" aria-labelledby="reel-title">
+      <canvas class="reel-ambient" width="36" height="20" aria-hidden="true"></canvas>
+      <div class="container reel-grid">
+        <div class="reel-copy">
+          <span class="eyebrow reveal">Showreel</span>
+          <h2 class="reveal d1" id="reel-title">See it <span class="hl">live.</span></h2>
+          <p class="lead reveal d2">Real crowds, real reactions. Turn the sound on and pull up a chair.</p>
+          <div class="hero-cta reveal d3">
+            <button class="btn reel-sound-btn" type="button" data-reel-sound>Watch with sound <span class="arrow">→</span></button>
+            <a class="btn btn-ghost reel-ig" href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener">Watch on Instagram</a>
           </div>
+        </div>
+        <div class="reel-stage">
+          <video class="reel-video" playsinline muted loop preload="none" poster="assets/img/showreel-poster.jpg" aria-label="Jason Wong performing live at The Comic Strip"></video>
+          <button class="reel-toggle" type="button" aria-label="Play showreel">
+            <svg class="i-play" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="reel-mute" type="button" aria-label="Turn sound on" aria-pressed="false">
+            <svg class="i-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+            <svg class="i-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          </button>
+          <div class="reel-progress" aria-hidden="true"><span></span></div>
         </div>
       </div>
     </section>
@@ -292,12 +304,13 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="eyebrow reveal">@jwmagic_</span>
+            <span class="eyebrow reveal">Latest posts · @jwmagic_</span>
             <h2 class="reveal d1">Follow the <span class="hl">madness.</span></h2>
           </div>
           <a class="btn btn-ghost reveal" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener">Follow on Instagram <span class="arrow">→</span></a>
         </div>
-        <div class="ig-grid reveal">
+        <!-- Filled with the latest posts from assets/js/instagram-feed.js (refreshed daily). These tiles show only if that list is missing. -->
+        <div class="ig-grid reveal" data-ig-feed>
           <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♠</a>
           <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♦</a>
           <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♣</a>
@@ -327,6 +340,7 @@
   <a class="btn fab" href="corporate.html#book">Book a show</a>
 
   <script src="assets/js/config.js?v=dev"></script>
+  <script src="assets/js/instagram-feed.js?v=dev"></script>
   <script src="assets/js/main.js?v=dev"></script>
 </body>
 </html>

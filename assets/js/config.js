@@ -20,12 +20,15 @@ window.JW_CONFIG = {
 
   /*
    * SHOWREEL (home page)
-   * Paste the link to your video. Either kind works:
-   *   Instagram: "https://www.instagram.com/reel/ABC123xyz/"  (or a /p/ post link)
-   *   YouTube:   "https://www.youtube.com/watch?v=ABC123xyz"
-   * On Instagram: open the reel → ⋯ / paper-plane icon → Copy link.
-   * The post must be public. Left empty, the section says "coming soon".
+   * showreelVideo: the video file that plays full-screen on the home page.
+   *   It lives in assets/video/. To swap it, upload a new .mp4 there and
+   *   change the file name below (portrait phone videos look best).
+   * showreel: the same video's Instagram (or YouTube) link, used for the
+   *   "Watch on Instagram" button. If showreelVideo is left empty, this
+   *   link is embedded instead. Left empty too, the section says "coming soon".
    */
+  showreelVideo: "assets/video/showreel.mp4",
+  showreelPoster: "assets/img/showreel-poster.jpg",
   showreel: "https://www.instagram.com/p/DdrBQpQhWaQ/",
 
   /*
