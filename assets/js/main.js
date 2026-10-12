@@ -51,6 +51,13 @@
         toggle.setAttribute("aria-expanded", "false");
       });
     });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !document.body.classList.contains("menu-open")) return;
+      document.body.classList.remove("menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open menu");
+      toggle.focus();
+    });
     var onScroll = function () { header.classList.toggle("scrolled", window.scrollY > 20); };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -69,12 +76,13 @@
             '<a class="logo" href="index.html" aria-label="JW Magic home">' + LOGO + '<span class="logo-word"><span>JW</span> Magic</span></a>' +
             '<p class="muted" style="margin-top:18px;max-width:34ch">Corporate &amp; comedy magic by ' + C.name + '. Based in ' + C.city + ', performing across Canada.</p>' +
             '<form class="newsletter" data-form="newsletter" novalidate>' +
-              '<label class="sr-only" for="nl-email" style="position:absolute;left:-9999px">Email</label>' +
-              '<input id="nl-email" type="email" name="email" placeholder="Join the mailing list" required autocomplete="email">' +
+              '<label class="sr-only" for="nl-email" style="position:absolute;left:-9999px">Email for the JW Magic mailing list</label>' +
+              '<input id="nl-email" type="email" name="email" placeholder="Join the mailing list" required autocomplete="email" aria-describedby="nl-consent">' +
               '<input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">' +
               '<button class="btn btn-sm" type="submit">Join</button>' +
             "</form>" +
             '<div class="form-status" role="status" aria-live="polite"></div>' +
+            '<p class="consent-note" id="nl-consent">By joining, you agree to get occasional emails from JW Magic about shows and merch. Unsubscribe anytime. See our <a href="privacy.html">Privacy Policy</a>.</p>' +
           "</div>" +
           "<div><h4>Explore</h4><ul>" +
             '<li><a href="corporate.html">Corporate events</a></li>' +
@@ -96,11 +104,17 @@
           "</div>" +
           "<div><h4>Policies</h4><ul>" +
             '<li><a href="privacy.html">Privacy policy</a></li>' +
+            '<li><a href="privacy.html#cookies">Cookies</a></li>' +
             '<li><a href="terms.html">Terms &amp; conditions</a></li>' +
             '<li><a href="shipping.html">Shipping policy</a></li>' +
             '<li><a href="refunds.html">Refund policy</a></li>' +
+            '<li><a href="privacy.html#requests">Access or delete my data</a></li>' +
           "</ul></div>" +
         "</div>" +
+        '<p class="business-details">' + C.brand + " is operated by " + C.name + " · " +
+          (C.address ? C.address : C.city + ", Canada") +
+          ' · <a href="mailto:' + C.email + '">' + C.email + '</a> · <a href="' + telHref + '">' + C.phone + "</a>" +
+          " · All prices in Canadian dollars (CAD) unless stated otherwise.</p>" +
         '<div class="footer-bottom"><span>© ' + new Date().getFullYear() + " " + C.brand + ". All rights reserved. No cards were harmed.</span>" +
         '<span>Made with sleight of hand in Edmonton.</span></div>' +
       "</div>";
@@ -196,6 +210,7 @@
       var original = btn.innerHTML;
       btn.textContent = "Sending…";
       var payload = Object.assign({ _subject: subject, form: type }, data);
+      if (type === "newsletter") payload.consent = "Signed up on jaywmagic.com on " + new Date().toISOString() + ". Agreed to occasional emails from JW Magic about shows and merch.";
       if (data.contact && data.contact.indexOf("@") > -1) payload.email = payload._replyto = data.contact.trim();
       fetch(C.formEndpoint, {
         method: "POST",
@@ -213,6 +228,7 @@
       var body = Object.keys(data).map(function (k) {
         return (LABELS[k] || k) + ": " + data[k];
       }).join("\n");
+      if (type === "newsletter") body += "\nConsent: I agree to get occasional emails from JW Magic about shows and merch. I can unsubscribe anytime.";
       window.location.href = "mailto:" + C.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body + "\n\n— Sent from jaywmagic.com");
       setStatus(form, "ok", "Your email app should open with everything filled in — just hit send. Nothing opened? Email " + C.email + " directly.");
     }
@@ -243,16 +259,21 @@
       var opts = p.options ? '<div class="opts" role="radiogroup" aria-label="Size">' + p.options.map(function (o, j) {
         return '<label class="chip"><input type="radio" name="opt-' + p.id + '" value="' + o + '"' + (j === 2 ? " checked" : "") + "><span>" + o + "</span></label>";
       }).join("") + "</div>" : "";
-      var art = p.image ? '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy">' : (ART[p.art] || ART.deck);
+      var art = p.image ? '<img src="' + p.image + '" alt="' + (p.alt || p.name) + '" loading="lazy">' : (ART[p.art] || ART.deck).replace("<svg ", '<svg aria-hidden="true" focusable="false" ');
       return '<article class="product reveal d' + (i % 3) + '" data-id="' + p.id + '">' +
         '<div class="product-art">' + art + (p.tag ? '<span class="tag">' + p.tag + "</span>" : "") + "</div>" +
         '<div class="product-body">' +
-          '<div class="product-top"><h3>' + p.name + '</h3><span class="price">$' + p.price + "</span></div>" +
+          '<div class="product-top"><h3>' + p.name + '</h3><span class="price">$' + p.price + ' <span class="currency">CAD</span></span></div>' +
           "<p>" + p.blurb + "</p>" + opts +
           '<button class="btn btn-block" type="button" data-buy="' + p.id + '">' +
             (p.checkout ? "Buy now" : "Order by email") + ' <span class="arrow">→</span></button>' +
         "</div></article>";
     }).join("");
+
+    // Only promise card checkout once Stripe links are set up
+    var checkoutNote = document.querySelector("[data-checkout-note]");
+    if (checkoutNote) checkoutNote.textContent = C.products.some(function (p) { return p.checkout; })
+      ? "Secure card checkout by Stripe" : "Order by email, we reply with payment options";
 
     shop.addEventListener("click", function (e) {
       var btn = e.target.closest("[data-buy]");
@@ -333,6 +354,12 @@
     document.addEventListener("keydown", function (e) {
       if (!lb.classList.contains("open")) return;
       if (e.key === "Escape") close();
+      if (e.key === "Tab") {
+        var btns = lb.querySelectorAll("button"), firstB = btns[0], lastB = btns[btns.length - 1];
+        if (e.shiftKey && document.activeElement === firstB) { e.preventDefault(); lastB.focus(); }
+        else if (!e.shiftKey && document.activeElement === lastB) { e.preventDefault(); firstB.focus(); }
+        else if (!lb.contains(document.activeElement)) { e.preventDefault(); firstB.focus(); }
+      }
       if (e.key === "ArrowLeft") show(current - 1);
       if (e.key === "ArrowRight") show(current + 1);
     });

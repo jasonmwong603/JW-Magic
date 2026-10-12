@@ -10,6 +10,12 @@ window.JW_CONFIG = {
   email: "jaywmagic@gmail.com",
   phone: "780-729-8383",
   city: "Edmonton, Alberta",
+  /*
+   * BUSINESS ADDRESS (optional, shown in the footer of every page)
+   * Left empty, the footer shows the city only. If you get a PO box,
+   * virtual mailbox or office, put it here, e.g. "PO Box 123, Edmonton, AB T5J 0A1".
+   */
+  address: "",
   instagram: "https://www.instagram.com/jwmagic_",
 
   /*

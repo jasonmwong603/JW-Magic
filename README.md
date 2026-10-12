@@ -40,6 +40,9 @@ Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` o
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages.
+- [ ] **Business address (optional):** if you get a PO box or virtual mailbox, add it to `address` in `config.js` so it shows in the footer. Until then, the footer shows Edmonton, AB.
+- [ ] **Mailing list:** send newsletters through a mailing tool (Mailchimp, Buttondown, Kit…) so every email has an unsubscribe link, and import sign-ups with the consent date they arrive with.
+- [x] **Photos:** photographers have given permission for website use. Event guests are told photos and video will be taken, and children are never named.
 
 ## How to edit the website
 
