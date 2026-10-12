@@ -444,6 +444,9 @@ section { position: relative; }
 .reel-mute:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
 .reel-mute .i-on, .reel-stage.sound-on .reel-mute .i-off { display: none; }
 .reel-stage.sound-on .reel-mute .i-on { display: block; }
+.reel-copy, .reel::before, .reel-ambient { transition: opacity .6s var(--ease), visibility 0s; }
+.reel.watching .reel-copy { opacity: .25; }
+.reel.watching .reel-copy:hover, .reel.watching .reel-copy:focus-within { opacity: 1; }
 .reel-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255,255,255,.18); z-index: 2; }
 .reel-progress span { display: block; height: 100%; background: var(--yellow); transform: scaleX(0); transform-origin: left; }
 /* Fallback when only an Instagram/YouTube link is set */
@@ -468,6 +471,7 @@ section { position: relative; }
   .reel-copy .btn { padding: 13px 18px; font-size: .78rem; }
   .reel-mute { top: 84px; bottom: auto; }
   .reel-progress { top: 0; bottom: auto; z-index: 3; }
+  .reel.watching .reel-copy, .reel.watching::before { opacity: 0; visibility: hidden; transition: opacity .6s var(--ease), visibility 0s .6s; }
   .reel-embed .reel-grid { flex-direction: column; }
   .reel-embed .reel-copy { position: static; padding: 60px 16px 0; }
   .reel-embed .reel-stage { width: min(420px, 100% - 32px); margin-inline: auto; }

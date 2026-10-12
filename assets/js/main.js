@@ -313,7 +313,7 @@
       var ctx2d = canvas && canvas.getContext ? canvas.getContext("2d") : null;
       var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
         (navigator.connection && navigator.connection.saveData);
-      var userPaused = false, heardSound = false, lastPaint = 0;
+      var userPaused = false, heardSound = false, watching = false, lastPaint = 0;
 
       var paintAmbient = function (src) {
         if (!ctx2d) return;
@@ -336,6 +336,9 @@
         muteBtn.setAttribute("aria-pressed", String(!vid.muted));
         muteBtn.setAttribute("aria-label", vid.muted ? "Turn sound on" : "Turn sound off");
         stage.classList.toggle("sound-on", !vid.muted);
+        // Once a visitor chooses to watch, move the text out of the way so captions stay visible.
+        if (vid.paused) watching = false;
+        reel.classList.toggle("watching", watching);
       };
       var play = function () { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () { sync(); }); };
       vid.addEventListener("play", function () { sync(); requestAnimationFrame(tick); });
@@ -344,10 +347,10 @@
 
       var withSound = function () {
         if (!heardSound) { heardSound = true; vid.currentTime = 0; }
-        vid.muted = false; userPaused = false; play();
+        vid.muted = false; userPaused = false; watching = true; play();
       };
       toggle.addEventListener("click", function () {
-        if (vid.paused) { userPaused = false; play(); } else { userPaused = true; vid.pause(); }
+        if (vid.paused) { userPaused = false; watching = true; play(); } else { userPaused = true; vid.pause(); }
       });
       muteBtn.addEventListener("click", function () {
         if (vid.muted) withSound(); else vid.muted = true;
