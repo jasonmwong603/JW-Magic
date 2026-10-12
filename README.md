@@ -8,6 +8,8 @@ The website for Jason Wong, corporate and comedy magician in Edmonton. It's a pl
 |---|---|
 | `index.html` | Home page: hero, shows, about, showreel, booking steps, reviews, merch teaser, Instagram |
 | `corporate.html` | Why book Jason, the **Email me for a quote** button (`#book`) and the FAQ |
+| `private.html` | Weddings & parties: occasions, formats, FAQ and an **Email me about my party** button |
+| `planners.html` | Event planner kit: quick facts, bio, MC intro, photo and logo downloads, stage needs |
 | `shop.html` | Merch shop. Products come from `assets/js/config.js` |
 | `contact.html` | Contact cards and a **Write me an email** button |
 | `privacy` / `terms` / `shipping` / `refunds.html` | Policy pages |
@@ -38,6 +40,7 @@ Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` o
 - [x] **Showreel:** plays full-screen from `assets/video/showreel.mp4` (the Comic Strip reel, Instagram post DdrBQpQhWaQ). To swap it, upload a new portrait `.mp4` to `assets/video/` and update `showreelVideo` (and the `showreel` Instagram link) in `assets/js/config.js`. Keep it under about 25 MB so it loads quickly on phones.
 - [x] **Recent Instagram posts:** the home page grid shows your 6 latest public posts. It refreshes itself every morning (`.github/workflows/instagram.yml`), so there's nothing to update. To refresh right away: GitHub → **Actions** → **Refresh Instagram posts** → **Run workflow**.
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
+- [ ] **Trusted by:** add companies or venues you've performed for (with their OK) to `trustedBy` in `config.js`. The row appears on the home page once there's at least one.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages.
 - [ ] **Business address (optional):** if you get a PO box or virtual mailbox, add it to `address` in `config.js` so it shows in the footer. Until then, the footer shows Edmonton, AB.

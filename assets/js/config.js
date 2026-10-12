@@ -32,6 +32,14 @@ window.JW_CONFIG = {
   showreel: "https://www.instagram.com/p/DdrBQpQhWaQ/",
 
   /*
+   * "TRUSTED BY" (home page, under the scrolling banner)
+   * Companies, venues or events you've performed for, with their OK.
+   * e.g. ["The Comic Strip", "Acme Corp holiday party"]
+   * Left empty, the row stays hidden.
+   */
+  trustedBy: [],
+
+  /*
    * MAILING LIST SIGN-UP (footer). Booking and contact use email buttons, not forms.
    * Paste a Formspree endpoint here (free at https://formspree.io), e.g.
    *   "https://formspree.io/f/abcdwxyz"
