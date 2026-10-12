@@ -11,10 +11,9 @@ window.JW_CONFIG = {
   phone: "780-729-8383",
   city: "Edmonton, Alberta",
   /*
-   * BUSINESS ADDRESS (shown in the footer of every page)
-   * Alberta's online-sales rules expect a business address when you sell
-   * online, e.g. "123 Example St NW, Edmonton, AB T5J 0A1".
-   * Left empty, the footer just shows the city.
+   * BUSINESS ADDRESS (optional, shown in the footer of every page)
+   * Left empty, the footer shows the city only. If you get a PO box,
+   * virtual mailbox or office, put it here, e.g. "PO Box 123, Edmonton, AB T5J 0A1".
    */
   address: "",
   instagram: "https://www.instagram.com/jwmagic_",
