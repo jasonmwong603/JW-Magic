@@ -53,30 +53,15 @@
           </div>
         </div>
 
-        <div class="form-card reveal d1">
-          <h3 style="margin-bottom:24px">Send a message</h3>
-          <form id="contact-form" data-form="contact" novalidate>
-            <div class="form-grid">
-              <div class="field full"><label for="c-name">Name <span class="req">*</span></label><input id="c-name" name="name" autocomplete="name" required><div class="error-msg">Please add your name.</div></div>
-              <div class="field full"><label for="c-contact">Email or phone <span class="req">*</span></label><input id="c-contact" name="contact" autocomplete="email" placeholder="So I can get back to you" required data-contact><div class="error-msg">Add an email or phone number so I can reply.</div></div>
-              <div class="field full"><label for="c-msg">What are you looking for? <span class="req">*</span></label><textarea id="c-msg" name="message" rows="4" placeholder="e.g. Holiday party for 80 people on Dec 12, magic during cocktails" required></textarea><div class="error-msg">Tell me a little about what you have in mind.</div></div>
-              <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <div class="full"><button class="btn btn-block" type="submit">Send <span class="arrow">→</span></button></div>
-              <p class="consent-note full">I'll only use these details to reply about your request. This doesn't add you to any mailing list. <a href="privacy.html">Privacy Policy</a></p>
-            </div>
-          </form>
-          <div class="form-status" role="status" aria-live="polite"></div>
+        <div class="form-card email-card reveal d1">
+          <h3 style="margin-bottom:12px">Send a message</h3>
+          <p class="muted" style="margin:0 0 18px">Bookings, merch, lessons or collaborations. The button opens your email app with my address already in it.</p>
+          <ul class="email-list"><li>Who you are</li><li>What you're looking for</li><li>Best way to reach you</li></ul>
+          <a class="btn btn-block" data-mailto-template="contact" href="mailto:jaywmagic@gmail.com">Write me an email <span class="arrow">→</span></a>
+          <p class="consent-note">This opens your email app with my address and a short template filled in. Nothing opened? Email <a data-email href="mailto:jaywmagic@gmail.com">jaywmagic@gmail.com</a> <button class="copy-email" type="button" data-copy-email>Copy address</button></p>
         </div>
       </div>
     </section>
-    <script>
-      // Links like contact.html?subject=bulk start the message for the visitor
-      (function () {
-        var map = { bulk: "I'm interested in a bulk / corporate gift order.", merch: "I have a question about merch.", lessons: "I'm interested in magic lessons.", privacy: "Privacy request: please send me a copy of / correct / delete the personal information you hold about me." };
-        var q = new URLSearchParams(location.search).get("subject");
-        if (q && map[q]) document.getElementById("c-msg").value = map[q] + " ";
-      })();
-    </script>
   </main>
 
   <footer id="site-footer"></footer>
