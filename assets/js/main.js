@@ -18,6 +18,7 @@
   /* ---------- Header ---------- */
   var nav = [
     ["corporate", "corporate.html", "Corporate"],
+    ["private", "private.html", "Weddings &amp; parties"],
     ["shows", "index.html#shows", "Shows"],
     ["about", "index.html#about", "About"],
     ["shop", "shop.html", "Shop"],
@@ -86,6 +87,8 @@
           "</div>" +
           "<div><h4>Explore</h4><ul>" +
             '<li><a href="corporate.html">Corporate events</a></li>' +
+            '<li><a href="private.html">Weddings &amp; parties</a></li>' +
+            '<li><a href="planners.html">Event planner kit</a></li>' +
             '<li><a href="index.html#shows">Shows</a></li>' +
             '<li><a href="index.html#about">About Jason</a></li>' +
             '<li><a href="shop.html">Merch shop</a></li>' +
@@ -134,6 +137,10 @@
       subject: "Show booking request",
       body: "Hi Jason,\n\nI'd like a quote for an event.\n\nEvent date:\nCity or venue:\nNumber of guests:\nType of event:\nWhat I have in mind:\n\nMy name:\nBest phone number (optional):\n"
     },
+    private: {
+      subject: "Private party booking request",
+      body: "Hi Jason,\n\nI'd like to book magic for a private event.\n\nOccasion (wedding, birthday...):\nDate:\nCity or venue:\nNumber of guests (and ages if kids are coming):\nRoving magic, a show, or both:\n\nMy name:\nBest phone number (optional):\n"
+    },
     contact: {
       subject: "Message from jaywmagic.com",
       body: "Hi Jason,\n\n\n\nMy name:\nBest phone number (optional):\n"
@@ -157,6 +164,36 @@
     }
     el.href = "mailto:" + C.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   });
+  document.querySelectorAll("[data-copy-target]").forEach(function (btn) {
+    var label = btn.textContent;
+    btn.addEventListener("click", function () {
+      var src = document.getElementById(btn.getAttribute("data-copy-target"));
+      if (!src || !navigator.clipboard) return;
+      navigator.clipboard.writeText(src.textContent.trim()).then(function () {
+        btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = label; }, 2000);
+      }, function () {});
+    });
+  });
+
+  /* ---------- "Starting from" prices (config.js), hidden until a price is set ---------- */
+  var prices = C.startingPrices || {};
+  document.querySelectorAll("[data-price]").forEach(function (el) {
+    var v = prices[el.getAttribute("data-price")];
+    if (!v) return;
+    el.textContent = "$" + v;
+    el.closest(".price-card").hidden = false;
+    el.closest("[data-prices]").hidden = false;
+  });
+
+  /* ---------- "Trusted by" row (config.js), hidden until names are added ---------- */
+  var trusted = (C.trustedBy || []).filter(Boolean);
+  document.querySelectorAll("[data-trusted]").forEach(function (el) {
+    if (!trusted.length) return;
+    var ul = el.querySelector("ul");
+    trusted.forEach(function (n) { var li = document.createElement("li"); li.textContent = n; ul.appendChild(li); });
+    el.hidden = false;
+  });
+
   document.querySelectorAll("[data-copy-email]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var done = function () { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy address"; }, 2000); };

@@ -668,3 +668,28 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- Starting prices ---------- */
+.price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.price-card { padding: 30px 26px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); }
+.price-card .price-label { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #d9d6cf; }
+.price-card strong { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 5vw, 3.6rem); color: var(--yellow); line-height: 1.1; margin: 10px 0 6px; }
+.price-card p { margin: 0; font-size: .9rem; }
+
+/* ---------- Trusted by ---------- */
+.trusted { padding: 40px 0; border-bottom: 1px solid var(--line); text-align: center; }
+.trusted .eyebrow { justify-content: center; }
+.trusted ul { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; }
+.trusted li { font-family: var(--display); font-size: clamp(1.1rem, 2.4vw, 1.6rem); text-transform: uppercase; color: #d9d6cf; letter-spacing: .03em; }
+
+/* ---------- Planner kit ---------- */
+.kit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.kit-card { padding: 30px 26px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); }
+.kit-card p { color: #d9d6cf; margin: 12px 0 18px; }
+.kit-card .copy-email { margin-left: 0; font-size: .85rem; padding: 6px 16px; }
+.kit-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 40vw), 1fr)); gap: 18px; }
+.kit-photo { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; }
+.kit-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.kit-logo img { object-fit: contain; padding: 40px; background: var(--black); }
+.kit-photo figcaption { padding: 14px 16px; font-size: .85rem; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; margin-top: auto; }
+.kit-photo figcaption a { color: var(--yellow); font-weight: 700; }
