@@ -56,7 +56,7 @@
       </div>
     </section>
 
-    <!-- Booking form -->
+    <!-- Book by email -->
     <section class="section" id="book">
       <div class="container split" style="align-items:start">
         <div>
@@ -73,18 +73,11 @@
           </div>
         </div>
 
-        <div class="form-card reveal d1">
-          <form id="booking-form" data-form="booking" novalidate>
-            <div class="form-grid">
-              <div class="field full"><label for="b-name">Name <span class="req">*</span></label><input id="b-name" name="name" autocomplete="name" required><div class="error-msg">Please add your name.</div></div>
-              <div class="field full"><label for="b-contact">Email or phone <span class="req">*</span></label><input id="b-contact" name="contact" autocomplete="email" placeholder="So I can get back to you" required data-contact><div class="error-msg">Add an email or phone number so I can reply.</div></div>
-              <div class="field full"><label for="b-msg">What are you looking for? <span class="req">*</span></label><textarea id="b-msg" name="message" rows="4" placeholder="e.g. Holiday party for 80 people on Dec 12, magic during cocktails" required></textarea><div class="error-msg">Tell me a little about what you have in mind.</div></div>
-              <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <div class="full"><button class="btn btn-block" type="submit">Get my quote <span class="arrow">→</span></button></div>
-              <p class="consent-note full">I'll only use these details to reply about your request. This doesn't add you to any mailing list. <a href="privacy.html">Privacy Policy</a></p>
-            </div>
-          </form>
-          <div class="form-status" role="status" aria-live="polite"></div>
+        <div class="form-card email-card reveal d1">
+          <p class="muted" style="margin:0 0 18px">Hit the button below and your email app opens with a quick template. Fill in what you know, send it, and I'll reply within 24 hours.</p>
+          <ul class="email-list"><li>Event date</li><li>City or venue</li><li>Number of guests</li><li>Type of event and what you have in mind</li></ul>
+          <a class="btn btn-block" data-mailto-template="booking" href="mailto:jaywmagic@gmail.com">Email me for a quote <span class="arrow">→</span></a>
+          <p class="consent-note">This opens your email app with my address and a short template filled in. Nothing opened? Email <a data-email href="mailto:jaywmagic@gmail.com">jaywmagic@gmail.com</a> <button class="copy-email" type="button" data-copy-email>Copy address</button></p>
         </div>
       </div>
     </section>
@@ -104,7 +97,7 @@
           <details><summary>Can you incorporate our brand or message?</summary><p>Yes — that's one of my favourite things to do. Logos on cards, product reveals, a prediction that spells out your company tagline. We'll brainstorm on our planning call.</p></details>
           <details><summary>Do you travel outside Edmonton?</summary><p>Yes. I regularly perform across Alberta and travel anywhere in Canada (and beyond). Travel costs are quoted upfront.</p></details>
           <details><summary>How does payment work?</summary><p>A 50% non-refundable deposit, due within a week of the invoice, secures your date. The remaining balance is due on the day, after the performance. I accept e-transfer, credit card and company cheques, and provide a proper invoice. Full details are in the <a href="terms.html">Terms &amp; Conditions</a>.</p></details>
-          <details><summary>Do you perform for private parties too?</summary><p>Yes! Birthdays, weddings, anniversaries and house parties. Use the same form and just mention it's a private event.</p></details>
+          <details><summary>Do you perform for private parties too?</summary><p>Yes! Birthdays, weddings, anniversaries and house parties. Use the same email button and just mention it's a private event.</p></details>
         </div>
       </div>
     </section>

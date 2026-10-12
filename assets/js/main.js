@@ -128,6 +128,42 @@
   document.querySelectorAll("[data-tel]").forEach(function (el) { el.href = telHref; });
   document.querySelectorAll("[data-icon]").forEach(function (el) { el.innerHTML = ICONS[el.getAttribute("data-icon")] || ""; });
 
+  /* ---------- "Email me" buttons: open the visitor's email app with a template ---------- */
+  var MAIL_TEMPLATES = {
+    booking: {
+      subject: "Show booking request",
+      body: "Hi Jason,\n\nI'd like a quote for an event.\n\nEvent date:\nCity or venue:\nNumber of guests:\nType of event:\nWhat I have in mind:\n\nMy name:\nBest phone number (optional):\n"
+    },
+    contact: {
+      subject: "Message from jaywmagic.com",
+      body: "Hi Jason,\n\n\n\nMy name:\nBest phone number (optional):\n"
+    }
+  };
+  // Links like contact.html?subject=bulk start the message for the visitor
+  var STARTERS = {
+    bulk: ["Bulk / corporate gift order", "I'm interested in a bulk / corporate gift order."],
+    merch: ["Merch question", "I have a question about merch."],
+    lessons: ["Magic lessons", "I'm interested in magic lessons."],
+    privacy: ["Privacy request", "Privacy request: please send me a copy of / correct / delete the personal information you hold about me."]
+  };
+  var starter = STARTERS[new URLSearchParams(location.search).get("subject")];
+  document.querySelectorAll("[data-mailto-template]").forEach(function (el) {
+    var t = MAIL_TEMPLATES[el.getAttribute("data-mailto-template")];
+    if (!t) return;
+    var subject = t.subject, body = t.body;
+    if (starter && el.getAttribute("data-mailto-template") === "contact") {
+      subject = starter[0];
+      body = "Hi Jason,\n\n" + starter[1] + "\n\nMy name:\nBest phone number (optional):\n";
+    }
+    el.href = "mailto:" + C.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
+  document.querySelectorAll("[data-copy-email]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var done = function () { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy address"; }, 2000); };
+      if (navigator.clipboard) navigator.clipboard.writeText(C.email).then(done, function () {});
+    });
+  });
+
   /* ---------- Toast ---------- */
   var toastEl;
   function toast(msg) {

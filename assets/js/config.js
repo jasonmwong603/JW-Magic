@@ -32,11 +32,11 @@ window.JW_CONFIG = {
   showreel: "https://www.instagram.com/p/DdrBQpQhWaQ/",
 
   /*
-   * FORMS (booking + contact + mailing list)
+   * MAILING LIST SIGN-UP (footer). Booking and contact use email buttons, not forms.
    * Paste a Formspree endpoint here (free at https://formspree.io), e.g.
    *   "https://formspree.io/f/abcdwxyz"
    * Submissions then land straight in your inbox.
-   * Left empty, forms fall back to opening the visitor's email app
+   * Left empty, the sign-up opens the visitor's email app
    * with everything pre-filled, so nothing is ever lost.
    */
   formEndpoint: "",

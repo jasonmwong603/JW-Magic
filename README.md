@@ -7,9 +7,9 @@ The website for Jason Wong, corporate and comedy magician in Edmonton. It's a pl
 | Page | Purpose |
 |---|---|
 | `index.html` | Home page: hero, shows, about, showreel, booking steps, reviews, merch teaser, Instagram |
-| `corporate.html` | Why book Jason, the short **quote form** (`#book`) and the FAQ |
+| `corporate.html` | Why book Jason, the **Email me for a quote** button (`#book`) and the FAQ |
 | `shop.html` | Merch shop. Products come from `assets/js/config.js` |
-| `contact.html` | Contact cards and a general message form |
+| `contact.html` | Contact cards and a **Write me an email** button |
 | `privacy` / `terms` / `shipping` / `refunds.html` | Policy pages |
 | `404.html` | The "page vanished" page |
 
@@ -17,11 +17,10 @@ The website for Jason Wong, corporate and comedy magician in Edmonton. It's a pl
 
 Email, phone, Instagram, form delivery and merch products all live in this file.
 
-### 1. Make the forms deliver to your inbox (5 minutes)
-1. Sign up free at https://formspree.io and create a form using jaywmagic@gmail.com.
-2. Copy the endpoint (for example `https://formspree.io/f/abcdwxyz`) into `formEndpoint`.
+### 1. Booking and contact go straight to email
+There are no booking or contact forms. The **Email me for a quote** and **Write me an email** buttons open the visitor's own email app with your address and a short template (date, city, guests…) filled in. To change the template wording, edit `MAIL_TEMPLATES` in `assets/js/main.js`.
 
-Until you do this, the booking, contact and newsletter forms open the visitor's email app with everything filled in, so no enquiry is lost.
+The mailing list sign-up in the footer also opens the visitor's email app. If you'd rather it land in your inbox directly, sign up free at https://formspree.io and paste the endpoint into `formEndpoint`.
 
 ### 2. Turn on merch checkout (Stripe)
 1. In Stripe, go to **Payment Links → New** and create a link for each product. Turn on shipping address collection, and a custom "Size" field for apparel.
@@ -63,7 +62,7 @@ Tip: in the editor, use your browser's Find (Ctrl/Cmd+F) to jump to the sentence
 | Email, phone, Instagram, showreel link, form delivery | `assets/js/config.js` |
 | Merch products, prices, descriptions, Stripe links | `assets/js/config.js` (the `products` list) |
 | Home page text: headline, shows, about, gallery captions, FAQ-style blurbs | `index.html` |
-| Corporate page text, quote form, FAQ | `corporate.html` |
+| Corporate page text, quote button, FAQ | `corporate.html` |
 | Contact page text | `contact.html` |
 | Shop page headings and the bulk-order blurb | `shop.html` |
 | Menu links, footer text | `assets/js/main.js` (search for `nav` or `footer`) |
