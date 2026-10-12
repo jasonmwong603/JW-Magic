@@ -413,7 +413,9 @@
         vid.muted = false; userPaused = false; watching = true; play();
       };
       toggle.addEventListener("click", function () {
-        if (vid.paused) { userPaused = false; watching = true; play(); } else { userPaused = true; vid.pause(); }
+        // First tap on the quiet preview turns the sound on instead of pausing it.
+        if (!vid.paused && vid.muted && !heardSound) withSound();
+        else if (vid.paused) { userPaused = false; watching = true; play(); } else { userPaused = true; vid.pause(); }
       });
       muteBtn.addEventListener("click", function () {
         if (vid.muted) withSound(); else vid.muted = true;
@@ -576,5 +578,10 @@
   var bookSection = document.getElementById("book");
   if (fab && bookSection && "IntersectionObserver" in window) {
     new IntersectionObserver(function (en) { fab.classList.toggle("hide", en[0].isIntersecting); }).observe(bookSection);
+  }
+  // Keep the floating button off the showreel so it never sits on the video's captions.
+  var reelSection = document.getElementById("showreel");
+  if (fab && reelSection && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { fab.classList.toggle("hide-reel", en[0].isIntersecting); }, { threshold: 0.15 }).observe(reelSection);
   }
 })();
