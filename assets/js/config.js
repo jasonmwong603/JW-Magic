@@ -10,6 +10,13 @@ window.JW_CONFIG = {
   email: "jaywmagic@gmail.com",
   phone: "780-729-8383",
   city: "Edmonton, Alberta",
+  /*
+   * BUSINESS ADDRESS (shown in the footer of every page)
+   * Alberta's online-sales rules expect a business address when you sell
+   * online, e.g. "123 Example St NW, Edmonton, AB T5J 0A1".
+   * Left empty, the footer just shows the city.
+   */
+  address: "",
   instagram: "https://www.instagram.com/jwmagic_",
 
   /*

@@ -40,6 +40,9 @@ Logo: the JW double diamond with a horizontal line, in punchy yellow `#ffd60a` o
 - [ ] **Testimonials:** the reviews section in `index.html` is hidden for launch. Put real client quotes in place of the samples, then remove `hidden` from that `<section>`.
 - [ ] **Merch:** change the product names, prices and descriptions in `config.js` to match what you actually sell.
 - [ ] Review the policy pages.
+- [ ] **Business address:** add a mailing address to `address` in `config.js` so it shows in the footer (needed once merch sells online).
+- [ ] **Mailing list:** send newsletters through a mailing tool (Mailchimp, Buttondown, Kit…) so every email has an unsubscribe link, and import sign-ups with the consent date they arrive with.
+- [ ] **Photos:** keep written permission from the photographers, and from parents for any photo showing a child.
 
 ## How to edit the website
 
