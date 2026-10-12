@@ -1,0 +1,42 @@
+name: Refresh Instagram posts
+
+# Pulls the latest public posts from the Instagram account in config.js
+# into the home page grid, then redeploys the site if anything changed.
+on:
+  schedule:
+    - cron: "17 13 * * *" # every day, early morning Edmonton time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch latest posts
+        run: node scripts/update-instagram.mjs
+      - name: Save and redeploy if anything changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add assets/js/instagram-feed.js assets/img/instagram
+          if git diff --cached --quiet; then
+            echo "No new posts."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh recent Instagram posts"
+          git push
+          # Pushes made by this workflow don't trigger other workflows, so start the deploy directly.
+          gh workflow run pages.yml --ref main
