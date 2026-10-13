@@ -67,7 +67,7 @@ Tip: in the editor, use your browser's Find (Ctrl/Cmd+F) to jump to the sentence
 | Home page text: headline, shows, about, gallery captions, FAQ-style blurbs | `index.html` |
 | Corporate page text, quote button, FAQ | `corporate.html` |
 | Contact page text | `contact.html` |
-| Shop page headings and the bulk-order blurb | `shop.html` |
+| Shop page headings | `shop.html` |
 | Menu links, footer text | `assets/js/main.js` (search for `nav` or `footer`) |
 | Policies | `privacy.html`, `terms.html`, `shipping.html`, `refunds.html` |
 | Colours and fonts | `assets/css/styles.css` (top of the file, under `:root`) |
