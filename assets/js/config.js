@@ -67,10 +67,10 @@ window.JW_CONFIG = {
       image: "assets/img/shop/fractured-deck.jpg",
       alt: "A Fractured deck in its red, grey and black tuck box, surrounded by the line-art cards",
       bundles: [
-        { label: "1 deck", price: 20, checkout: "" },
-        { label: "3 decks", price: 50, checkout: "" },
-        { label: "Half brick (6)", price: 90, checkout: "" },
-        { label: "Brick (12)", price: 160, checkout: "" }
+        { label: "1 deck", price: 20, checkout: "https://square.link/u/5lG8MhJO" },
+        { label: "3 decks", price: 50, checkout: "https://square.link/u/QjzupLI2" },
+        { label: "Half brick (6)", price: 90, checkout: "https://square.link/u/XGX6BuRZ" },
+        { label: "Brick (12)", price: 160, checkout: "https://square.link/u/pusUzHMw" }
       ]
     }
   ]
