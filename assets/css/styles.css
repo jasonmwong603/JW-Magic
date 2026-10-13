@@ -560,6 +560,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 @media (max-width: 1000px) { .shop-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 620px) { .shop-grid { grid-template-columns: 1fr; } }
+.shop-grid > .product:only-child { grid-column: 1 / -1; justify-self: center; width: 100%; max-width: 440px; }
 .product { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color .3s, transform .4s var(--ease); }
 .product:hover { border-color: var(--yellow); transform: translateY(-6px); }
 .product-art { aspect-ratio: 1; background: radial-gradient(circle at 50% 40%, #2a2a2a, #111 70%); display: grid; place-items: center; position: relative; overflow: hidden; }
