@@ -51,20 +51,36 @@ window.JW_CONFIG = {
 
   /*
    * MERCH
-   * For each product, create a Stripe Payment Link
-   * (Stripe Dashboard → Payment Links → New) and paste it in `checkout`.
-   * Stripe handles card payment, shipping address, tax and receipts.
-   * Turn on "Collect custom field" in Stripe to ask for shirt size.
+   * For each product, create a Square payment link
+   * (Square app → Online → Payment links → Create) and paste it in `checkout`.
+   * Square handles card payment, shipping address, shipping fee and receipts.
+   * Products with `bundles` get one link per bundle (paste each in that bundle's `checkout`).
    * Left empty, the button becomes "Order by email".
    */
   products: [
     {
-      id: "deck",
-      name: "JW Signature Playing Cards",
-      price: 18,
-      tag: "Bestseller",
-      blurb: "Black & gold custom deck. The exact cards I use on stage. Shuffle at your own risk.",
-      art: "deck",
+      id: "fractured",
+      name: "Fractured Playing Cards",
+      price: 20,
+      tag: "Limited edition",
+      blurb: "My own deck, printed once by the United States Playing Card Company and never reprinted. Bold red and black backs, line-art courts. When they're gone, they're gone.",
+      image: "assets/img/shop/fractured-deck.jpg",
+      alt: "A Fractured deck in its red, grey and black tuck box, surrounded by the line-art cards",
+      bundles: [
+        { label: "1 deck", price: 20, checkout: "" },
+        { label: "3 decks", price: 50, checkout: "" },
+        { label: "Half brick (6)", price: 90, checkout: "" },
+        { label: "Brick (12)", price: 160, checkout: "" }
+      ]
+    },
+    {
+      id: "fractured-sheet",
+      name: "Fractured Uncut Sheet",
+      price: 60,
+      tag: "Only 25 made",
+      blurb: "The whole Fractured deck on one uncut press sheet, straight from the printer. Ready to frame. Ships rolled in a tube.",
+      image: "assets/img/shop/fractured-fan.jpg",
+      alt: "A hand holding a fanned Fractured deck, its red and black back on top",
       checkout: ""
     },
     {

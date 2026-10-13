@@ -322,31 +322,47 @@
       var opts = p.options ? '<div class="opts" role="radiogroup" aria-label="Size">' + p.options.map(function (o, j) {
         return '<label class="chip"><input type="radio" name="opt-' + p.id + '" value="' + o + '"' + (j === 2 ? " checked" : "") + "><span>" + o + "</span></label>";
       }).join("") + "</div>" : "";
+      if (p.bundles) opts = '<div class="opts" role="radiogroup" aria-label="Quantity">' + p.bundles.map(function (b, j) {
+        return '<label class="chip"><input type="radio" name="bundle-' + p.id + '" value="' + j + '"' + (j === 0 ? " checked" : "") + "><span>" + b.label + "</span></label>";
+      }).join("") + "</div>";
+      var hasCheckout = p.bundles ? p.bundles.some(function (b) { return b.checkout; }) : !!p.checkout;
       var art = p.image ? '<img src="' + p.image + '" alt="' + (p.alt || p.name) + '" loading="lazy">' : (ART[p.art] || ART.deck).replace("<svg ", '<svg aria-hidden="true" focusable="false" ');
       return '<article class="product reveal d' + (i % 3) + '" data-id="' + p.id + '">' +
         '<div class="product-art">' + art + (p.tag ? '<span class="tag">' + p.tag + "</span>" : "") + "</div>" +
         '<div class="product-body">' +
-          '<div class="product-top"><h3>' + p.name + '</h3><span class="price">$' + p.price + ' <span class="currency">CAD</span></span></div>' +
+          '<div class="product-top"><h3>' + p.name + '</h3><span class="price">$<span data-price>' + p.price + '</span> <span class="currency">CAD</span></span></div>' +
           "<p>" + p.blurb + "</p>" + opts +
           '<button class="btn btn-block" type="button" data-buy="' + p.id + '">' +
-            (p.checkout ? "Buy now" : "Order by email") + ' <span class="arrow">→</span></button>' +
+            (hasCheckout ? "Buy now" : "Order by email") + ' <span class="arrow">→</span></button>' +
         "</div></article>";
     }).join("");
 
-    // Only promise card checkout once Stripe links are set up
+    // Only promise card checkout once Square links are set up
     var checkoutNote = document.querySelector("[data-checkout-note]");
-    if (checkoutNote) checkoutNote.textContent = C.products.some(function (p) { return p.checkout; })
-      ? "Secure card checkout by Stripe" : "Order by email, we reply with payment options";
+    if (checkoutNote) checkoutNote.textContent = C.products.some(function (p) {
+      return p.checkout || (p.bundles && p.bundles.some(function (b) { return b.checkout; }));
+    }) ? "Secure card checkout by Square" : "Order by email, we reply with payment options";
+
+    // Bundle picker: show the chosen bundle's price
+    shop.addEventListener("change", function (e) {
+      if (!e.target.name || e.target.name.indexOf("bundle-") !== 0) return;
+      var card = e.target.closest(".product");
+      var p = C.products.filter(function (x) { return x.id === card.getAttribute("data-id"); })[0];
+      card.querySelector("[data-price]").textContent = p.bundles[e.target.value].price;
+    });
 
     shop.addEventListener("click", function (e) {
       var btn = e.target.closest("[data-buy]");
       if (!btn) return;
       var p = C.products.filter(function (x) { return x.id === btn.getAttribute("data-buy"); })[0];
       var opt = shop.querySelector('input[name="opt-' + p.id + '"]:checked');
-      if (p.checkout) {
-        window.open(p.checkout, "_blank", "noopener");
+      var picked = shop.querySelector('input[name="bundle-' + p.id + '"]:checked');
+      var bundle = picked ? p.bundles[picked.value] : null;
+      var checkout = bundle ? bundle.checkout : p.checkout;
+      if (checkout) {
+        window.open(checkout, "_blank", "noopener");
       } else {
-        var body = "Hi Jason,\n\nI'd like to order:\n\n" + p.name + (opt ? " — size " + opt.value : "") + " ($" + p.price + " CAD)\nQuantity: 1\n\nShipping address:\n\n\nThanks!";
+        var body = "Hi Jason,\n\nI'd like to order:\n\n" + p.name + (opt ? " — size " + opt.value : "") + (bundle ? " — " + bundle.label : "") + " ($" + (bundle ? bundle.price : p.price) + " CAD)\nQuantity: 1\n\nShipping address:\n\n\nThanks!";
         window.location.href = "mailto:" + C.email + "?subject=" + encodeURIComponent("Merch order: " + p.name) + "&body=" + encodeURIComponent(body);
         toast("Opening your email app to place the order…");
       }

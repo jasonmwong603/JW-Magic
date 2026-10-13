@@ -24,9 +24,9 @@ There are no booking or contact forms. The **Email me for a quote** and **Write 
 
 The mailing list sign-up in the footer also opens the visitor's email app. If you'd rather it land in your inbox directly, sign up free at https://formspree.io and paste the endpoint into `formEndpoint`.
 
-### 2. Turn on merch checkout (Stripe)
-1. In Stripe, go to **Payment Links → New** and create a link for each product. Turn on shipping address collection, and a custom "Size" field for apparel.
-2. Paste each link into that product's `checkout` field.
+### 2. Turn on merch checkout (Square)
+1. In the Square app, create a payment link for each product (for Fractured, one per bundle: 1 deck, 3 decks, half brick, brick). Turn on shipping address collection and add the shipping fee.
+2. Paste each link into that product's `checkout` field (for Fractured, into each bundle's `checkout`).
 
 The button then changes from **Order by email** to **Buy now**. To use a real product photo, add `image: "assets/img/deck.jpg"` to the product.
 
@@ -63,7 +63,7 @@ Tip: in the editor, use your browser's Find (Ctrl/Cmd+F) to jump to the sentence
 | To change… | Edit this file |
 |---|---|
 | Email, phone, Instagram, showreel link, form delivery | `assets/js/config.js` |
-| Merch products, prices, descriptions, Stripe links | `assets/js/config.js` (the `products` list) |
+| Merch products, prices, descriptions, Square links | `assets/js/config.js` (the `products` list) |
 | Home page text: headline, shows, about, gallery captions, FAQ-style blurbs | `index.html` |
 | Corporate page text, quote button, FAQ | `corporate.html` |
 | Contact page text | `contact.html` |
