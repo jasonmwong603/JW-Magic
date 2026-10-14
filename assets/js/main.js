@@ -146,9 +146,8 @@
       body: "Hi Jason,\n\n\n\nMy name:\nBest phone number (optional):\n"
     }
   };
-  // Links like contact.html?subject=bulk start the message for the visitor
+  // Links like contact.html?subject=merch start the message for the visitor
   var STARTERS = {
-    bulk: ["Bulk / corporate gift order", "I'm interested in a bulk / corporate gift order."],
     merch: ["Merch question", "I have a question about merch."],
     privacy: ["Privacy request", "Privacy request: please send me a copy of / correct / delete the personal information you hold about me."]
   };
