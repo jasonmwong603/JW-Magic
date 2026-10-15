@@ -8,6 +8,7 @@
     mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-10 6L2 7"/></svg>',
     phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
     ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>',
+    fb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
     pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>'
   };
   window.JW_ICONS = ICONS;
@@ -101,6 +102,7 @@
           "</ul>" +
             '<div class="socials">' +
               '<a href="' + C.instagram + '" target="_blank" rel="noopener" aria-label="Instagram">' + ICONS.ig + "</a>" +
+              (C.facebook ? '<a href="' + C.facebook + '" target="_blank" rel="noopener" aria-label="Facebook">' + ICONS.fb + "</a>" : "") +
               '<a href="mailto:' + C.email + '" aria-label="Email">' + ICONS.mail + "</a>" +
               '<a href="' + telHref + '" aria-label="Call">' + ICONS.phone + "</a>" +
             "</div>" +
@@ -127,6 +129,7 @@
   document.querySelectorAll("[data-email]").forEach(function (el) { el.textContent = C.email; if (el.tagName === "A") el.href = "mailto:" + C.email; });
   document.querySelectorAll("[data-phone]").forEach(function (el) { el.textContent = C.phone; if (el.tagName === "A") el.href = telHref; });
   document.querySelectorAll("[data-ig]").forEach(function (el) { el.href = C.instagram; });
+  document.querySelectorAll("[data-fb]").forEach(function (el) { el.href = C.facebook; });
   document.querySelectorAll("[data-mailto]").forEach(function (el) { el.href = "mailto:" + C.email; });
   document.querySelectorAll("[data-tel]").forEach(function (el) { el.href = telHref; });
   document.querySelectorAll("[data-icon]").forEach(function (el) { el.innerHTML = ICONS[el.getAttribute("data-icon")] || ""; });
