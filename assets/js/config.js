@@ -51,6 +51,14 @@ window.JW_CONFIG = {
   formEndpoint: "",
 
   /*
+   * META PIXEL (Facebook & Instagram ads)
+   * Your Pixel/dataset ID from Meta Events Manager. It only loads for
+   * visitors who click "Accept" on the cookie notice. Leave it empty
+   * to switch the Pixel and the cookie notice off entirely.
+   */
+  metaPixelId: "1130096129979489",
+
+  /*
    * MERCH
    * For each product, create a Square payment link
    * (Square app → Online → Payment links → Create) and paste it in `checkout`.

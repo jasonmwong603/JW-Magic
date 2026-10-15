@@ -110,6 +110,7 @@
           "<div><h4>Policies</h4><ul>" +
             '<li><a href="privacy.html">Privacy policy</a></li>' +
             '<li><a href="privacy.html#cookies">Cookies</a></li>' +
+            (C.metaPixelId ? '<li><button class="link-btn" type="button" data-cookie-settings>Cookie settings</button></li>' : "") +
             '<li><a href="terms.html">Terms &amp; conditions</a></li>' +
             '<li><a href="shipping.html">Shipping policy</a></li>' +
             '<li><a href="refunds.html">Refund policy</a></li>' +
@@ -191,6 +192,63 @@
       if (navigator.clipboard) navigator.clipboard.writeText(C.email).then(done, function () {});
     });
   });
+
+  /* ---------- Meta Pixel: loads only after the visitor accepts cookies ---------- */
+  var CONSENT_KEY = "jw-cookie-consent";
+  var pixelOn = false;
+  function getConsent() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } }
+  function setConsent(v) { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) {} }
+  function loadPixel() {
+    if (pixelOn || !C.metaPixelId) return;
+    pixelOn = true;
+    /* Meta's standard base code */
+    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    window.fbq("init", C.metaPixelId);
+    window.fbq("track", "PageView");
+  }
+  // Ad conversions: does nothing unless the Pixel is on
+  function track(name, params) { if (pixelOn && window.fbq) window.fbq("track", name, params || {}); }
+
+  var cookieBar;
+  function showCookieBar() {
+    if (!cookieBar) {
+      cookieBar = document.createElement("div");
+      cookieBar.className = "cookie-bar";
+      cookieBar.setAttribute("role", "region");
+      cookieBar.setAttribute("aria-label", "Cookie choice");
+      cookieBar.innerHTML =
+        '<p>I use Meta (Facebook) cookies to see which ads bring people here. Okay with that? <a href="privacy.html#cookies">Details</a></p>' +
+        '<div class="cookie-actions"><button class="btn btn-sm" type="button" data-consent="yes">Accept</button>' +
+        '<button class="btn btn-sm btn-ghost" type="button" data-consent="no">No thanks</button></div>';
+      cookieBar.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-consent]");
+        if (!b) return;
+        var yes = b.getAttribute("data-consent") === "yes";
+        var wasOn = pixelOn;
+        setConsent(yes ? "yes" : "no");
+        cookieBar.classList.remove("show");
+        if (yes) loadPixel();
+        else if (wasOn) location.reload(); // drop the already-loaded Pixel
+      });
+      document.body.appendChild(cookieBar);
+    }
+    requestAnimationFrame(function () { cookieBar.classList.add("show"); });
+  }
+  if (C.metaPixelId) {
+    var consent = getConsent();
+    if (consent === "yes") loadPixel();
+    else if (consent !== "no") showCookieBar();
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-cookie-settings]")) { showCookieBar(); return; }
+      var a = e.target.closest('a[href^="mailto:"], a[href^="tel:"]');
+      if (!a) return;
+      var tpl = a.getAttribute("data-mailto-template");
+      if (tpl === "booking" || tpl === "private") track("Lead", { content_name: tpl === "booking" ? "Corporate quote email" : "Private party email" });
+      else track("Contact", { content_name: a.href.indexOf("tel:") === 0 ? "Phone" : "Email" });
+    });
+  }
 
   /* ---------- Toast ---------- */
   var toastEl;
@@ -359,6 +417,7 @@
       var bundle = picked ? p.bundles[picked.value] : null;
       var checkout = bundle ? bundle.checkout : p.checkout;
       if (checkout) {
+        track("InitiateCheckout", { value: bundle ? bundle.price : p.price, currency: "CAD", content_name: p.name + (bundle ? " - " + bundle.label : "") });
         window.open(checkout, "_blank", "noopener");
       } else {
         var body = "Hi Jason,\n\nI'd like to order:\n\n" + p.name + (opt ? " — size " + opt.value : "") + (bundle ? " — " + bundle.label : "") + " ($" + (bundle ? bundle.price : p.price) + " CAD)\nQuantity: 1\n\nShipping address:\n\n\nThanks!";
