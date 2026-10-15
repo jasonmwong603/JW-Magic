@@ -17,6 +17,7 @@ window.JW_CONFIG = {
    */
   address: "",
   instagram: "https://www.instagram.com/jwmagic_",
+  facebook: "https://www.facebook.com/jaywmagic",
 
   /*
    * SHOWREEL (home page)
