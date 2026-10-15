@@ -30,6 +30,17 @@ The mailing list sign-up in the footer also opens the visitor's email app. If yo
 
 The button then changes from **Order by email** to **Buy now**. To use a real product photo, add `image: "assets/img/deck.jpg"` to the product.
 
+### 3. Meta Pixel (Facebook & Instagram ads)
+`metaPixelId` in `config.js` holds the Pixel (dataset) ID from Meta Events Manager. Visitors see a small cookie notice; the Pixel only loads if they click **Accept**, and the footer's **Cookie settings** lets them change their mind. It records page views plus these ad conversions:
+
+| Event | When |
+|---|---|
+| `Lead` | Corporate quote or party email button clicked |
+| `Contact` | Any other email link or phone number tapped |
+| `InitiateCheckout` | A shop **Buy now** button clicked (with the bundle price in CAD) |
+
+Clicking an email button only means the visitor's email app opened, not that they sent it. To switch the Pixel and the cookie notice off, empty `metaPixelId`.
+
 ## Photos
 Original, full-resolution photos live in `assets/img/photos/`. They are used in the home page hero (`card-throw-festival.jpg`), the About section (`jason-portrait.jpg`), the "In action" gallery (tap to view full size), and the Corporate and Contact page headers. To add one to the gallery, copy any `<figure class="g-item">` block in `index.html` and change the file name, size and caption.
 
