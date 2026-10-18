@@ -18,6 +18,15 @@ window.JW_CONFIG = {
   address: "",
   instagram: "https://www.instagram.com/jwmagic_",
   facebook: "https://www.facebook.com/jaywmagic",
+  /*
+   * GOOGLE BUSINESS PROFILE (footer + Contact page)
+   * google: your listing on Google Maps.
+   * googleReview: the "Ask for reviews" link from your Business Profile
+   *   (looks like https://g.page/r/.../review). Left empty, the
+   *   review buttons open your listing instead.
+   */
+  google: "https://www.google.com/maps?cid=16067556014950231143",
+  googleReview: "",
 
   /*
    * SHOWREEL (home page)
