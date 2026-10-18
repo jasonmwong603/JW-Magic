@@ -26,7 +26,7 @@ window.JW_CONFIG = {
    *   review buttons open your listing instead.
    */
   google: "https://www.google.com/maps?cid=16067556014950231143",
-  googleReview: "",
+  googleReview: "https://g.page/r/CWeszOcQbfveEBI/review",
 
   /*
    * SHOWREEL (home page)
