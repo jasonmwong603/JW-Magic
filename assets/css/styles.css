@@ -118,6 +118,9 @@ p { margin: 0 0 1em; }
   background: var(--yellow); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease);
 }
 .nav-links a:not(.btn):hover::after, .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+.nav-links a { white-space: nowrap; }
+@media (min-width: 901px) and (max-width: 1100px) { .nav-links { gap: 18px; } .nav-links a:not(.btn) { font-size: .85rem; } }
+@media (min-width: 901px) and (max-width: 1010px) { .logo-word { display: none; } }
 .cart-link { position: relative; display: inline-flex; align-items: center; }
 .cart-count {
   position: absolute; top: -6px; right: -12px; min-width: 18px; height: 18px; padding: 0 5px;
@@ -168,6 +171,51 @@ p { margin: 0 0 1em; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 46px; color: var(--muted); font-size: .9rem; }
 .hero-meta strong { display: block; font-family: var(--display); font-size: 2.2rem; color: var(--white); font-weight: 400; line-height: 1; }
+
+/* Home hero: performance photo behind the headline. On wide screens the photo
+   sits to the right so Jason stays clear of the text; on phones it fills the
+   screen and the text sits on the darker lower half. */
+.hero-bg { position: absolute; inset: 0 0 0 28%; z-index: -2; pointer-events: none; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, var(--black) 0%, rgba(10,10,10,.85) 18%, rgba(10,10,10,.35) 50%, rgba(10,10,10,.15) 100%),
+    linear-gradient(rgba(10,10,10,.55), transparent 22%, transparent 70%, var(--black));
+}
+.hero-photo-bg { background: var(--black); }
+.hero-photo-bg::before { display: none; }
+.hero-photo-bg .hero-grid { grid-template-columns: minmax(0, 640px); }
+.hero-photo-bg .lead { color: #e9e6de; text-shadow: 0 2px 18px rgba(0,0,0,.6); }
+.hero-photo-bg .hero-meta { color: #d4d1c9; }
+.hero-photo-bg h1 { text-shadow: 0 4px 30px rgba(0,0,0,.5); }
+.hero-credit { position: absolute; right: 16px; bottom: 14px; margin: 0; font-size: .7rem; letter-spacing: .06em; color: rgba(255,255,255,.6); }
+@media (max-width: 900px) {
+  .hero-photo-bg { align-items: end; }
+  .hero-bg { inset: 0; }
+  .hero-bg img { object-position: 46% 0%; height: 62%; }
+  .hero-bg::after {
+    background: linear-gradient(rgba(10,10,10,.5), transparent 16%, transparent 30%, rgba(10,10,10,.85) 48%, var(--black) 62%);
+  }
+  .hero-photo-bg .hero-grid { padding-top: 34vh; }
+}
+
+/* Home: compact link card to the photos + showreel page */
+.teaser-card {
+  display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: clamp(24px, 4vw, 56px);
+  text-decoration: none; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px); background: var(--panel); transition: border-color .3s;
+}
+.teaser-card:hover { border-color: var(--yellow); }
+.teaser-thumbs { display: grid; grid-template-columns: .8fr 1fr 1fr; gap: 10px; height: clamp(160px, 22vw, 260px); }
+.teaser-thumbs img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; transition: transform .6s var(--ease); }
+.teaser-card:hover .teaser-thumbs img { transform: scale(1.03); }
+.teaser-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.teaser-title { font-family: var(--display); font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: .95; text-transform: uppercase; }
+@media (max-width: 760px) {
+  .teaser-card { grid-template-columns: 1fr; }
+  .teaser-thumbs { height: 150px; }
+}
 
 .card-fan { position: relative; height: 520px; perspective: 1200px; }
 .playing-card {
@@ -421,7 +469,8 @@ section { position: relative; }
     linear-gradient(var(--black), transparent 18%, transparent 82%, var(--black));
 }
 .reel-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(32px, 6vw, 96px); align-items: center; width: min(var(--maxw), 100% - 32px); }
-.reel-copy h2 { margin-bottom: 18px; }
+.reel-copy h2, .reel-copy h1 { margin-bottom: 18px; }
+.reel-copy h1 { font-size: clamp(3rem, 8vw, 6.5rem); }
 .reel-copy .lead { max-width: 30ch; }
 .reel-stage {
   position: relative; height: min(100svh, 920px); aspect-ratio: 9 / 16; max-width: 56vw;
