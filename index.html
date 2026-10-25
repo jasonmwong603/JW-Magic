@@ -43,7 +43,10 @@
 
   <main id="main">
     <!-- ================= HERO ================= -->
-    <section class="hero">
+    <section class="hero hero-photo-bg">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="assets/img/photos/stage-blue-jacket.jpg" width="2576" height="1717" alt="" fetchpriority="high" decoding="async">
+      </div>
       <div class="spotlight" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div>
@@ -56,7 +59,7 @@
           <p class="lead reveal d2">I bring laughter and magic to your company party, gala, or conference for a night that everyone will talk about for years.</p>
           <div class="hero-cta reveal d3">
             <a class="btn" href="corporate.html#book">Book your event <span class="arrow">→</span></a>
-            <a class="btn btn-ghost" href="#shows">See the shows</a>
+            <a class="btn btn-ghost" href="gallery.html">Watch the showreel</a>
           </div>
           <div class="hero-meta reveal d3">
             <div><strong>10+</strong>Years performing</div>
@@ -64,15 +67,8 @@
             <div><strong>48h</strong>Quote turnaround</div>
           </div>
         </div>
-
-        <div class="hero-photo reveal d2">
-          <span class="float-badge b1" aria-hidden="true">♠ Your card?</span>
-          <span class="float-badge b2" aria-hidden="true">Edmonton's own</span>
-          <figure class="photo-card">
-            <img src="assets/img/photos/card-throw-festival.jpg" width="1932" height="2576" alt="Jason Wong tossing a playing card into the air on an outdoor festival stage strung with lanterns" fetchpriority="high" decoding="async">
-          </figure>
-        </div>
       </div>
+      <p class="hero-credit">Photo: Manual Focus Photography</p>
       <span class="scroll-cue">Scroll</span>
     </section>
 
@@ -178,74 +174,21 @@
       </div>
     </section>
 
-    <!-- ================= GALLERY ================= -->
-    <section class="section" id="gallery" style="padding-top:0">
+    <!-- ================= GALLERY TEASER (photos + showreel live on gallery.html) ================= -->
+    <section class="section gallery-teaser" style="padding-top:0">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow reveal">In action</span>
-            <h2 class="reveal d1">Boardrooms to<br><span class="hl">ballrooms.</span></h2>
-          </div>
-          <p class="lead reveal d2">Galas, festivals, comedy rooms and cocktail hours. Tap any photo to see it full size.</p>
-        </div>
-        <div class="gallery">
-          <figure class="g-item reveal">
-            <a href="assets/img/photos/corporate-closeup.jpg" data-lightbox aria-label="View larger: Corporate reception"><img src="assets/img/photos/corporate-closeup.jpg" width="2576" height="1717" alt="Roving close-up magic at a corporate reception" loading="lazy" decoding="async"></a>
-            <figcaption>Corporate reception</figcaption>
-          </figure>
-          <figure class="g-item reveal d1">
-            <a href="assets/img/photos/spotlight-table.jpg" data-lightbox aria-label="View larger: Under the spotlight"><img src="assets/img/photos/spotlight-table.jpg" width="1320" height="1980" alt="Jason Wong performing card magic at a table under a single spotlight" loading="lazy" decoding="async"></a>
-            <figcaption>Under the spotlight</figcaption>
-          </figure>
-          <figure class="g-item reveal d2">
-            <a href="assets/img/photos/stage-table-show.jpg" data-lightbox aria-label="View larger: Stage show, live on the big screen"><img src="assets/img/photos/stage-table-show.jpg" width="2576" height="1717" alt="Jason Wong performing card magic on stage for seated volunteers, projected on a big screen" loading="lazy" decoding="async"></a>
-            <figcaption>Stage show, live on the big screen</figcaption>
-          </figure>
-          <figure class="g-item reveal">
-            <a href="assets/img/photos/comedy-club.jpg" data-lightbox aria-label="View larger: Intimate comedy magic show"><img src="assets/img/photos/comedy-club.jpg" width="880" height="1116" alt="Jason Wong performing for a packed room at an intimate comedy show" loading="lazy" decoding="async"></a>
-            <figcaption>Intimate comedy magic show</figcaption>
-          </figure>
-          <figure class="g-item reveal d1">
-            <a href="assets/img/photos/festival-stage.jpg" data-lightbox aria-label="View larger: Festival main stage"><img src="assets/img/photos/festival-stage.jpg" width="2576" height="1717" alt="Jason Wong on a festival main stage with a young volunteer" loading="lazy" decoding="async"></a>
-            <figcaption>Festival main stage</figcaption>
-          </figure>
-          <figure class="g-item reveal d2">
-            <a href="assets/img/photos/wedding-card-trick.jpg" data-lightbox aria-label="View larger: Private celebration"><img src="assets/img/photos/wedding-card-trick.jpg" width="2048" height="1366" alt="Jason Wong holding a playing card in his teeth while a young guest looks on" loading="lazy" decoding="async"></a>
-            <figcaption>Private celebration</figcaption>
-          </figure>
-          <figure class="g-item reveal">
-            <a href="assets/img/photos/stage-blue-jacket.jpg" data-lightbox aria-label="View larger: Evening headliner · Photo: Manual Focus Photography"><img src="assets/img/photos/stage-blue-jacket.jpg" width="2576" height="1717" alt="Jason Wong headlining an evening show in front of a starlit backdrop" loading="lazy" decoding="async"></a>
-            <figcaption>Evening headliner · Photo: Manual Focus Photography</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= SHOWREEL ================= -->
-    <!-- The video and its Instagram link are set in assets/js/config.js (showreelVideo / showreel). -->
-    <section class="reel" id="showreel" aria-labelledby="reel-title">
-      <canvas class="reel-ambient" width="36" height="20" aria-hidden="true"></canvas>
-      <div class="container reel-grid">
-        <div class="reel-copy">
-          <span class="eyebrow reveal">Showreel</span>
-          <h2 class="reveal d1" id="reel-title">See it <span class="hl">live.</span></h2>
-          <p class="lead reveal d2">Real crowds, real reactions. Turn the sound on and pull up a chair.</p>
-          <div class="hero-cta reveal d3">
-            <button class="btn reel-sound-btn" type="button" data-reel-sound>Watch with sound <span class="arrow">→</span></button>
-            <a class="btn btn-ghost reel-ig" href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener">Watch on Instagram</a>
-          </div>
-        </div>
-        <div class="reel-stage">
-          <video class="reel-video" playsinline muted loop preload="none" poster="assets/img/showreel-poster.jpg" aria-label="Jason Wong performing live at The Comic Strip"></video>
-          <button class="reel-toggle" type="button" aria-label="Play showreel">
-            <svg class="i-play" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-          <button class="reel-mute" type="button" aria-label="Turn sound on" aria-pressed="false">
-            <svg class="i-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
-            <svg class="i-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
-          </button>
-          <div class="reel-progress" aria-hidden="true"><span></span></div>
-        </div>
+        <a class="teaser-card reveal" href="gallery.html">
+          <span class="teaser-thumbs" aria-hidden="true">
+            <img src="assets/img/showreel-poster.jpg" width="720" height="1280" alt="" loading="lazy" decoding="async">
+            <img src="assets/img/photos/stage-table-show.jpg" width="2576" height="1717" alt="" loading="lazy" decoding="async">
+            <img src="assets/img/photos/corporate-closeup.jpg" width="2576" height="1717" alt="" loading="lazy" decoding="async">
+          </span>
+          <span class="teaser-copy">
+            <span class="eyebrow">Photos &amp; showreel</span>
+            <span class="teaser-title">See it <span class="hl">live.</span></span>
+            <span class="btn">Open the gallery <span class="arrow">→</span></span>
+          </span>
+        </a>
       </div>
     </section>
 
@@ -307,28 +250,6 @@
       </div>
     </section>
 
-    <!-- ================= INSTAGRAM ================= -->
-    <section class="section" style="padding-bottom:60px">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow reveal">Latest posts · @jwmagic_</span>
-            <h2 class="reveal d1">Follow the <span class="hl">madness.</span></h2>
-          </div>
-          <a class="btn btn-ghost reveal" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener">Follow on Instagram <span class="arrow">→</span></a>
-        </div>
-        <!-- Filled with the latest posts from assets/js/instagram-feed.js (refreshed daily). These tiles show only if that list is missing. -->
-        <div class="ig-grid reveal" data-ig-feed>
-          <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♠</a>
-          <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♦</a>
-          <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♣</a>
-          <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♥</a>
-          <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">★</a>
-          <a class="ig-tile" data-ig href="https://www.instagram.com/jwmagic_" target="_blank" rel="noopener" aria-label="Instagram">♠</a>
-        </div>
-      </div>
-    </section>
-
     <!-- ================= CTA ================= -->
     <section class="section cta-band bg-yellow">
       <div class="suits" aria-hidden="true"><span style="left:-30px;top:-40px">♠</span><span style="right:-20px;bottom:-60px">♦</span></div>
@@ -348,7 +269,6 @@
   <a class="btn fab" href="corporate.html#book">Book a show</a>
 
   <script src="assets/js/config.js?v=dev"></script>
-  <script src="assets/js/instagram-feed.js?v=dev"></script>
   <script src="assets/js/main.js?v=dev"></script>
 </body>
 </html>
