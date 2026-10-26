@@ -22,8 +22,8 @@
   var nav = [
     ["corporate", "corporate.html", "Corporate"],
     ["private", "private.html", "Weddings &amp; parties"],
-    ["shows", "index.html#shows", "Shows"],
-    ["about", "index.html#about", "About"],
+    ["shows", "shows.html", "Shows"],
+    ["about", "about.html", "About"],
     ["gallery", "gallery.html", "Gallery"],
     ["shop", "shop.html", "Shop"],
     ["contact", "contact.html", "Contact"]
@@ -93,8 +93,8 @@
             '<li><a href="corporate.html">Corporate events</a></li>' +
             '<li><a href="private.html">Weddings &amp; parties</a></li>' +
             '<li><a href="planners.html">Event planner kit</a></li>' +
-            '<li><a href="index.html#shows">Shows</a></li>' +
-            '<li><a href="index.html#about">About Jason</a></li>' +
+            '<li><a href="shows.html">Shows</a></li>' +
+            '<li><a href="about.html">About Jason</a></li>' +
             '<li><a href="gallery.html">Photos &amp; showreel</a></li>' +
             '<li><a href="shop.html">Merch shop</a></li>' +
             '<li><a href="contact.html">Contact</a></li>' +
