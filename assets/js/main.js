@@ -79,7 +79,7 @@
         '<div class="footer-grid">' +
           "<div>" +
             '<a class="logo" href="index.html" aria-label="JW Magic home">' + LOGO + '<span class="logo-word"><span>JW</span> Magic</span></a>' +
-            '<p class="muted" style="margin-top:18px;max-width:34ch">Corporate &amp; comedy magic by ' + C.name + '. Based in ' + C.city + ', performing across Canada.</p>' +
+            '<p class="muted" style="margin-top:18px;max-width:34ch">Edmonton\'s funniest corporate magician, ' + C.name + '. Based in ' + C.city + ', performing across Canada.</p>' +
             '<form class="newsletter" data-form="newsletter" novalidate>' +
               '<label class="sr-only" for="nl-email" style="position:absolute;left:-9999px">Email for the JW Magic mailing list</label>' +
               '<input id="nl-email" type="email" name="email" placeholder="Join the mailing list" required autocomplete="email" aria-describedby="nl-consent">' +
