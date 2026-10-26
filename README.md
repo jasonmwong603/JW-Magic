@@ -6,8 +6,11 @@ The website for Jason Wong, corporate and comedy magician in Edmonton. It's a pl
 
 | Page | Purpose |
 |---|---|
-| `index.html` | Home page: hero, shows, about, showreel, booking steps, reviews, merch teaser, Instagram |
-| `corporate.html` | Why book Jason, the **Email me for a quote** button (`#book`) and the FAQ |
+| `index.html` | Home page, kept short: hero plus photo link cards to each page below |
+| `shows.html` | The five show types |
+| `about.html` | About Jason and the by-the-numbers stats |
+| `gallery.html` | Photos, showreel and the Instagram feed |
+| `corporate.html` | Why book Jason, how booking works, the **Email me for a quote** button (`#book`) and the FAQ |
 | `private.html` | Weddings & parties: occasions, formats, FAQ and an **Email me about my party** button |
 | `planners.html` | Event planner kit: quick facts, bio, MC intro, photo and logo downloads, stage needs |
 | `shop.html` | Merch shop. Products come from `assets/js/config.js` |
