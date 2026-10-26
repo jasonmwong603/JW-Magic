@@ -668,6 +668,8 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .socials svg { width: 18px; height: 18px; }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+/* Let grid columns shrink below their content width so the mailing-list form fits small phones. */
+.footer-grid > * { min-width: 0; }
 
 /* Floating book button (mobile) */
 .fab {
