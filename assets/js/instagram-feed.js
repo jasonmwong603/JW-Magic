@@ -7,6 +7,13 @@ window.JW_INSTAGRAM = {
   "handle": "jwmagic_",
   "posts": [
     {
+      "url": "https://www.instagram.com/reel/DfQw6Awtbwh/",
+      "image": "assets/img/instagram/DfQw6Awtbwh.jpg",
+      "type": "video",
+      "caption": "Thank you once again to @centralsocialhall and @sparrowcowork for having me be a part of their respective parties!",
+      "date": "2026-11-03"
+    },
+    {
       "url": "https://www.instagram.com/p/Dd-yNOolOLZ/",
       "image": "assets/img/instagram/Dd-yNOolOLZ.jpg",
       "type": "carousel",
@@ -40,13 +47,6 @@ window.JW_INSTAGRAM = {
       "type": "photo",
       "caption": "🌙 PERFORMER SPOTLIGHT | ASIAFEST 2026 🎤✨",
       "date": "2026-09-12"
-    },
-    {
-      "url": "https://www.instagram.com/p/DaEffVlmzQM/",
-      "image": "assets/img/instagram/DaEffVlmzQM.jpg",
-      "type": "carousel",
-      "caption": "(not so) serious photoshoot",
-      "date": "2026-06-27"
     }
   ]
 };
