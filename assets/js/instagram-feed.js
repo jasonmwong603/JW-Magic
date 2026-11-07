@@ -7,6 +7,13 @@ window.JW_INSTAGRAM = {
   "handle": "jwmagic_",
   "posts": [
     {
+      "url": "https://www.instagram.com/reel/DfboF51OnYX/",
+      "image": "assets/img/instagram/DfboF51OnYX.jpg",
+      "type": "video",
+      "caption": "From classrooms to boardrooms",
+      "date": "2026-11-07"
+    },
+    {
       "url": "https://www.instagram.com/reel/DfQw6Awtbwh/",
       "image": "assets/img/instagram/DfQw6Awtbwh.jpg",
       "type": "video",
@@ -40,13 +47,6 @@ window.JW_INSTAGRAM = {
       "type": "video",
       "caption": "What. A. Night.",
       "date": "2026-09-22"
-    },
-    {
-      "url": "https://www.instagram.com/p/DdMU_aoACjr/",
-      "image": "assets/img/instagram/DdMU_aoACjr.jpg",
-      "type": "photo",
-      "caption": "🌙 PERFORMER SPOTLIGHT | ASIAFEST 2026 🎤✨",
-      "date": "2026-09-12"
     }
   ]
 };
