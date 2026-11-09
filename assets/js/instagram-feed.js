@@ -7,6 +7,13 @@ window.JW_INSTAGRAM = {
   "handle": "jwmagic_",
   "posts": [
     {
+      "url": "https://www.instagram.com/p/DficgdjEdrp/",
+      "image": "assets/img/instagram/DficgdjEdrp.jpg",
+      "type": "photo",
+      "caption": "Come curious. Leave confused. 🃏",
+      "date": "2026-11-09"
+    },
+    {
       "url": "https://www.instagram.com/reel/DfboF51OnYX/",
       "image": "assets/img/instagram/DfboF51OnYX.jpg",
       "type": "video",
@@ -40,13 +47,6 @@ window.JW_INSTAGRAM = {
       "type": "video",
       "caption": "RATE ME.",
       "date": "2026-09-24"
-    },
-    {
-      "url": "https://www.instagram.com/reel/Ddm77p4tDl_/",
-      "image": "assets/img/instagram/Ddm77p4tDl_.jpg",
-      "type": "video",
-      "caption": "What. A. Night.",
-      "date": "2026-09-22"
     }
   ]
 };
