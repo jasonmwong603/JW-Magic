@@ -335,7 +335,9 @@
     var wrap = document.createElement("span");
     wrap.innerHTML = ticketButton(nx.ev, "btn-ghost");
     var tb = wrap.firstChild;
-    tb.innerHTML = "Get tickets · " + esc(nx.ev.title).replace(/-/g, "\u2011") + ' <span class="arrow" aria-hidden="true">→</span>';
+    // Phones show "Get tickets" and the show name on two lines (see .tix-label in styles.css)
+    tb.innerHTML = '<span class="tix-label"><span>Get tickets</span><span class="tix-sep" aria-hidden="true"> · </span><span>' +
+      esc(nx.ev.title).replace(/-/g, "\u2011") + '</span></span> <span class="arrow" aria-hidden="true">→</span>';
     tb.setAttribute("aria-label", "Get tickets for " + nx.ev.title + ", " + fmt(nx.start, { weekday: "long", month: "long", day: "numeric" }) + " at " + nx.ev.venue);
     heroAlt.replaceWith(tb);
   }
