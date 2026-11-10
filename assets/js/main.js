@@ -335,7 +335,7 @@
     var wrap = document.createElement("span");
     wrap.innerHTML = ticketButton(nx.ev, "btn-ghost");
     var tb = wrap.firstChild;
-    tb.innerHTML = "Get tickets · " + esc(fmt(nx.start, { month: "short", day: "numeric" })) + ' show <span class="arrow" aria-hidden="true">→</span>';
+    tb.innerHTML = "Get tickets · " + esc(nx.ev.title).replace(/-/g, "\u2011") + ' <span class="arrow" aria-hidden="true">→</span>';
     tb.setAttribute("aria-label", "Get tickets for " + nx.ev.title + ", " + fmt(nx.start, { weekday: "long", month: "long", day: "numeric" }) + " at " + nx.ev.venue);
     heroAlt.replaceWith(tb);
   }
