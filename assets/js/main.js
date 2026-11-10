@@ -328,19 +328,16 @@
   }).filter(function (x) { return x && x.end.getTime() > now && x.ev.eventbriteId; })
     .sort(function (a, b) { return a.start - b.start; });
 
-  // Home: one slim strip under the hero for the next show.
-  var strip = document.querySelector("[data-next-show]");
-  if (strip && upcoming.length) {
+  // Home: while a show is coming up, the hero's showreel button becomes "Get tickets".
+  var heroAlt = document.querySelector("[data-next-show]");
+  if (heroAlt && upcoming.length) {
     var nx = upcoming[0];
-    strip.innerHTML =
-      '<div class="container next-show-inner">' +
-        '<p><span class="next-show-label">Next public show</span>' +
-        '<strong>' + esc(nx.ev.title) + '</strong> ' +
-        '<span class="next-show-when">' + esc(fmt(nx.start, { weekday: "short", month: "short", day: "numeric" })) + " · " + esc(fmtTime(nx.start)) + " · " + esc(nx.ev.venue) + "</span></p>" +
-        '<div class="next-show-actions">' + ticketButton(nx.ev, "btn-dark btn-sm") +
-        '<a class="next-show-more" href="shows.html#public-shows">Details</a></div>' +
-      "</div>";
-    strip.hidden = false;
+    var wrap = document.createElement("span");
+    wrap.innerHTML = ticketButton(nx.ev, "btn-ghost");
+    var tb = wrap.firstChild;
+    tb.innerHTML = "Get tickets · " + esc(fmt(nx.start, { month: "short", day: "numeric" })) + ' show <span class="arrow" aria-hidden="true">→</span>';
+    tb.setAttribute("aria-label", "Get tickets for " + nx.ev.title + ", " + fmt(nx.start, { weekday: "long", month: "long", day: "numeric" }) + " at " + nx.ev.venue);
+    heroAlt.replaceWith(tb);
   }
 
   // Shows page: a full card per upcoming show.

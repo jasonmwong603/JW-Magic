@@ -760,14 +760,6 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 }
 
 /* ---------- Public shows (Eventbrite) ---------- */
-.next-show { background: var(--yellow); color: var(--black); }
-.next-show-inner { display: flex; align-items: center; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; padding-block: 14px; }
-.next-show p { margin: 0; line-height: 1.4; }
-.next-show-label { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-right: 12px; padding: 3px 8px; border: 1.5px solid var(--black); border-radius: 6px; vertical-align: 2px; }
-.next-show strong { font-weight: 800; margin-right: 4px; }
-.next-show-when { font-weight: 600; }
-.next-show-actions { display: flex; align-items: center; gap: 18px; }
-.next-show-more { color: var(--black); font-weight: 700; font-size: .9rem; }
 .btn[aria-busy="true"] { opacity: .7; cursor: progress; }
 
 .public-shows { padding-bottom: 0; }
@@ -797,10 +789,4 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
   .gig-when strong { display: block; }
   .gig-cta { grid-column: 1 / -1; }
   .gig-cta .btn { width: 100%; }
-}
-@media (max-width: 560px) {
-  .next-show-label { display: block; width: max-content; margin: 0 0 6px; }
-  .next-show-when { display: block; }
-  .next-show-actions { width: 100%; }
-  .next-show-actions .btn { flex: 1; }
 }
