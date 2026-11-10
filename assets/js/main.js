@@ -256,6 +256,132 @@
     });
   }
 
+  /* ---------- Public shows (Eventbrite tickets) ---------- */
+  // Times in config.js are Edmonton wall-clock times; turn them into real instants.
+  function edmonton(str) {
+    var guess = new Date(str + "Z");
+    if (isNaN(guess)) return null;
+    try {
+      var asEdm = new Date(guess.toLocaleString("en-US", { timeZone: "America/Edmonton" }));
+      var asUtc = new Date(guess.toLocaleString("en-US", { timeZone: "UTC" }));
+      return new Date(guess.getTime() + (asUtc - asEdm));
+    } catch (e) { return new Date(str + "-07:00"); }
+  }
+  function fmt(d, opts) {
+    opts.timeZone = "America/Edmonton";
+    try { return d.toLocaleString("en-CA", opts); } catch (e) { delete opts.timeZone; return d.toLocaleString("en-CA", opts); }
+  }
+  function fmtTime(d) {
+    var t = fmt(d, { hour: "numeric", minute: "2-digit" }).replace(/\./g, "").replace(":00", "");
+    return t.toLowerCase();
+  }
+  function esc(t) { var el = document.createElement("span"); el.textContent = t == null ? "" : String(t); return el.innerHTML; }
+
+  var EB_SCRIPT = "https://www.eventbrite.ca/static/widgets/eb_widgets.js";
+  var ebLoading = null;
+  function loadEventbrite() {
+    if (window.EBWidgets) return Promise.resolve();
+    if (ebLoading) return ebLoading;
+    ebLoading = new Promise(function (resolve, reject) {
+      var sc = document.createElement("script");
+      sc.src = EB_SCRIPT; sc.async = true;
+      sc.onload = function () { window.EBWidgets ? resolve() : reject(); };
+      sc.onerror = function () { ebLoading = null; reject(); };
+      document.head.appendChild(sc);
+    });
+    return ebLoading;
+  }
+  function checkoutUrl(id) { return "https://www.eventbrite.ca/checkout-external?eid=" + encodeURIComponent(id); }
+
+  // Eventbrite's script only loads when someone clicks "Get tickets", then opens its checkout pop-up.
+  var ebSeq = 0;
+  function ticketButton(ev, cls) {
+    var id = "eb-tickets-" + (++ebSeq);
+    return '<button type="button" class="btn ' + (cls || "") + '" id="' + id + '" data-eb-event="' + esc(ev.eventbriteId) +
+      '" data-eb-name="' + esc(ev.title) + '">Get tickets <span class="arrow" aria-hidden="true">→</span></button>';
+  }
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-eb-event]");
+    if (!btn) return;
+    if (e.isTrusted) track("InitiateCheckout", { content_name: "Tickets - " + btn.getAttribute("data-eb-name"), currency: "CAD" });
+    if (btn.getAttribute("data-eb-ready")) return; // Eventbrite's own listener opens the pop-up
+    var eid = btn.getAttribute("data-eb-event");
+    btn.setAttribute("aria-busy", "true");
+    loadEventbrite().then(function () {
+      window.EBWidgets.createWidget({ widgetType: "checkout", eventId: eid, modal: true, modalTriggerElementId: btn.id });
+      btn.setAttribute("data-eb-ready", "1");
+      btn.removeAttribute("aria-busy");
+      btn.click();
+    }, function () {
+      // Script blocked or offline: go straight to Eventbrite's checkout page instead.
+      btn.removeAttribute("aria-busy");
+      location.href = checkoutUrl(eid);
+    });
+  });
+
+  var now = Date.now();
+  var upcoming = (C.events || []).map(function (ev) {
+    var start = edmonton(ev.start), end = ev.end ? edmonton(ev.end) : null;
+    if (!start) return null;
+    if (!end) end = new Date(start.getTime() + 3 * 3600e3);
+    return { ev: ev, start: start, end: end };
+  }).filter(function (x) { return x && x.end.getTime() > now && x.ev.eventbriteId; })
+    .sort(function (a, b) { return a.start - b.start; });
+
+  // Home: one slim strip under the hero for the next show.
+  var strip = document.querySelector("[data-next-show]");
+  if (strip && upcoming.length) {
+    var nx = upcoming[0];
+    strip.innerHTML =
+      '<div class="container next-show-inner">' +
+        '<p><span class="next-show-label">Next public show</span>' +
+        '<strong>' + esc(nx.ev.title) + '</strong> ' +
+        '<span class="next-show-when">' + esc(fmt(nx.start, { weekday: "short", month: "short", day: "numeric" })) + " · " + esc(fmtTime(nx.start)) + " · " + esc(nx.ev.venue) + "</span></p>" +
+        '<div class="next-show-actions">' + ticketButton(nx.ev, "btn-dark btn-sm") +
+        '<a class="next-show-more" href="shows.html#public-shows">Details</a></div>' +
+      "</div>";
+    strip.hidden = false;
+  }
+
+  // Shows page: a full card per upcoming show.
+  var list = document.querySelector("[data-public-shows]");
+  if (list && upcoming.length) {
+    list.querySelector("[data-public-shows-list]").innerHTML = upcoming.map(function (x) {
+      var ev = x.ev, d = x.start;
+      var map = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ev.venue + ", " + (ev.address || "Edmonton, AB"));
+      return '<article class="gig">' +
+        '<div class="gig-date" aria-hidden="true"><span>' + esc(fmt(d, { month: "short" })) + "</span><strong>" + esc(fmt(d, { day: "numeric" })) + "</strong><span>" + esc(fmt(d, { weekday: "short" })) + "</span></div>" +
+        '<div class="gig-body">' +
+          "<h3>" + esc(ev.title) + "</h3>" +
+          '<p class="gig-when"><strong>' + esc(fmt(d, { weekday: "long", month: "long", day: "numeric" })) + "</strong> · Show " + esc(fmtTime(d)) +
+            (ev.doors ? " · Doors " + esc(ev.doors) : "") + "</p>" +
+          '<p class="gig-where">' + ICONS.pin + '<a href="' + map + '" target="_blank" rel="noopener">' + esc(ev.venue) + (ev.address ? ", " + esc(ev.address) : "") + "</a></p>" +
+          (ev.blurb ? '<p class="muted">' + esc(ev.blurb) + "</p>" : "") +
+          (ev.notes && ev.notes.length ? '<ul class="gig-notes">' + ev.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "") +
+        "</div>" +
+        '<div class="gig-cta">' + ticketButton(ev) + '<span class="gig-small">Secure checkout by Eventbrite</span></div>' +
+      "</article>";
+    }).join("");
+    list.hidden = false;
+
+    // Event details for Google search results
+    var ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.textContent = JSON.stringify(upcoming.map(function (x) {
+      return {
+        "@context": "https://schema.org", "@type": "Event", name: x.ev.title, description: x.ev.blurb,
+        startDate: x.start.toISOString(), endDate: x.end.toISOString(),
+        eventStatus: "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: { "@type": "Place", name: x.ev.venue, address: x.ev.address || "Edmonton, AB" },
+        performer: { "@type": "Person", name: C.name },
+        organizer: { "@type": "Organization", name: C.brand, url: "https://www.jaywmagic.com/" },
+        offers: { "@type": "Offer", url: "https://www.eventbrite.ca/e/" + x.ev.eventbriteId, availability: "https://schema.org/InStock" }
+      };
+    }));
+    document.head.appendChild(ld);
+  }
+
   /* ---------- Toast ---------- */
   var toastEl;
   function toast(msg) {

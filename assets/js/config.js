@@ -68,6 +68,31 @@ window.JW_CONFIG = {
   metaPixelId: "1130096129979489",
 
   /*
+   * PUBLIC SHOWS (Shows page card + a strip under the home page hero)
+   * One entry per ticketed show. The "Get tickets" button opens
+   * Eventbrite's checkout in a pop-up right on this site.
+   *   eventbriteId: the number at the end of the Eventbrite link
+   *     (eventbrite.ca/e/the-jw-magic-ish-show-tickets-2004588059849 → "2004588059849").
+   *   start / end: date and time in Edmonton time, e.g. "2026-11-25T19:00".
+   * Each show hides itself automatically once its end time has passed,
+   * so old shows can stay here until you get around to deleting them.
+   * Ticket prices come from Eventbrite; don't type them here.
+   */
+  events: [
+    {
+      title: "The JW Magic-ish Show",
+      blurb: "Come curious. Leave confused. Card magic, mind-bending moments, gambling demonstrations and plenty of laughs, up close and a little bit chaotic.",
+      venue: "Azucar Taco House",
+      address: "13062 50 Street NW, Edmonton, AB T5A 4V9",
+      start: "2026-11-25T19:00",
+      end: "2026-11-25T20:30",
+      doors: "6:30 pm",
+      notes: ["Ages 16+", "Food & drinks from the menu", "Free parking", "Limited seats"],
+      eventbriteId: "2004588059849"
+    }
+  ],
+
+  /*
    * MERCH
    * For each product, create a Square payment link
    * (Square app → Online → Payment links → Create) and paste it in `checkout`.
