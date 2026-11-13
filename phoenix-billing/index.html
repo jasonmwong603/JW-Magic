@@ -391,10 +391,11 @@ tr:last-child td{border-bottom:0}
 <script>
 (function(){
 "use strict";
-const KEY="phoenix-practice-hub-v2";
+const KEY="phoenix-practice-hub-v3";
 const MIN=60000,HR=60*MIN,DAY=24*HR;
 const SPECIALTIES=["Behavioral Health","Cardiology","Chiropractic","Dermatology","Endocrinology","Family Medicine","Gastroenterology","Internal Medicine","Neurology","Orthopedic Surgery","Pain Management","Pediatrics","Physical Therapy","Podiatry","Urgent Care"];
-const PAYERS=["Aetna","AHCCCS","Blue Cross Blue Shield of AZ","Cigna","Humana","Medicare","UnitedHealthcare"];
+const PAYERS=["Aetna","AHCCCS","Blue Cross Blue Shield of AZ","Cigna","Humana","Medicare","TRICARE West","UnitedHealthcare"];
+const payerName=(p)=>p==="AHCCCS"?"AHCCCS (Arizona Medicaid)":p;
 const STEPS=[["pending","Sent"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"]];
 const STATUS={pending:"Waiting to hear back",accepted:"Accepted",booked:"Appointment booked",completed:"Patient seen",declined:"Not able to take"};
 const usd=(n)=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
@@ -429,7 +430,7 @@ function seed(){
   const doctors=[
     {id:"phx",team:true,first:"Maria",last:"Delgado",cred:"",specialty:"Billing specialist",clinic:"Phoenix Medical Billing",city:"Glendale",hue:95,joined:t(900*DAY)},
     {id:"d1",first:"Elena",last:"Ruiz",cred:"MD",specialty:"Family Medicine",clinic:"Desert Bloom Family Practice",city:"Glendale",hue:262,joined:t(400*DAY),accepting:true,pay:"insurance",payers:["Aetna","AHCCCS","Blue Cross Blue Shield of AZ","Medicare","UnitedHealthcare"],languages:["English","Spanish"],years:14,reply:"within a couple of hours",bio:"Family doctor for the West Valley since 2011. I see whole families, from newborns to great-grandparents, and I like to know who I'm sending my patients to.",goodFor:["Chronic disease management","Women's health","Spanish-speaking families"]},
-    {id:"d2",first:"Craig",last:"Zimmerman",cred:"DC",specialty:"Chiropractic",clinic:"LaserTech Pain & Back Relief Center",city:"Scottsdale",hue:205,joined:t(2*DAY),accepting:true,pay:"cash",payers:[],languages:["English"],years:40,reply:"same day",real:true,bio:"Board-certified chiropractic physician since 1985, serving the Valley since 2006. Drug-free care for chronic pain using multi-wave laser therapy, spinal decompression and shockwave therapy.",goodFor:["Neuropathy","Herniated and degenerative discs","Sciatica and back pain","Knee and shoulder pain","Auto and sports injuries"]},
+    {id:"d2",first:"Alex",last:"Carter",cred:"DC",specialty:"Chiropractic",clinic:"Valley Laser & Spine Center",city:"Scottsdale",hue:205,joined:t(2*DAY),accepting:true,pay:"cash",payers:[],languages:["English"],years:25,reply:"same day",featured:true,bio:"Cash-pay chiropractic clinic. Drug-free care for chronic pain with laser therapy, spinal decompression and manual therapy. Patients can pay with HSA or FSA cards.",goodFor:["Neuropathy","Herniated and degenerative discs","Sciatica and back pain","Knee and shoulder pain","Auto and sports injuries"]},
     {id:"d3",first:"Nisha",last:"Patel",cred:"MD",specialty:"Internal Medicine",clinic:"Arrowhead Internal Medicine",city:"Peoria",hue:330,joined:t(300*DAY),accepting:true,pay:"insurance",payers:["Aetna","Cigna","Humana","Medicare","UnitedHealthcare"],languages:["English","Hindi","Gujarati"],years:11,reply:"within an hour",bio:"Internist with a soft spot for complicated patients: diabetes, kidney disease and the people juggling ten medications.",goodFor:["Diabetes","Medicare annual wellness","Complex medication lists"]},
     {id:"d4",first:"James",last:"Whitaker",cred:"DO",specialty:"Orthopedic Surgery",clinic:"Camelback Orthopedics",city:"Phoenix",hue:20,joined:t(260*DAY),accepting:true,pay:"insurance",payers:["Aetna","Blue Cross Blue Shield of AZ","Cigna","UnitedHealthcare"],languages:["English"],years:18,reply:"within a day",bio:"Knees, hips and shoulders. I'd rather try everything conservative first, and I'm happy to share care with chiropractors and PTs.",goodFor:["Joint replacement","Sports medicine","Second opinions"]},
     {id:"d5",first:"Sofia",last:"Nguyen",cred:"MD",specialty:"Pain Management",clinic:"Sonoran Pain Institute",city:"Tempe",hue:170,joined:t(190*DAY),accepting:true,pay:"both",payers:["Aetna","Blue Cross Blue Shield of AZ","Medicare"],languages:["English","Vietnamese"],years:9,reply:"within a few hours",bio:"Interventional pain doctor. I work closely with chiropractors and physical therapists so patients don't bounce between offices.",goodFor:["Spinal injections","Nerve blocks","Chronic pain plans"]},
@@ -440,6 +441,8 @@ function seed(){
     {id:"d10",first:"Tyler",last:"Brooks",cred:"DC",specialty:"Chiropractic",clinic:"Brooks Family Chiropractic",city:"Goodyear",hue:15,joined:t(12*DAY),accepting:true,pay:"insurance",payers:["Aetna","Blue Cross Blue Shield of AZ","UnitedHealthcare"],languages:["English","Spanish"],years:6,reply:"within a few hours",bio:"In-network family chiropractic in the West Valley. Kids, pregnancy and weekend warriors.",goodFor:["Pregnancy care","Sports adjustments","Families"]},
     {id:"d11",first:"Omar",last:"Haddad",cred:"MD",specialty:"Endocrinology",clinic:"Saguaro Diabetes & Endocrine",city:"Surprise",hue:350,joined:t(6*DAY),accepting:true,pay:"insurance",payers:["Aetna","AHCCCS","Humana","Medicare"],languages:["English","Arabic"],years:15,reply:"within a day",bio:"Diabetes, thyroid and bone health. Happy to co-manage with primary care.",goodFor:["Insulin pumps","Thyroid nodules","Osteoporosis"]}
   ];
+  const ZIP={Glendale:"85308",Scottsdale:"85260",Peoria:"85382",Phoenix:"85016",Tempe:"85281",Mesa:"85201",Chandler:"85224",Gilbert:"85234",Goodyear:"85395",Surprise:"85374"};
+  doctors.forEach((d,i)=>{if(d.team)return;d.npi="1"+String(234500000+i*104729).slice(0,9);d.phone="("+(["Glendale","Peoria","Goodyear","Surprise"].includes(d.city)?"623":["Scottsdale","Tempe","Mesa","Chandler","Gilbert"].includes(d.city)?"480":"602")+") 555-01"+String(10+i);d.address=(1200+i*137)+" N Example Rd, Suite "+(100+i*10)+", "+d.city+", AZ "+(ZIP[d.city]||"85001");});
   const threads=[
     {id:"t1",members:["d1","phx"],read:{d1:t(3*DAY),phx:t(1*HR)},messages:[
       {from:"phx",text:"Morning Dr. Ruiz! October is all closed out: 386 claims paid, 98% went through on the first try.",ts:t(3*DAY+2*HR)},
@@ -449,38 +452,38 @@ function seed(){
       {from:"d3",text:"Elena, thanks for sending Mrs. G over. Her A1c is down to 7.1. I'll send my notes this week.",ts:t(1*DAY+2*HR)},
       {from:"d1",text:"So glad to hear it. She was nervous about the new meds, so thank you for taking the time with her.",ts:t(1*DAY)}]},
     {id:"t3",members:["d1","d5"],read:{d1:t(5*HR),d5:t(2*HR)},messages:[
-      {from:"d5",text:"Hi Elena, have you met Dr. Zimmerman yet? He just joined the hub. I've had good results co-managing neuropathy patients with laser therapy, worth a look for your back pain folks.",ts:t(2*HR)}]},
+      {from:"d5",text:"Hi Elena, have you met Dr. Carter yet? He just joined the hub. I've had good results co-managing neuropathy patients with laser therapy, worth a look for your back pain folks.",ts:t(2*HR)}]},
     {id:"t4",members:["d2","phx"],read:{d2:t(2*DAY)},messages:[
-      {from:"phx",text:"Welcome to the hub, Dr. Zimmerman! I'm Maria and I'll be your billing specialist. Doctors on the network can now see your clinic and send you patients directly. When you're ready, I can walk you through superbills and what accepting a few insurance plans would look like.",ts:t(2*DAY)}]},
+      {from:"phx",text:"Welcome to the hub, Dr. Carter! I'm Maria and I'll be your billing specialist. Doctors on the network can now see your clinic and send you patients directly. When you're ready, I can walk you through superbills and what accepting a few insurance plans would look like.",ts:t(2*DAY)}]},
     {id:"t5",members:["d4","d7"],read:{d4:t(1*DAY),d7:t(1*DAY)},messages:[
       {from:"d4",text:"Kayla, your post-op knee plans are excellent. Sending two more your way next week.",ts:t(1*DAY+5*HR)},
       {from:"d7",text:"Thank you! We'll take good care of them.",ts:t(1*DAY+4*HR)}]}
   ];
   const mk=(o)=>Object.assign({history:[{status:"pending",ts:o.created,by:o.from}]},o);
   const referrals=[
-    mk({id:"R-2041",from:"d1",to:"d2",patient:"D.M.",age:56,sex:"M",reason:"Chronic low back pain with sciatica, 8 months. Finished 6 weeks of PT with little change.",urgency:"routine",coverage:"Self-pay",status:"pending",created:t(3*HR),note:"He wants to avoid injections and surgery if he can. He's open to paying out of pocket for the right care."}),
-    mk({id:"R-2039",from:"d3",to:"d2",patient:"R.K.",age:68,sex:"F",reason:"Diabetic peripheral neuropathy, both feet, burning pain at night",urgency:"routine",coverage:"Medicare",status:"pending",created:t(20*HR),note:"Sugars are well controlled now. Gabapentin made her too drowsy. Asked about laser therapy."}),
-    mk({id:"R-2036",from:"d1",to:"d4",patient:"S.L.",age:63,sex:"F",reason:"Right knee osteoarthritis, failed injections and PT",urgency:"routine",coverage:"Blue Cross Blue Shield of AZ",status:"booked",created:t(9*DAY),appt:isoDay(now+4*DAY),note:"She's ready to talk about a replacement."}),
-    mk({id:"R-2031",from:"d1",to:"d3",patient:"M.G.",age:59,sex:"F",reason:"Type 2 diabetes, A1c 9.4 despite metformin",urgency:"routine",coverage:"Aetna",status:"completed",created:t(26*DAY),claim:true,thanked:true}),
-    mk({id:"R-2044",from:"d5",to:"d1",patient:"J.A.",age:47,sex:"M",reason:"Needs a primary care home. New to Glendale, on long-term pain plan.",urgency:"routine",coverage:"UnitedHealthcare",status:"pending",created:t(1*HR),note:"Lovely guy, very organized. He just needs a PCP close to home."}),
-    mk({id:"R-2038",from:"d1",to:"d9",patient:"A.T.",age:34,sex:"F",reason:"Anxiety and poor sleep after car accident",urgency:"urgent",coverage:"Cigna",status:"accepted",created:t(2*DAY)}),
-    mk({id:"R-2027",from:"d6",to:"d8",patient:"H.W.",age:71,sex:"M",reason:"Progressive numbness both feet, needs EMG",urgency:"routine",coverage:"Medicare",status:"declined",created:t(14*DAY),declineReason:"Our waitlist is closed until January. Dr. Haddad or a pain specialist on the hub may be able to see him sooner."}),
-    mk({id:"R-2033",from:"d4",to:"d7",patient:"P.N.",age:52,sex:"M",reason:"Post-op rehab, left total knee replacement",urgency:"routine",coverage:"Cigna",status:"completed",created:t(20*DAY),claim:true})
+    mk({id:"R-2041",from:"d1",to:"d2",patient:"D.M.",icd:"M54.41",age:56,sex:"M",reason:"Chronic low back pain with sciatica, 8 months. Finished 6 weeks of PT with little change.",urgency:"routine",coverage:"Self-pay",status:"pending",created:t(3*HR),note:"He wants to avoid injections and surgery if he can. He's open to paying out of pocket for the right care."}),
+    mk({id:"R-2039",from:"d3",to:"d2",patient:"R.K.",icd:"E11.42",age:68,sex:"F",reason:"Diabetic peripheral neuropathy, both feet, burning pain at night",urgency:"routine",coverage:"Medicare",status:"pending",created:t(20*HR),note:"Sugars are well controlled now. Gabapentin made her too drowsy. Asked about laser therapy."}),
+    mk({id:"R-2036",from:"d1",to:"d4",patient:"S.L.",icd:"M17.11",age:63,sex:"F",reason:"Right knee osteoarthritis, failed injections and PT",urgency:"routine",coverage:"Blue Cross Blue Shield of AZ",status:"booked",created:t(9*DAY),appt:isoDay(now+4*DAY),note:"She's ready to talk about a replacement."}),
+    mk({id:"R-2031",from:"d1",to:"d3",patient:"M.G.",icd:"E11.65",age:59,sex:"F",reason:"Type 2 diabetes, A1c 9.4 despite metformin",urgency:"routine",coverage:"Aetna",status:"completed",created:t(26*DAY),claim:true,thanked:true}),
+    mk({id:"R-2044",from:"d5",to:"d1",patient:"J.A.",icd:"G89.29",age:47,sex:"M",reason:"Needs a primary care home. New to Glendale, on long-term pain plan.",urgency:"routine",coverage:"UnitedHealthcare",status:"pending",created:t(1*HR),note:"Lovely guy, very organized. He just needs a PCP close to home."}),
+    mk({id:"R-2038",from:"d1",to:"d9",patient:"A.T.",icd:"F41.9",age:34,sex:"F",reason:"Anxiety and poor sleep after car accident",urgency:"urgent",coverage:"Cigna",status:"accepted",created:t(2*DAY)}),
+    mk({id:"R-2027",from:"d6",to:"d8",patient:"H.W.",icd:"R20.2",age:71,sex:"M",reason:"Progressive numbness both feet, needs EMG",urgency:"routine",coverage:"Medicare",status:"declined",created:t(14*DAY),declineReason:"Our waitlist is closed until January. Dr. Haddad or a pain specialist on the hub may be able to see him sooner."}),
+    mk({id:"R-2033",from:"d4",to:"d7",patient:"P.N.",icd:"Z47.1",age:52,sex:"M",reason:"Post-op rehab, left total knee replacement",urgency:"routine",coverage:"Cigna",status:"completed",created:t(20*DAY),claim:true})
   ];
   const activity=[
     {ts:t(1*HR),who:"d5",text:"<b>Dr. Nguyen</b> sent a patient to <b>Dr. Ruiz</b>"},
-    {ts:t(3*HR),who:"d1",text:"<b>Dr. Ruiz</b> sent a patient to <b>Dr. Zimmerman</b>"},
-    {ts:t(20*HR),who:"d3",text:"<b>Dr. Patel</b> sent a patient to <b>Dr. Zimmerman</b>"},
-    {ts:t(2*DAY),who:"d2",text:"<b>Dr. Craig Zimmerman</b> joined from LaserTech Pain & Back Relief Center, Scottsdale"},
+    {ts:t(3*HR),who:"d1",text:"<b>Dr. Ruiz</b> sent a patient to <b>Dr. Carter</b>"},
+    {ts:t(20*HR),who:"d3",text:"<b>Dr. Patel</b> sent a patient to <b>Dr. Carter</b>"},
+    {ts:t(2*DAY),who:"d2",text:"<b>Dr. Alex Carter</b> joined from Valley Laser & Spine Center, Scottsdale"},
     {ts:t(6*DAY),who:"d11",text:"<b>Dr. Omar Haddad</b> joined from Saguaro Diabetes & Endocrine, Surprise"},
     {ts:t(8*DAY),who:"d1",text:"<b>Dr. Ruiz</b> thanked <b>Dr. Patel</b> for seeing a patient"}
   ];
-  return {v:2,me:"d1",sim:true,seq:2045,doctors,threads,referrals,activity,fixed:{},reminded:{}};
+  return {v:3,me:"d1",sim:true,seq:2045,doctors,threads,referrals,activity,fixed:{},reminded:{}};
 }
 function isoDay(ms){const d=new Date(ms);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 
 let S=load()||seed();
-function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===2)return o;}}catch(e){}return null;}
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===3)return o;}}catch(e){}return null;}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const ui={thread:null,refTab:"inbound",refFilter:"all",q:"",spec:"",city:"",pay:"",openOnly:false,tq:"",pop:null,typing:{}};
 
@@ -497,7 +500,7 @@ const initials=(d)=>(d.first[0]+(d.last[0]||"")).toUpperCase();
 const av=(d,cls)=>'<span class="av '+(cls||"")+'" style="--h:'+d.hue+'" aria-hidden="true">'+esc(initials(d))+'</span>';
 const members=()=>S.doctors.filter(d=>!d.team);
 function ago(ts){const s=Date.now()-ts;if(s<MIN)return"just now";if(s<HR)return Math.floor(s/MIN)+" min ago";if(s<DAY){const h=Math.floor(s/HR);return h+(h===1?" hour ago":" hours ago");}if(s<2*DAY)return"yesterday";if(s<7*DAY)return Math.floor(s/DAY)+" days ago";return new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric"});}
-function clock(ts){return new Date(ts).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});}
+function clock(ts){return new Date(ts).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",timeZone:"America/Phoenix"})+" MST";}
 function dayLabel(ts){const d=new Date(ts),n=new Date(),y=new Date(n-DAY);if(d.toDateString()===n.toDateString())return"Today";if(d.toDateString()===y.toDateString())return"Yesterday";return d.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});}
 function apptLabel(iso){if(!iso)return"";const [y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});}
 function payLabel(d){return d.pay==="cash"?"Cash-pay only":d.pay==="both"?"Insurance + self-pay":"Takes insurance";}
@@ -526,18 +529,18 @@ function billing(d){
   const pts=["T.R.","B.C.","L.M.","K.O.","W.S.","E.F.","N.D.","G.P."];
   const day=(n)=>new Date(Date.now()-n*DAY).toLocaleDateString("en-US",{month:"short",day:"numeric"});
   if(cash){
-    const balances=[0,1,2,3].map(i=>({id:d.id+"-b"+i,patient:pts[i+2],visit:["Laser therapy package (10 visits)","Spinal decompression session","New patient exam + X-ray","Shockwave therapy (3 sessions)"][i],amount:[1450,185,240,375][i],due:day(6+i*5)}));
-    const paid=[0,1,2,3,4].map(i=>({who:pts[(i+3)%8],what:["Laser therapy visit","Text-to-pay invoice","Decompression session","Package deposit","New patient exam"][i],method:["Card on file","Text-to-pay","Card in office","Text-to-pay","HSA card"][i],amount:[95,420,185,700,240][i],date:day(i)}));
-    return {cash:true,months,cur,prevSame,visits:Math.round(cur/118),avgVisit:118,superbills:Math.round(cur/118*0.38),outstanding:balances.reduce((a,b)=>a+b.amount,0),balances,paid};
+    const balances=[0,1,2,3].map(i=>({id:d.id+"-b"+i,patient:pts[i+2],visit:["Laser therapy package, 10 visits (S8948)","Spinal decompression (97012)","New patient exam + X-ray (99203, 72100)","Spinal manipulation, 3 regions (98941)"][i],amount:[1450,185,240,375][i],due:day(6+i*5)}));
+    const paid=[0,1,2,3,4].map(i=>({who:pts[(i+3)%8],what:["Laser therapy (S8948)","Text-to-pay invoice","Decompression (97012)","Package deposit","New patient exam (99203)"][i],method:["Card on file","Text-to-pay","HSA card","Text-to-pay","FSA card"][i],amount:[95,420,185,700,240][i],date:day(i)}));
+    return {cash:true,gfe:Math.round(cur/118*0.22),months,cur,prevSame,visits:Math.round(cur/118),avgVisit:118,superbills:Math.round(cur/118*0.38),outstanding:balances.reduce((a,b)=>a+b.amount,0),balances,paid};
   }
   const claims=Math.round(cur/142), clean=94+Math.floor(r()*5), ar=19+Math.floor(r()*12), waiting=Math.round(cur*0.34/10)*10;
   const issues=[
-    {payer:"Aetna",problem:"Aetna needs a prior authorization number before they'll pay this visit.",ask:"Prior authorization number",ph:"e.g. A123456789"},
-    {payer:"Blue Cross Blue Shield of AZ",problem:"The referring doctor's NPI is missing. If this patient came through the hub we'll fill it in automatically.",ask:"Referring doctor or NPI",ph:"e.g. Dr. Ruiz, or 1234567890"},
-    {payer:"UnitedHealthcare",problem:"The patient's plan ended on Sep 30. We need their new insurance details.",ask:"New insurance and member ID",ph:"e.g. Cigna, member U1234567"},
-    {payer:"Medicare",problem:"The diagnosis code doesn't support this level of visit. A quick note from you will let our coder fix it.",ask:"Note for our coder",ph:"What made this visit more involved?"}
-  ].slice(0,2+Math.floor(r()*3)).map((x,i)=>Object.assign({id:d.id+"-c"+i,patient:pts[i],dos:day(5+i*4),amount:[184,312,96,248][i]},x));
-  const payments=[0,1,2,3,4,5].map(i=>{const p=d.payers.length?d.payers[i%d.payers.length]:PAYERS[i];return {payer:p,claims:3+Math.floor(r()*22),amount:Math.round((900+r()*7200)/5)*5,date:day(i)};});
+    {payer:"Aetna",carc:"CO-197",carcText:"Prior authorization missing",cpt:"20610",cptText:"Joint injection, major joint",icd:"M17.11",problem:"Aetna needs a prior authorization number before they'll pay this visit.",ask:"Prior authorization number",ph:"e.g. PA-0000000"},
+    {payer:"Blue Cross Blue Shield of AZ",carc:"CO-16",carcText:"Claim is missing information",cpt:"99204",cptText:"New patient office visit",icd:"M54.50",problem:"The referring provider's NPI (box 17b) is missing. If this patient came through the hub we fill it in automatically.",ask:"Referring provider name or NPI",ph:"e.g. Dr. Ruiz, NPI 1000000000"},
+    {payer:"UnitedHealthcare",carc:"CO-27",carcText:"Coverage ended before the visit",cpt:"99214",cptText:"Office visit, established patient",icd:"E11.9",problem:"The patient's plan ended Sep 30. We need their new insurance so we can bill the right payer.",ask:"New insurance and member ID",ph:"e.g. Cigna, member ID 000000000"},
+    {payer:"Medicare",carc:"CO-11",carcText:"Diagnosis doesn't match the service",cpt:"99215",cptText:"Office visit, high complexity",icd:"Z00.00",problem:"Diagnosis Z00.00 (routine exam) doesn't support a 99215. A short note from you lets our coder pick the right diagnosis.",ask:"Note for our coder",ph:"What made this visit more involved?"}
+  ].slice(0,2+Math.floor(r()*3)).map((x,i)=>Object.assign({id:d.id+"-c"+i,claimNo:"CLM-"+String(48210+i*317+Math.floor(r()*90)),patient:pts[i],dos:day(5+i*4),resubmitBy:day(5+i*4-90),amount:[184,312,96,248][i]},x));
+  const payments=[0,1,2,3,4,5].map(i=>{const p=d.payers.length?d.payers[i%d.payers.length]:PAYERS[i];return {payer:p,claims:3+Math.floor(r()*22),amount:Math.round((900+r()*7200)/5)*5,date:day(i),trace:"EFT ••"+String(1000+Math.floor(r()*9000))};});
   return {cash:false,months,cur,prevSame,claims,clean,ar,waiting,issues,payments};
 }
 function openIssues(b){return b.cash?b.balances.filter(x=>!S.reminded[x.id]):b.issues.filter(x=>!S.fixed[x.id]);}
@@ -550,7 +553,7 @@ function renderChrome(){
   const m=me(), tm=team();
   $("#crumb").innerHTML=esc(m.clinic)+' · <strong>'+{home:"Home",billing:"Billing",referrals:"Referrals",messages:"Messages",network:"Network"}[r]+'</strong>';
   $("#specialist").innerHTML='<div class="who">'+av(tm,"sm")+'<div><small>Your billing specialist</small><b>'+esc(full(tm))+'</b><span class="online">Online now</span></div></div><button type="button" data-action="msg-doc" data-id="phx">Message Maria</button>';
-  $("#demoNote").innerHTML='<b>Demo.</b> Patients, claims and dollar amounts are made up. Use the menu at the top right to see the hub as any doctor.';
+  $("#demoNote").innerHTML='<b>Demo.</b> All names, NPIs, addresses, patients and dollar amounts are placeholders. No real patient information. Use the menu at the top right to see the hub as any doctor.';
   $("#persona").innerHTML='<button class="persona-btn" type="button" data-action="toggle-persona" aria-haspopup="true" aria-expanded="'+(ui.pop==="persona")+'">'+av(m,"sm")+'<span class="who"><b>'+esc(full(m))+'</b><span>'+esc(m.specialty)+'</span></span>'+I.chev+'</button>'+(ui.pop==="persona"?personaPop():"");
 }
 function personaPop(){
@@ -580,9 +583,9 @@ function viewHome(){
   const summary=bits.length?"Since you were last here, "+list(bits)+".":"You're all caught up. Nice work.";
   const firstName=m.cred==="DC"||m.cred==="MD"||m.cred==="DO"?m.first:m.first;
   let todos="";
-  pend.forEach(r=>{const f=doc(r.from);todos+='<div class="todo">'+av(f)+'<div class="body"><p><b>'+esc(short(f))+'</b> would like you to see <b>'+esc(r.patient)+'</b>, '+r.age+r.sex+'</p><div class="meta">'+esc(r.reason)+' · '+esc(r.coverage)+' · '+ago(r.created)+'</div>'+(r.note?'<div class="meta" style="font-style:italic;margin-top:4px">“'+esc(r.note)+'”</div>':'')+'<div class="acts"><button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept patient</button><button class="btn sm" data-action="ref-decline" data-id="'+r.id+'">Can’t take them</button></div></div></div>';});
+  pend.forEach(r=>{const f=doc(r.from);todos+='<div class="todo">'+av(f)+'<div class="body"><p><b>'+esc(short(f))+'</b> would like you to see <b>'+esc(r.patient)+'</b>, '+r.age+r.sex+'</p><div class="meta">'+esc(r.reason)+' · '+esc(payerName(r.coverage))+' · '+ago(r.created)+'</div>'+(r.note?'<div class="meta" style="font-style:italic;margin-top:4px">“'+esc(r.note)+'”</div>':'')+'<div class="acts"><button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept patient</button><button class="btn sm" data-action="ref-decline" data-id="'+r.id+'">Can’t take them</button></div></div></div>';});
   unread.forEach(t=>{const o=other(t),l=last(t);todos+='<div class="todo">'+av(o)+'<div class="body"><p><b>'+esc(full(o))+'</b> sent you a message</p><div class="meta">“'+esc(l.text.length>120?l.text.slice(0,120)+"…":l.text)+'” · '+ago(l.ts)+'</div><div class="acts"><button class="btn sm" data-action="open-thread" data-id="'+t.id+'">Reply</button></div></div></div>';});
-  issues.slice(0,2).forEach(x=>{todos+=b.cash?'<div class="todo"><span class="ic money">'+I.bill+'</span><div class="body"><p><b>'+esc(x.patient)+'</b> still owes '+usd(x.amount)+'</p><div class="meta">'+esc(x.visit)+' · since '+x.due+'</div><div class="acts"><button class="btn sm" data-action="remind" data-id="'+x.id+'">Text them a payment link</button></div></div></div>':'<div class="todo"><span class="ic money">'+I.alert+'</span><div class="body"><p><b>'+esc(x.payer)+'</b> is holding a '+usd(x.amount)+' claim</p><div class="meta">'+esc(x.problem)+'</div><div class="acts"><button class="btn sm" data-action="fix" data-id="'+x.id+'">Help Maria fix it</button></div></div></div>';});
+  issues.slice(0,2).forEach(x=>{todos+=b.cash?'<div class="todo"><span class="ic money">'+I.bill+'</span><div class="body"><p><b>'+esc(x.patient)+'</b> still owes '+usd(x.amount)+'</p><div class="meta">'+esc(x.visit)+' · since '+x.due+'</div><div class="acts"><button class="btn sm" data-action="remind" data-id="'+x.id+'">Text them a payment link</button></div></div></div>':'<div class="todo"><span class="ic money">'+I.alert+'</span><div class="body"><p><b>'+esc(payerName(x.payer))+'</b> denied a '+usd(x.amount)+' claim ('+x.carc+')</p><div class="meta">'+esc(x.problem)+'</div><div class="acts"><button class="btn sm" data-action="fix" data-id="'+x.id+'">Help Maria fix it</button></div></div></div>';});
   if(!todos) todos='<div class="empty">Nothing waiting on you right now. New patients and messages will show up here.</div>';
   const delta=b.cur-b.prevSame;
   const newest=members().filter(d=>d.id!==S.me).sort((a,b)=>b.joined-a.joined).slice(0,3);
@@ -608,16 +611,16 @@ function viewBilling(){
     '<section class="card"><div class="card-h"><h3>Your specialist</h3></div><div class="card-b" style="display:flex;flex-direction:column;gap:14px"><div class="profile-h">'+av(tm,"lg")+'<div><b style="font-size:17px">'+esc(full(tm))+'</b><div class="muted" style="font-size:14px">Phoenix Medical Billing · Glendale</div><div class="muted" style="font-size:13.5px">Usually replies within the hour</div></div></div><p style="font-size:14.5px">“'+(b.cash?"I’ll keep an eye on open balances and send superbills the same day. When you’re ready, I can show you what adding a few insurance plans would mean for your numbers.":"I check your claims every morning. If a payer pushes back I’ll fix it myself, and I’ll only bother you when I really need something from you.")+'”</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn soft sm" data-action="msg-doc" data-id="phx">'+I.msg+'Message</button><button class="btn sm" data-action="service" data-s="Book a call">Book a call</button></div></div></section></div>';
   let facts, body;
   if(b.cash){
-    facts='<div class="facts">'+fact(b.visits,"Paid visits this month","")+fact(usd(b.avgVisit),"Average per visit","")+fact(b.superbills,"Superbills sent to patients","So patients can claim it back")+fact(usd(b.outstanding),"Still owed by patients",iss.length+" open balances")+'</div>';
+    facts='<div class="facts">'+fact(b.visits,"Paid visits this month","Average "+usd(b.avgVisit)+" per visit")+fact(b.superbills,"Superbills sent","So patients can file with their insurer")+fact(b.gfe,"Good Faith Estimates sent","Required for self-pay patients (No Surprises Act)")+fact(usd(b.outstanding),"Still owed by patients",iss.length+" open balances")+'</div>';
     body='<div class="cols"><section class="card"><div class="card-h"><h3>Open patient balances</h3><span class="muted" style="font-size:13.5px">'+iss.length+' open</span></div><div class="card-b">'+(b.balances.map(x=>'<div class="claim"><span class="av sm" style="--h:40">'+esc(x.patient.replace(/\./g,""))+'</span><div class="body"><b>'+esc(x.patient)+'</b> · '+esc(x.visit)+'<div class="meta">Owed since '+x.due+'</div></div><div style="text-align:right"><div class="amt num">'+usd(x.amount)+'</div>'+(S.reminded[x.id]?'<span class="pill ok">Link sent</span>':'<button class="btn sm" data-action="remind" data-id="'+x.id+'">Text a pay link</button>')+'</div></div>').join(""))+'</div></section>'+
       '<section class="card"><div class="card-h"><h3>Recent payments</h3></div><div class="card-b table-wrap"><table><thead><tr><th>Patient</th><th>How</th><th class="r">Amount</th></tr></thead><tbody>'+b.paid.map(p=>'<tr><td><b>'+esc(p.who)+'</b><div class="muted" style="font-size:12.5px">'+esc(p.what)+' · '+p.date+'</div></td><td>'+esc(p.method)+'</td><td class="r num"><b>'+usd(p.amount)+'</b></td></tr>').join("")+'</tbody></table></div></section></div>'+
-      '<section class="callout"><div><span class="caps">Thinking about insurance?</span><h3>Most patients on the hub have insurance.</h3><p>'+insuranceDemand(m)+' Phoenix can get you credentialed with the plans that matter, or keep you cash-pay and send every patient a superbill.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-action="service" data-s="Credentialing">Explore credentialing</button><button class="btn" data-action="service" data-s="Superbills">Set up superbills</button></div></section>';
+      '<section class="callout"><div><span class="caps">Thinking about insurance?</span><h3>Most patients on the hub have insurance.</h3><p>'+insuranceDemand(m)+' Phoenix can get you credentialed with the plans that matter, or keep you cash-pay and send every patient a superbill. One thing to know: Medicare only pays chiropractors for spinal manipulation (CPT 98940–98942).</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-action="service" data-s="Credentialing">Explore credentialing</button><button class="btn" data-action="service" data-s="Superbills">Set up superbills</button></div></section>';
   } else {
-    facts='<div class="facts">'+fact(b.claims,"Claims sent this month","")+fact(b.clean+"%","Paid on the first try","Industry average is about 85%")+fact(b.ar+" days","Average time to get paid","")+fact(usd(b.waiting),"Waiting on insurance","Normal for this time of month")+'</div>';
-    body='<div class="cols"><section class="card"><div class="card-h"><h3>Needs you</h3><span class="muted" style="font-size:13.5px">'+(iss.length?iss.length+" claim"+(iss.length>1?"s":""):"All clear")+'</span></div><div class="card-b">'+(b.issues.map(x=>'<div class="claim"><span class="todo" style="padding:0"><span class="ic money">'+I.alert+'</span></span><div class="body"><b>'+esc(x.payer)+'</b> · '+esc(x.patient)+', seen '+x.dos+'<div class="meta">'+esc(x.problem)+'</div></div><div style="text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end"><div class="amt num">'+usd(x.amount)+'</div>'+(S.fixed[x.id]?'<span class="pill ok">With Maria</span>':'<button class="btn sm primary" data-action="fix" data-id="'+x.id+'">Fix it</button>')+'</div></div>').join(""))+'</div></section>'+
-      '<section class="card"><div class="card-h"><h3>Payments posted</h3></div><div class="card-b table-wrap"><table><thead><tr><th>Payer</th><th class="r">Claims</th><th class="r">Amount</th></tr></thead><tbody>'+b.payments.map(p=>'<tr><td><b>'+esc(p.payer)+'</b><div class="muted" style="font-size:12.5px">'+p.date+'</div></td><td class="r num">'+p.claims+'</td><td class="r num"><b>'+usd(p.amount)+'</b></td></tr>').join("")+'</tbody></table></div></section></div>';
+    facts='<div class="facts">'+fact(b.claims,"Claims submitted this month","Sent electronically (837P)")+fact(b.clean+"%","Clean claim rate","Paid on the first try")+fact(b.ar,"Days in A/R","Average time to get paid")+fact(usd(b.waiting),"Open A/R","Waiting on insurance right now")+'</div>';
+    body='<div class="cols"><section class="card"><div class="card-h"><h3>Needs you</h3><span class="muted" style="font-size:13.5px">'+(iss.length?iss.length+" claim"+(iss.length>1?"s":""):"All clear")+'</span></div><div class="card-b">'+(b.issues.map(x=>'<div class="claim"><span class="todo" style="padding:0"><span class="ic money">'+I.alert+'</span></span><div class="body"><b>'+esc(payerName(x.payer))+'</b> · '+esc(x.patient)+', seen '+x.dos+'<div class="meta"><b style="color:var(--bad)">'+x.carc+'</b> '+esc(x.carcText)+' · CPT '+x.cpt+' · ICD-10 '+x.icd+'</div><div class="meta">'+esc(x.problem)+'</div></div><div style="text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end"><div class="amt num">'+usd(x.amount)+'</div>'+(S.fixed[x.id]?'<span class="pill ok">With Maria</span>':'<button class="btn sm primary" data-action="fix" data-id="'+x.id+'">Fix it</button>')+'</div></div>').join(""))+'</div></section>'+
+      '<section class="card"><div class="card-h"><h3>Payments posted</h3><span class="muted" style="font-size:13.5px">From ERAs (835)</span></div><div class="card-b table-wrap"><table><thead><tr><th>Payer</th><th class="r">Claims</th><th class="r">Amount</th></tr></thead><tbody>'+b.payments.map(p=>'<tr><td><b>'+esc(payerName(p.payer))+'</b><div class="muted" style="font-size:12.5px">'+p.date+' · '+p.trace+'</div></td><td class="r num">'+p.claims+'</td><td class="r num"><b>'+usd(p.amount)+'</b></td></tr>').join("")+'</tbody></table></div></section></div>';
   }
-  const services=[["Credentialing",I.id,"Get in-network with the plans your patients carry."],["Patient payments",I.phone,"Text-to-pay links, card on file and payment plans."],["Patient reminders",I.mail,"Postcards, birthday cards and automated recall campaigns."],["HIPAA check-up",I.shield,"A yearly review so you’re never caught off guard."],["EMR help",I.screen,"We work with any system. No switching required."],["Practice analysis",I.chart,"A free review of where money is slipping through."]];
+  const services=[["Eligibility checks",I.shield,"We verify every patient’s coverage before the visit, not after the denial."],["Denial management",I.alert,"We work every denial and appeal it before the filing deadline."],["Credentialing",I.id,"Get in-network with Aetna, BCBS of AZ, UnitedHealthcare, AHCCCS plans and Medicare."],["Patient payments",I.phone,"Text-to-pay links, card on file and payment plans."],["Patient reminders",I.mail,"Postcards, birthday cards and automated recall campaigns."],["HIPAA check-up",I.shield,"A yearly review so you’re never caught off guard."],["EMR help",I.screen,"We work with any system. No switching required."],["Practice analysis",I.chart,"A free review of where money is slipping through."]];
   return '<div class="stack">'+head+hero+facts+body+'<section><div class="page-head" style="margin-bottom:12px"><div><h2 style="font-size:20px">More ways Phoenix can help</h2><p>Everything beyond billing, in the same place. Tap one and Maria will get back to you.</p></div></div><div class="services">'+services.map(([n,ic,d])=>'<div class="service"><span class="ic">'+ic+'</span><h4>'+n+'</h4><p>'+d+'</p><button class="btn sm soft" data-action="service" data-s="'+esc(n)+'">Ask about this</button></div>').join("")+'</div></section></div>';
 }
 function fact(n,l,hint){return '<div class="fact"><span class="n num">'+n+'</span><span class="l">'+l+'</span>'+(hint?'<span class="hint">'+hint+'</span>':'')+'</div>';}
@@ -625,7 +628,7 @@ function insuranceDemand(m){const rs=inbound();const ins=rs.filter(r=>r.coverage
 
 function personCard(d,featuredIfNew){
   const isMe=d.id===S.me, isNew=Date.now()-d.joined<7*DAY;
-  return '<article class="person'+(featuredIfNew&&isNew&&d.real?" featured":"")+'"><div class="person-h">'+av(d,"lg")+'<div><b>'+esc(withCred(d))+(isMe?'<span class="you">You</span>':'')+'</b><span class="spec">'+esc(d.specialty)+'</span><div class="where">'+esc(d.clinic)+' · '+esc(d.city)+', AZ</div></div></div>'+
+  return '<article class="person'+(featuredIfNew&&isNew&&d.featured?" featured":"")+'"><div class="person-h">'+av(d,"lg")+'<div><b>'+esc(withCred(d))+(isMe?'<span class="you">You</span>':'')+'</b><span class="spec">'+esc(d.specialty)+'</span><div class="where">'+esc(d.clinic)+' · '+esc(d.city)+', AZ</div></div></div>'+
   '<p class="bio">'+esc(d.bio)+'</p>'+
   '<div class="tags">'+(isNew?'<span class="pill new">New this week</span>':'')+payPill(d)+(d.accepting?'':'<span class="pill plain">Not taking referrals</span>')+'</div>'+
   '<span class="reply">Usually replies '+esc(d.reply)+'</span>'+
@@ -638,7 +641,7 @@ function viewNetwork(){
   '<div class="toolbar"><label class="search">'+I.search+'<input class="input" id="dirQ" type="search" placeholder="Try “sciatica”, “Scottsdale” or “Spanish”" value="'+esc(ui.q)+'" aria-label="Search doctors"></label>'+
   '<select class="input" id="dirSpec" aria-label="Specialty"><option value="">Any specialty</option>'+specs.map(s=>'<option'+(s===ui.spec?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
   '<select class="input" id="dirCity" aria-label="City"><option value="">Any city</option>'+cities.map(s=>'<option'+(s===ui.city?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
-  '<select class="input" id="dirPay" aria-label="Payment"><option value="">Any payment</option><option value="cash"'+(ui.pay==="cash"?" selected":"")+'>Sees self-pay patients</option>'+PAYERS.map(p=>'<option'+(p===ui.pay?" selected":"")+'>'+esc(p)+'</option>').join("")+'</select>'+
+  '<select class="input" id="dirPay" aria-label="Insurance"><option value="">Any insurance</option><option value="cash"'+(ui.pay==="cash"?" selected":"")+'>Sees self-pay patients</option>'+PAYERS.map(p=>'<option value="'+esc(p)+'"'+(p===ui.pay?" selected":"")+'>'+esc(payerName(p))+'</option>').join("")+'</select>'+
   '<label class="check"><input type="checkbox" id="dirOpen"'+(ui.openOnly?" checked":"")+'> Taking new patients</label></div>'+
   (rows.length?'<div class="people">'+rows.map(d=>personCard(d,true)).join("")+'</div>':'<div class="card empty">No one matches that yet. Try a different word or clear a filter.</div>');
 }
@@ -679,11 +682,11 @@ function refCard(r){
   } else if(r.status==="completed"&&!r.thanked) acts='<button class="btn sm lime" data-action="thank" data-id="'+r.id+'">'+I.heart+'Say thanks</button>';
   acts+='<button class="btn sm" data-action="msg-doc" data-id="'+(mine?f.id:t.id)+'">Message</button>';
   const cashMismatch=t.pay==="cash"&&r.coverage&&r.coverage!=="Self-pay";
-  return '<article class="ref"><div style="min-width:0"><div class="ref-top"><span class="pill '+r.status+'">'+STATUS[r.status]+'</span>'+(r.urgency==="urgent"?'<span class="pill urgent">Urgent</span>':'')+'<span class="pill plain">'+esc(r.coverage||"Coverage unknown")+'</span>'+(r.claim?'<span class="pill ok">Billed by Phoenix</span>':'')+(r.thanked&&!mine?'<span class="pill ok">♥ Thanked</span>':'')+'</div>'+
+  return '<article class="ref"><div style="min-width:0"><div class="ref-top"><span class="pill '+r.status+'">'+STATUS[r.status]+'</span>'+(r.urgency==="urgent"?'<span class="pill urgent">Urgent</span>':'')+'<span class="pill plain">'+esc(payerName(r.coverage||"Coverage unknown"))+'</span>'+(r.icd?'<span class="pill plain">ICD-10 '+esc(r.icd)+'</span>':'')+(r.claim?'<span class="pill ok">Billed by Phoenix</span>':'')+(r.thanked&&!mine?'<span class="pill ok">♥ Thanked</span>':'')+'</div>'+
     '<h3>'+esc(r.patient)+', '+r.age+r.sex+'</h3><p class="reason">'+esc(r.reason)+'</p>'+
     '<div class="party">'+av(f,"xs")+'<span><b>'+esc(f.id===S.me?"You":short(f))+'</b></span><span>sent to</span>'+av(t,"xs")+'<span><b>'+esc(t.id===S.me?"you":short(t))+'</b> · '+esc(t.specialty)+'</span></div>'+
     (r.note?'<div class="note">“'+esc(r.note)+'”<span class="by">— '+esc(full(f))+'</span></div>':'')+
-    (cashMismatch&&r.status!=="declined"?'<div class="notice" style="margin-top:10px"><b>Cash-pay clinic.</b> Phoenix will give this patient a superbill so they can ask '+esc(r.coverage)+' to pay them back.</div>':'')+
+    (cashMismatch&&r.status!=="declined"?'<div class="notice" style="margin-top:10px"><b>Cash-pay clinic.</b> Phoenix will give this patient a superbill so they can ask '+esc(payerName(r.coverage))+' to reimburse them as out-of-network care.</div>':'')+
     (r.status==="declined"&&r.declineReason?'<div class="note">“'+esc(r.declineReason)+'”<span class="by">— '+esc(full(t))+'</span></div>':'')+
   '</div><div class="side"><span class="when">Sent '+ago(r.created)+(r.appt?' · Appointment '+apptLabel(r.appt):'')+'</span>'+steps+'<div class="acts">'+acts+'</div></div></article>';
 }
@@ -703,18 +706,20 @@ function openReferral(to){
     '<label class="field"><span>Who are you sending them to?</span><select class="input" name="to" id="rTo" required><option value="">Choose a doctor</option>'+doctorOptions(to,d=>d.accepting)+'</select></label>'+
     '<div class="two"><label class="field"><span>Patient initials</span><input class="input" name="patient" id="rPatient" required maxlength="6" placeholder="J.D."></label><div class="two"><label class="field"><span>Age</span><input class="input" name="age" id="rAge" type="number" min="0" max="120" required placeholder="52"></label><label class="field"><span>Sex</span><select class="input" name="sex" id="rSex"><option>F</option><option>M</option><option value="X">X</option></select></label></div></div>'+
     '<label class="field"><span>What’s going on?</span><input class="input" name="reason" id="rReason" required placeholder="e.g. Neck pain and headaches since a car accident in August"></label>'+
-    '<label class="field"><span>How will they pay?</span><select class="input" name="coverage" id="rCov"><option>Self-pay</option>'+PAYERS.map(p=>'<option>'+esc(p)+'</option>').join("")+'</select></label>'+
+    '<div class="two"><label class="field"><span>How will they pay?</span><select class="input" name="coverage" id="rCov"><option>Self-pay</option>'+PAYERS.map(p=>'<option value="'+esc(p)+'">'+esc(payerName(p))+'</option>').join("")+'</select></label><label class="field"><span>Diagnosis code <span class="muted" style="font-weight:400">(ICD-10, optional)</span></span><input class="input" name="icd" id="rIcd" maxlength="8" placeholder="e.g. M54.50"></label></div>'+
     '<div id="rCashNote" class="notice" hidden></div>'+
     '<div class="field"><span>How soon?</span><div class="seg"><label><input type="radio" name="urgency" value="routine" checked> Whenever they can</label><label><input type="radio" name="urgency" value="urgent"> Please see them soon</label></div></div>'+
     '<label class="field"><span>A note to your colleague <span class="muted" style="font-weight:400">(optional)</span></span><textarea class="input" name="note" id="rNote" placeholder="Anything that will help them help your patient"></textarea></label>'+
-    '<p class="hint">Demo only, so please use initials. When the patient is seen, Phoenix adds your NPI to the claim automatically.</p>'+
+    '<p class="hint">Demo only: use initials and never enter real patient information (PHI). When the patient is seen, Phoenix adds your NPI as the referring provider on the claim.</p>'+
     '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">'+I.send+'Send referral</button></div></form>');
   updateCashNote();
 }
 function updateCashNote(){
   const sel=$("#rTo"), cov=$("#rCov"), n=$("#rCashNote"); if(!sel||!n) return;
   const d=sel.value&&doc(sel.value);
-  if(d&&d.pay==="cash"&&cov.value!=="Self-pay"){n.hidden=false;n.innerHTML='<b>'+esc(short(d))+' is cash-pay.</b> The patient pays at the visit, and Phoenix sends them a superbill to submit to '+esc(cov.value)+'.';}
+  if(d&&d.pay==="cash"&&cov.value==="Medicare"){n.hidden=false;n.innerHTML='<b>'+esc(short(d))+' is cash-pay.</b> Medicare only covers chiropractic spinal manipulation (CPT 98940–98942), so most of this care will be self-pay. The patient gets a Good Faith Estimate first.';}
+  else if(d&&d.pay==="cash"&&cov.value!=="Self-pay"){n.hidden=false;n.innerHTML='<b>'+esc(short(d))+' is cash-pay.</b> The patient pays at the visit, and Phoenix sends them a superbill to file with '+esc(payerName(cov.value))+' as out-of-network care.';}
+  else if(d&&cov.value==="Self-pay"&&d.pay!=="insurance"){n.hidden=false;n.innerHTML='<b>Self-pay patient.</b> '+esc(short(d))+'’s office will send a Good Faith Estimate before the visit, as the No Surprises Act requires.';}
   else if(d&&d.pay==="insurance"&&cov.value==="Self-pay"){n.hidden=false;n.innerHTML='<b>Heads up:</b> '+esc(short(d))+' mostly sees insured patients. Their office will share self-pay rates when they call.';}
   else n.hidden=true;
 }
@@ -724,7 +729,7 @@ function openNewMessage(to){
 function openProfile(id){
   const d=doc(id);
   modal(esc(withCred(d)),'<div class="pad"><div class="profile-h">'+av(d,"lg")+'<div><b style="font-size:18px">'+esc(full(d))+'</b><div style="color:var(--green-ink);font-weight:600">'+esc(d.specialty)+'</div><div class="muted">'+esc(d.clinic)+' · '+esc(d.city)+', AZ</div></div></div><p>'+esc(d.bio)+'</p>'+
-  '<dl class="kv"><dt>Good fit for</dt><dd>'+esc((d.goodFor||[]).join(", "))+'</dd><dt>Payment</dt><dd>'+payLabel(d)+(d.payers.length?": "+esc(d.payers.join(", ")):"")+'</dd><dt>Languages</dt><dd>'+esc((d.languages||[]).join(", "))+'</dd><dt>In practice</dt><dd>'+d.years+' years</dd><dt>Replies</dt><dd>Usually '+esc(d.reply)+'</dd><dt>On the hub since</dt><dd>'+new Date(d.joined).toLocaleDateString("en-US",{month:"long",year:"numeric"})+'</dd></dl>'+
+  '<dl class="kv"><dt>Good fit for</dt><dd>'+esc((d.goodFor||[]).join(", "))+'</dd><dt>Insurance</dt><dd>'+payLabel(d)+(d.payers.length?": "+esc(d.payers.map(payerName).join(", ")):"")+'</dd><dt>NPI</dt><dd>'+esc(d.npi||"Pending")+'</dd><dt>Address</dt><dd>'+esc(d.address||d.city+", AZ")+'</dd><dt>Office phone</dt><dd>'+esc(d.phone||"(602) 555-0100")+'</dd><dt>Languages</dt><dd>'+esc((d.languages||[]).join(", "))+'</dd><dt>In practice</dt><dd>'+d.years+' years</dd><dt>Replies</dt><dd>Usually '+esc(d.reply)+'</dd><dt>On the hub since</dt><dd>'+new Date(d.joined).toLocaleDateString("en-US",{month:"long",year:"numeric"})+'</dd></dl>'+
   '<div class="foot"><button class="btn" data-action="msg-doc" data-id="'+d.id+'">Message</button>'+(d.accepting?'<button class="btn primary" data-action="refer-doc" data-id="'+d.id+'">Send a patient</button>':'')+'</div></div>');
 }
 function openJoin(){
@@ -741,7 +746,7 @@ function openDecline(id){modal("Can’t take this patient?",'<form data-form="de
 function openBook(id){modal("Book the appointment",'<form data-form="book" data-id="'+esc(id)+'"><label class="field"><span>Date</span><input class="input" type="date" name="date" id="bDate" required value="'+isoDay(Date.now()+5*DAY)+'"></label><p class="hint">We’ll let the referring doctor know.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Book it</button></div></form>');}
 function openFix(id){
   const x=billing(me()).issues.find(i=>i.id===id); if(!x) return;
-  modal("Help Maria fix this claim",'<form data-form="fix" data-id="'+esc(id)+'"><dl class="kv"><dt>Payer</dt><dd>'+esc(x.payer)+'</dd><dt>Patient</dt><dd>'+esc(x.patient)+', seen '+x.dos+'</dd><dt>Amount</dt><dd>'+usd2(x.amount)+'</dd></dl><div class="notice">'+esc(x.problem)+'</div><label class="field"><span>'+esc(x.ask)+'</span><input class="input" name="answer" id="fAnswer" required placeholder="'+esc(x.ph)+'"></label><p class="hint">Maria will update the claim and resubmit it today.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Not now</button><button class="btn primary" type="submit">Send to Maria</button></div></form>');
+  modal("Help Maria fix this claim",'<form data-form="fix" data-id="'+esc(id)+'"><dl class="kv"><dt>Claim</dt><dd>'+x.claimNo+'</dd><dt>Payer</dt><dd>'+esc(payerName(x.payer))+'</dd><dt>Patient</dt><dd>'+esc(x.patient)+', seen '+x.dos+'</dd><dt>Service</dt><dd>CPT '+x.cpt+' · '+esc(x.cptText)+'</dd><dt>Diagnosis</dt><dd>ICD-10 '+x.icd+'</dd><dt>Denial code</dt><dd>'+x.carc+' · '+esc(x.carcText)+'</dd><dt>Amount</dt><dd>'+usd2(x.amount)+'</dd><dt>Resubmit by</dt><dd>'+x.resubmitBy+'</dd></dl><div class="notice">'+esc(x.problem)+'</div><label class="field"><span>'+esc(x.ask)+'</span><input class="input" name="answer" id="fAnswer" required placeholder="'+esc(x.ph)+'"></label><p class="hint">Maria will update the claim and resubmit it today.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Not now</button><button class="btn primary" type="submit">Send to Maria</button></div></form>');
 }
 
 /* ---------- Actions ---------- */
@@ -760,7 +765,7 @@ function sendMessage(t,text){
   simReply(t,o.id,o.team?"Thanks, Dr. "+me().last+"! I’m on it and will message you as soon as it’s done.":null);
 }
 function createReferral(fd){
-  const r={id:"R-"+(++S.seq),from:S.me,to:fd.get("to"),patient:fd.get("patient").trim().toUpperCase(),age:Number(fd.get("age")),sex:fd.get("sex"),reason:fd.get("reason").trim(),coverage:fd.get("coverage"),urgency:fd.get("urgency")||"routine",status:"pending",created:Date.now(),note:(fd.get("note")||"").trim()};
+  const r={id:"R-"+(++S.seq),from:S.me,to:fd.get("to"),patient:fd.get("patient").trim().toUpperCase(),age:Number(fd.get("age")),sex:fd.get("sex"),reason:fd.get("reason").trim(),coverage:fd.get("coverage"),icd:(fd.get("icd")||"").trim().toUpperCase(),urgency:fd.get("urgency")||"routine",status:"pending",created:Date.now(),note:(fd.get("note")||"").trim()};
   r.history=[{status:"pending",ts:r.created,by:S.me}];S.referrals.push(r);
   const to=doc(r.to), t=threadWith(r.to,true), sender=me();
   postMessage(t,S.me,"I’ve sent you "+r.patient+" ("+r.age+r.sex+"): "+r.reason+(r.note?"\n\n"+r.note:""),{tag:"Referral "+r.id});
@@ -786,7 +791,7 @@ function thank(id){
 function joinDoctor(fd){
   const pay=fd.get("pay");
   const d={id:"d"+Date.now(),first:fd.get("first").trim(),last:fd.get("last").trim(),cred:fd.get("cred").trim(),specialty:fd.get("specialty"),clinic:fd.get("clinic").trim(),city:fd.get("city").trim(),hue:Math.floor(Math.random()*360),joined:Date.now(),accepting:true,pay,payers:pay==="cash"?[]:["Aetna","Blue Cross Blue Shield of AZ","UnitedHealthcare"],languages:["English"],years:1+Math.floor(Math.random()*20),reply:"within a day",bio:(fd.get("bio")||"").trim()||"New to the Phoenix network and looking forward to working with you.",goodFor:[fd.get("specialty")]};
-  S.doctors.push(d);addActivity("<b>"+esc(full(d))+"</b> joined from "+esc(d.clinic)+", "+esc(d.city));
+  d.npi="1"+String(Math.floor(100000000+Math.random()*899999999));d.phone="(602) 555-0199";d.address="100 N Example Rd, Suite 100, "+d.city+", AZ";S.doctors.push(d);addActivity("<b>"+esc(full(d))+"</b> joined from "+esc(d.clinic)+", "+esc(d.city));
   S.threads.push({id:"t"+Date.now(),members:[d.id,"phx"],read:{},messages:[{from:"phx",text:"Welcome to the hub, "+short(d)+"! I’m Maria, your billing specialist. You’re now visible to "+(members().length-1)+" doctors across the Valley who can send you patients. Let’s set up a quick onboarding call this week.",ts:Date.now()}]});
   if(fd.get("switch"))S.me=d.id;save();closeModal();toast("<b>"+esc(full(d))+"</b> is on the hub");if(fd.get("switch"))location.hash="#home";render();
 }
@@ -847,7 +852,7 @@ document.addEventListener("change",e=>{
   if(id==="dirOpen"){ui.openOnly=e.target.checked;render();}
   if(id==="rTo"||id==="rCov")updateCashNote();
 });
-window.addEventListener("hashchange",render);
+window.addEventListener("hashchange",()=>{closeModal();ui.pop=null;render();});
 window.addEventListener("storage",e=>{if(e.key===KEY){const n=load();if(n){S=n;render();}}});
 setInterval(()=>{if(!$("#modalRoot").innerHTML&&!(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)))render();},60000);
 render();

@@ -15,12 +15,12 @@ One place for every practice that bills with Phoenix Medical Billing. Doctors ca
 It's one static file with no build step. Open `index.html` in a browser, or put the folder on any static host.
 
 Everything is controlled from the menu at the top right:
-- **See the hub as**: switch doctors. Start as Dr. Elena Ruiz (family medicine), then switch to Dr. Craig Zimmerman to see the patients sent to his cash-pay clinic and his billing view.
+- **See the hub as**: switch doctors. Start as Dr. Elena Ruiz (family medicine), then switch to Dr. Alex Carter to see the patients sent to a cash-pay chiropractic clinic and its billing view.
 - **Add a new doctor**: show a new Phoenix client joining the hub.
 - **Colleagues reply on their own**: other doctors and Maria answer messages, and accept referrals after about 7 seconds. Turn it off to play both sides yourself.
 - **Start the demo over**: restore the sample data.
 
-All patients, claims, dollar amounts and doctors other than Dr. Zimmerman are made up. Data is saved in the viewer's own browser (localStorage).
+All names (doctors, clinics, staff, patients), NPIs, addresses, phone numbers and dollar amounts are placeholders. The structure is real US billing: CPT and ICD-10 codes, CARC denial codes (CO-197, CO-16, CO-27, CO-11), 837P claims, 835 ERAs and EFT deposits, Arizona payers (AHCCCS, BCBS of AZ, Medicare, TRICARE West), Good Faith Estimates for self-pay patients and Medicare's chiropractic rule (CPT 98940–98942 only). Data is saved in the viewer's own browser (localStorage).
 
 ## Hosting at demo.keydate.ca
 
