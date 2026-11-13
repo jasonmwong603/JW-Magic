@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<title>Phoenix Billing Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: app shell. Left rail (bottom bar on phones), top bar with identity switcher, one work area per view. */
+:root{
+  --bg:#f2f5f6; --surface:#ffffff; --surface-2:#e8eef0; --ink:#10262b; --muted:#587076; --line:#d5dfe2;
+  --brand:#14454c; --on-brand:#ffffff; --brand-soft:#dcebec;
+  --accent:#cf5a25; --on-accent:#ffffff; --accent-soft:#fbe7dc;
+  --good:#2c7a4c; --good-soft:#dcf0e3; --warn:#9a6512; --warn-soft:#f8ecd2; --bad:#b0402f; --bad-soft:#f7e0dc;
+  --av-l:42%; --shadow:0 1px 2px rgba(16,38,43,.06),0 6px 24px rgba(16,38,43,.06);
+  --f-display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1618; --surface:#132226; --surface-2:#1a2d32; --ink:#e3eef0; --muted:#91a9ae; --line:#24393e;
+  --brand:#6fc3c6; --on-brand:#0c1618; --brand-soft:#173a3e;
+  --accent:#f08a50; --on-accent:#1a0d05; --accent-soft:#3a2216;
+  --good:#63c48b; --good-soft:#163526; --warn:#e3b156; --warn-soft:#3a2d13; --bad:#ee8676; --bad-soft:#3d1e1a;
+  --av-l:36%; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1618; --surface:#132226; --surface-2:#1a2d32; --ink:#e3eef0; --muted:#91a9ae; --line:#24393e;
+  --brand:#6fc3c6; --on-brand:#0c1618; --brand-soft:#173a3e;
+  --accent:#f08a50; --on-accent:#1a0d05; --accent-soft:#3a2216;
+  --good:#63c48b; --good-soft:#163526; --warn:#e3b156; --warn-soft:#3a2d13; --bad:#ee8676; --bad-soft:#3d1e1a;
+  --av-l:36%; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.label{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.shell{display:grid;grid-template-columns:232px 1fr;min-height:100%}
+.rail{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px}
+.brand svg{width:30px;height:30px;flex:none}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:17px;line-height:1.1;display:block}
+.brand small{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500}
+.nav a svg{width:19px;height:19px;flex:none}
+.nav a:hover{background:var(--surface-2);color:var(--ink)}
+.nav a[aria-current="page"]{background:var(--brand-soft);color:var(--brand);font-weight:600}
+.nav .count{margin-left:auto;background:var(--accent);color:var(--on-accent);font-size:11.5px;font-weight:600;border-radius:99px;padding:0 7px;min-width:20px;text-align:center;line-height:19px}
+.rail-foot{margin-top:auto;font-size:12.5px;color:var(--muted);padding:12px 8px 0;border-top:1px solid var(--line)}
+.rail-foot strong{color:var(--ink);font-weight:600}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:14px max(16px,env(safe-area-inset-right,0px)) 14px 28px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+.top h1{font-size:19px;font-weight:700;margin-right:auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .mobile-brand{display:none}
+.view{padding:26px 28px 48px;max-width:1240px;width:100%}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 13px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--surface-2)}
+.btn svg{width:16px;height:16px}
+.btn.primary{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.accent{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.accent:hover{filter:brightness(1.06)}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.ghost:hover{background:var(--surface-2)}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn.danger{color:var(--bad)}
+.icon-btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;display:inline-grid;place-items:center;cursor:pointer}
+.icon-btn:hover{background:var(--surface-2)}
+.icon-btn svg{width:18px;height:18px}
+
+.av{--h:190;display:inline-grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:hsl(var(--h) 42% var(--av-l));color:#fff;font-family:var(--f-display);font-weight:700;font-size:13px;letter-spacing:.02em}
+.av.lg{width:52px;height:52px;font-size:17px}
+.av.sm{width:28px;height:28px;font-size:11px}
+.av.team{background:var(--brand-soft)}
+.av.team svg{width:60%;height:60%}
+
+.persona{position:relative}
+.persona-btn{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:3px 12px 3px 3px;cursor:pointer;max-width:260px}
+.persona-btn:hover{background:var(--surface-2)}
+.persona-btn .who{text-align:left;line-height:1.2;min-width:0}
+.persona-btn .who b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.persona-btn .who span{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.pop{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);width:300px;max-width:calc(100vw - 32px);padding:8px;z-index:40;max-height:70vh;overflow:auto}
+.pop .label{padding:6px 8px 8px}
+.pop-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;padding:7px 8px;border-radius:8px;cursor:pointer}
+.pop-item:hover{background:var(--surface-2)}
+.pop-item[aria-checked="true"]{background:var(--brand-soft)}
+.pop-item small{display:block;color:var(--muted);font-size:12px}
+.pop hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+
+.demo-bar{background:var(--accent-soft);color:var(--ink);font-size:13px;padding:7px max(16px,env(safe-area-inset-right,0px)) 7px 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.demo-bar b{color:var(--accent)}
+
+/* Dashboard */
+.hello{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.hello h2{font-size:clamp(22px,3vw,28px);font-weight:800}
+.hello p{margin:4px 0 0;color:var(--muted)}
+.hello .actions{display:flex;gap:8px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;text-decoration:none;display:flex;flex-direction:column;gap:6px;min-width:0}
+a.stat:hover{border-color:var(--brand)}
+.stat .n{font-family:var(--f-display);font-size:30px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stat .sub{font-size:12.5px;color:var(--muted)}
+.stat.hot .n{color:var(--accent)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.panel-h h3{font-size:15.5px;font-weight:700}
+.panel-b{padding:6px 0}
+.empty{padding:26px 16px;text-align:center;color:var(--muted);font-size:14px}
+.row{display:flex;gap:12px;align-items:flex-start;padding:11px 16px;min-width:0}
+.row + .row{border-top:1px solid var(--line)}
+.row .body{flex:1;min-width:0}
+.row .body b{font-weight:600}
+.row .meta{font-size:12.5px;color:var(--muted)}
+.row .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.feed .row{padding:9px 16px}
+.feed .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);margin-top:7px;flex:none}
+.feed .dot.k-ref{background:var(--accent)}
+.feed .dot.k-join{background:var(--good)}
+.feed .row .body{font-size:14px}
+.newbies{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:14px 16px}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:99px;padding:2px 9px;white-space:nowrap;line-height:18px}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.pending{background:var(--warn-soft);color:var(--warn)}
+.pill.accepted{background:var(--brand-soft);color:var(--brand)}
+.pill.booked{background:var(--brand-soft);color:var(--brand)}
+.pill.completed{background:var(--good-soft);color:var(--good)}
+.pill.declined{background:var(--bad-soft);color:var(--bad)}
+.pill.urgent{background:var(--accent-soft);color:var(--accent)}
+.pill.routine{background:var(--surface-2);color:var(--muted)}
+.pill.open{background:var(--good-soft);color:var(--good)}
+.pill.closed{background:var(--surface-2);color:var(--muted)}
+.pill.claim{background:var(--good-soft);color:var(--good)}
+.pill.claim::before{border-radius:2px}
+
+/* Directory */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field > span{font-size:13px;font-weight:600}
+.input,select.input,textarea.input{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 11px;min-width:0;width:100%}
+textarea.input{resize:vertical;min-height:84px}
+.input:focus{outline:2px solid var(--brand);outline-offset:-1px}
+.search{flex:1 1 240px;position:relative}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.search .input{padding-left:34px}
+.filters select.input{width:auto;flex:0 1 auto}
+.check{display:inline-flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
+.check input{accent-color:var(--brand);width:16px;height:16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.doc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.doc-h{display:flex;gap:12px;align-items:center;min-width:0}
+.doc-h > div{min-width:0}
+.doc-h b{display:block;font-family:var(--f-display);font-size:16px;font-weight:700}
+.doc-h .spec{color:var(--brand);font-weight:600;font-size:13.5px}
+.doc .where{font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.doc .tags{display:flex;gap:6px;flex-wrap:wrap}
+.doc .acts{display:flex;gap:8px;margin-top:auto}
+.doc .acts .btn{flex:1}
+.you{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-left:6px}
+.count-line{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+
+/* Messages */
+.msgs{display:grid;grid-template-columns:320px minmax(0,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);height:calc(100vh - 190px);min-height:460px;overflow:hidden}
+.tlist{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.tlist-h{padding:12px;border-bottom:1px solid var(--line);display:flex;gap:8px}
+.tlist-h .search{flex:1}
+.tlist-b{overflow:auto;flex:1}
+.titem{display:flex;gap:11px;padding:12px 14px;border:0;background:none;width:100%;text-align:left;cursor:pointer;border-bottom:1px solid var(--line);min-width:0}
+.titem:hover{background:var(--surface-2)}
+.titem[aria-current="true"]{background:var(--brand-soft)}
+.titem .body{flex:1;min-width:0}
+.titem .l1{display:flex;justify-content:space-between;gap:8px}
+.titem .l1 b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titem .l1 time{font-size:12px;color:var(--muted);flex:none}
+.titem .prev{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titem.unread .prev{color:var(--ink);font-weight:500}
+.titem.unread .l1 b::after{content:"";display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-left:7px;vertical-align:middle}
+.convo{display:flex;flex-direction:column;min-height:0;min-width:0}
+.convo-h{display:flex;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line)}
+.convo-h .who{flex:1;min-width:0}
+.convo-h .who b{display:block;font-family:var(--f-display)}
+.convo-h .who span{font-size:13px;color:var(--muted)}
+.convo-b{flex:1;overflow:auto;padding:18px 16px;display:flex;flex-direction:column;gap:6px;background:var(--bg)}
+.day{align-self:center;font-size:12px;color:var(--muted);padding:8px 0 4px}
+.bub{max-width:min(72%,520px);padding:9px 13px;border-radius:14px;background:var(--surface);border:1px solid var(--line);align-self:flex-start;white-space:pre-wrap;overflow-wrap:anywhere}
+.bub.me{align-self:flex-end;background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.bub time{display:block;font-size:11px;opacity:.7;margin-top:3px}
+.bub.bref{border-style:dashed}
+.bub.bref .refline{font-size:12px;font-weight:600;opacity:.85;display:block;margin-bottom:2px}
+.typing{align-self:flex-start;font-size:13px;color:var(--muted);padding:4px 6px}
+.typing i{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-right:3px;animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);align-items:flex-end}
+.composer textarea{flex:1;resize:none;min-height:42px;max-height:140px}
+.convo-empty{flex:1;display:grid;place-items:center;text-align:center;color:var(--muted);padding:24px}
+
+/* Referrals */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tab{border:0;background:none;padding:10px 14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand)}
+.tab .c{font-family:var(--f-mono);font-size:12px;background:var(--surface-2);border-radius:99px;padding:1px 7px;margin-left:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.refs{display:flex;flex-direction:column;gap:12px}
+.ref{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 20px;min-width:0}
+.ref.is-urgent{border-left:3px solid var(--accent)}
+.ref-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ref-id{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.ref h3{font-size:16px;font-weight:700;margin-top:6px}
+.ref .reason{margin:4px 0 0;font-size:14px;overflow-wrap:anywhere}
+.ref .party{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-top:10px;flex-wrap:wrap}
+.ref .party .arrow{color:var(--muted)}
+.ref .note{margin-top:10px;font-size:13.5px;background:var(--surface-2);border-radius:8px;padding:8px 11px;overflow-wrap:anywhere}
+.ref .side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.ref .side .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.steps{display:flex;align-items:center;gap:0;font-size:11.5px;color:var(--muted)}
+.steps .s{display:flex;align-items:center;gap:5px}
+.steps .s i{width:9px;height:9px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
+.steps .s.done i{background:var(--brand);border-color:var(--brand)}
+.steps .s.done{color:var(--ink)}
+.steps .bar{width:18px;height:2px;background:var(--line);margin:0 5px}
+.steps .bar.done{background:var(--brand)}
+
+/* Modal */
+.scrim{position:fixed;inset:0;background:rgba(8,20,23,.45);display:grid;place-items:center;padding:16px;z-index:60}
+.modal{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);width:min(560px,100%);max-height:calc(100% - 20px);overflow:auto;border:1px solid var(--line)}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface)}
+.modal-h h2{font-size:18px;font-weight:800}
+.modal form{padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px}
+.modal .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal .hint{font-size:12.5px;color:var(--muted);margin:0}
+.modal .foot{display:flex;justify-content:flex-end;gap:8px;padding-top:4px}
+.seg{display:flex;gap:8px}
+.seg label{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 11px;cursor:pointer;display:flex;gap:8px;align-items:center;font-size:14px}
+.seg input{accent-color:var(--brand)}
+.seg label:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+
+.toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;z-index:80;max-width:calc(100vw - 32px)}
+.toast{background:var(--ink);color:var(--bg);padding:11px 15px;border-radius:10px;box-shadow:var(--shadow);font-size:14px;display:flex;gap:10px;align-items:center;animation:rise .25s ease-out}
+.toast b{color:var(--accent)}
+@keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media (max-width:1020px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:760px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));border-right:0;border-top:1px solid var(--line);z-index:50;gap:0}
+  .rail .brand,.rail-foot{display:none}
+  .nav{flex-direction:row;flex:1;justify-content:space-around}
+  .nav a{flex-direction:column;gap:2px;font-size:11.5px;padding:6px 8px;position:relative}
+  .nav .count{position:absolute;top:0;right:6px;margin:0;font-size:10.5px;line-height:16px;min-width:16px;padding:0 4px}
+  .top{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .top .mobile-brand{display:block;width:26px;height:26px;flex:none}
+  .top .join-txt{display:none}
+  .persona-btn .who{display:none}
+  .persona-btn{padding:3px}
+  .demo-bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .view{padding:18px max(16px,env(safe-area-inset-right,0px)) 96px max(16px,env(safe-area-inset-left,0px))}
+  .msgs{grid-template-columns:minmax(0,1fr);height:calc(100vh - 210px)}
+  .msgs.has-thread .tlist{display:none}
+  .msgs:not(.has-thread) .convo{display:none}
+  .ref{grid-template-columns:minmax(0,1fr)}
+  .ref .side{align-items:flex-start}
+  .ref .side .acts{justify-content:flex-start}
+  .modal .two{grid-template-columns:1fr}
+  .bub{max-width:86%}
+}
+@media (min-width:761px){.back-btn{display:none}}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c1.6 4.6 7.5 7.4 7.5 14.6a7.5 7.5 0 0 1-15 0c0-3.3 1.6-5.6 3.3-7.2-.1 2.7 1 4.4 2.7 5C13.2 10.6 14.3 6.6 16 2.5z" fill="var(--accent)"/><path d="M16 29.5c-2.7 0-4.4-1.9-4.4-4.3 0-2.7 2.2-3.9 4.4-6.6 2.2 2.7 4.4 3.9 4.4 6.6 0 2.4-1.7 4.3-4.4 4.3z" fill="var(--brand)"/></svg>
+      <div><b>Phoenix Billing</b><small>Physician Hub</small></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="rail-foot" id="railFoot"></div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <svg class="mobile-brand" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c1.6 4.6 7.5 7.4 7.5 14.6a7.5 7.5 0 0 1-15 0c0-3.3 1.6-5.6 3.3-7.2-.1 2.7 1 4.4 2.7 5C13.2 10.6 14.3 6.6 16 2.5z" fill="var(--accent)"/><path d="M16 29.5c-2.7 0-4.4-1.9-4.4-4.3 0-2.7 2.2-3.9 4.4-6.6 2.2 2.7 4.4 3.9 4.4 6.6 0 2.4-1.7 4.3-4.4 4.3z" fill="var(--brand)"/></svg>
+      <h1 id="pageTitle">Hub</h1>
+      <button class="btn accent" data-action="join" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="join-txt">Add a doctor</span></button>
+      <div class="persona" id="persona"></div>
+    </header>
+    <div class="demo-bar" id="demoBar"></div>
+    <main class="view" id="view"></main>
+  </div>
+</div>
+<div id="modalRoot"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+const KEY = "phoenix-hub-demo-v1";
+const MIN = 60000, HR = 60*MIN, DAY = 24*HR;
+const SPECIALTIES = ["Family Medicine","Cardiology","Dermatology","Endocrinology","Gastroenterology","General Surgery","Internal Medicine","Neurology","Obstetrics & Gynaecology","Ophthalmology","Orthopaedic Surgery","Paediatrics","Psychiatry","Respirology","Rheumatology","Urology"];
+const STEPS = [["pending","Sent"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"]];
+const STATUS_LABEL = {pending:"Awaiting response",accepted:"Accepted",booked:"Booked",completed:"Patient seen",declined:"Declined"};
+const LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c1.6 4.6 7.5 7.4 7.5 14.6a7.5 7.5 0 0 1-15 0c0-3.3 1.6-5.6 3.3-7.2-.1 2.7 1 4.4 2.7 5C13.2 10.6 14.3 6.6 16 2.5z" fill="var(--accent)"/><path d="M16 29.5c-2.7 0-4.4-1.9-4.4-4.3 0-2.7 2.2-3.9 4.4-6.6 2.2 2.7 4.4 3.9 4.4 6.6 0 2.4-1.7 4.3-4.4 4.3z" fill="var(--brand)"/></svg>';
+const I = {
+  hub:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  msg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg>',
+  ref:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M12 6l6 6-6 6"/><path d="M20 4v16"/></svg>',
+  dir:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.8 3 2.6 3.5 5.2"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>'
+};
+
+/* ---------- Seed data (relative to "now" so the demo always looks fresh) ---------- */
+function seed(){
+  const now = Date.now();
+  const t = (ms)=> now - ms;
+  const doctors = [
+    {id:"phx",team:true,first:"Phoenix",last:"Billing Team",specialty:"Billing support",clinic:"Phoenix Billing",city:"Edmonton",hue:190,joined:t(400*DAY),accepting:false},
+    {id:"d1",first:"Priya",last:"Raman",specialty:"Family Medicine",clinic:"Riverbend Family Clinic",city:"Edmonton",hue:262,joined:t(210*DAY),accepting:true},
+    {id:"d2",first:"Marcus",last:"Chen",specialty:"Cardiology",clinic:"Capital Heart Associates",city:"Edmonton",hue:352,joined:t(180*DAY),accepting:true},
+    {id:"d3",first:"Aisha",last:"Okafor",specialty:"Dermatology",clinic:"Whyte Ave Skin Clinic",city:"Edmonton",hue:28,joined:t(150*DAY),accepting:true},
+    {id:"d4",first:"Daniel",last:"Fournier",specialty:"Orthopaedic Surgery",clinic:"Bow Valley Orthopaedics",city:"Calgary",hue:205,joined:t(140*DAY),accepting:true},
+    {id:"d5",first:"Hannah",last:"Lindqvist",specialty:"Endocrinology",clinic:"Sherwood Park Diabetes Centre",city:"Sherwood Park",hue:150,joined:t(120*DAY),accepting:true},
+    {id:"d6",first:"Tomás",last:"Alvarez",specialty:"Gastroenterology",clinic:"Northgate GI Clinic",city:"St. Albert",hue:45,joined:t(95*DAY),accepting:false},
+    {id:"d7",first:"Grace",last:"Whitford",specialty:"Psychiatry",clinic:"Parkland Mental Health",city:"Spruce Grove",hue:300,joined:t(80*DAY),accepting:true},
+    {id:"d8",first:"Ravi",last:"Sandhu",specialty:"Family Medicine",clinic:"Mill Woods Medical",city:"Edmonton",hue:120,joined:t(60*DAY),accepting:true},
+    {id:"d9",first:"Emily",last:"Tran",specialty:"Paediatrics",clinic:"Kids First Paediatrics",city:"Red Deer",hue:180,joined:t(34*DAY),accepting:true},
+    {id:"d10",first:"Owen",last:"MacLeod",specialty:"Ophthalmology",clinic:"Prairie Eye Centre",city:"Lethbridge",hue:225,joined:t(9*DAY),accepting:true},
+    {id:"d11",first:"Leila",last:"Haddad",specialty:"Obstetrics & Gynaecology",clinic:"Windermere Women's Health",city:"Edmonton",hue:330,joined:t(2*DAY),accepting:true},
+    {id:"d12",first:"Benjamin",last:"Osei",specialty:"Respirology",clinic:"Calgary Lung & Sleep",city:"Calgary",hue:95,joined:t(20*HR),accepting:true}
+  ];
+  const threads = [
+    {id:"t1",members:["d1","d2"],read:{d1:t(3*HR),d2:t(40*MIN)},messages:[
+      {from:"d1",text:"Hi Marcus, sending over K.L. (58M). Exertional chest tightness for 3 weeks, new T-wave changes on today's ECG.",ts:t(26*HR)},
+      {from:"d2",text:"Thanks Priya. Saw the referral come through. We can fit him in Thursday morning for a stress echo.",ts:t(25*HR)},
+      {from:"d1",text:"Perfect. I've started him on ASA 81 and nitro PRN in the meantime.",ts:t(24*HR)},
+      {from:"d2",text:"Good call. Echo is booked for Thursday 8:30. I'll send a consult letter after.",ts:t(52*MIN)}]},
+    {id:"t2",members:["d1","d3"],read:{d1:t(2*DAY),d3:t(2*DAY)},messages:[
+      {from:"d3",text:"Your patient M.S. is booked for Nov 21. Can your MOA send the dermoscopy photos ahead of time?",ts:t(2*DAY+3*HR)},
+      {from:"d1",text:"Will do, they'll be over by end of day.",ts:t(2*DAY+2*HR)}]},
+    {id:"t3",members:["d1","d8"],read:{d1:t(6*HR),d8:t(20*MIN)},messages:[
+      {from:"d8",text:"Priya, any chance you can cover my Saturday walk-in shift on the 22nd? Happy to swap for December.",ts:t(4*HR)},
+      {from:"d8",text:"Also, have you used the Phoenix claim reconciliation report yet? Saved me about two hours this week.",ts:t(3*HR+50*MIN)}]},
+    {id:"t4",members:["d1","phx"],read:{d1:t(5*DAY)},messages:[
+      {from:"phx",text:"October remittance is reconciled: 412 claims paid, 6 held for missing referring-practitioner numbers. We've fixed 5 and need your sign-off on 1.",ts:t(5*DAY+2*HR)},
+      {from:"d1",text:"Thanks! Signing off on it now.",ts:t(5*DAY)}]},
+    {id:"t5",members:["d2","d5"],read:{d2:t(1*DAY),d5:t(1*DAY)},messages:[
+      {from:"d5",text:"Marcus, sending you a shared T2DM patient with new HFrEF. Would value your input on SGLT2 timing.",ts:t(1*DAY+4*HR)},
+      {from:"d2",text:"Absolutely. Send the referral and I'll prioritize.",ts:t(1*DAY+3*HR)}]}
+  ];
+  const mk = (o)=>Object.assign({history:[{status:"pending",ts:o.created,by:o.from}]},o);
+  const referrals = [
+    mk({id:"R-10482",from:"d1",to:"d2",patient:"K.L.",age:58,sex:"M",reason:"Exertional chest tightness, new T-wave inversion V4–V6",urgency:"urgent",status:"booked",created:t(26*HR),note:"Started ASA 81 mg and nitro PRN. Troponin negative x2.",appt:isoDay(now+2*DAY)}),
+    mk({id:"R-10477",from:"d1",to:"d3",patient:"M.S.",age:34,sex:"F",reason:"Changing pigmented lesion, left shoulder, 8 mm, irregular border",urgency:"routine",status:"booked",created:t(6*DAY),note:"Dermoscopy photos to follow from clinic.",appt:isoDay(now+8*DAY)}),
+    mk({id:"R-10469",from:"d1",to:"d4",patient:"R.T.",age:67,sex:"M",reason:"Right knee OA, failed 6 months of physio and injections",urgency:"routine",status:"completed",created:t(30*DAY),note:"X-ray shows Kellgren-Lawrence grade 4.",claim:true}),
+    mk({id:"R-10491",from:"d9",to:"d1",patient:"J.W.",age:17,sex:"F",reason:"Transfer of care: well-controlled asthma, turning 18 next month",urgency:"routine",status:"pending",created:t(5*HR),note:"Family recently moved to Edmonton. Records attached in chart summary."}),
+    mk({id:"R-10493",from:"d7",to:"d1",patient:"D.P.",age:42,sex:"M",reason:"Shared care: lithium monitoring, needs local labs every 3 months",urgency:"urgent",status:"pending",created:t(90*MIN),note:"Stable on lithium 900 mg. Last level 0.7."}),
+    mk({id:"R-10486",from:"d1",to:"d5",patient:"S.N.",age:29,sex:"F",reason:"Suspected Graves' disease, TSH < 0.01, palpitations",urgency:"routine",status:"accepted",created:t(3*DAY)}),
+    mk({id:"R-10474",from:"d8",to:"d6",patient:"A.B.",age:45,sex:"M",reason:"Screening colonoscopy, first-degree relative with CRC at 52",urgency:"routine",status:"declined",created:t(9*DAY),declineReason:"Our waitlist is closed until January. Please re-refer in the new year or try another GI on the network."}),
+    mk({id:"R-10488",from:"d5",to:"d2",patient:"L.F.",age:61,sex:"F",reason:"T2DM with new HFrEF (EF 35%), SGLT2 timing",urgency:"routine",status:"accepted",created:t(1*DAY+3*HR)}),
+    mk({id:"R-10461",from:"d8",to:"d2",patient:"G.H.",age:72,sex:"M",reason:"New atrial fibrillation, CHA₂DS₂-VASc 4",urgency:"urgent",status:"completed",created:t(12*DAY),claim:true})
+  ];
+  const activity = [
+    {ts:t(20*HR),kind:"join",text:"<b>Dr. Benjamin Osei</b> (Respirology, Calgary) joined the network"},
+    {ts:t(52*MIN),kind:"msg",text:"<b>Dr. Chen</b> booked K.L. for a stress echo on Thursday"},
+    {ts:t(90*MIN),kind:"ref",text:"<b>Dr. Whitford</b> sent a referral to <b>Dr. Raman</b>"},
+    {ts:t(5*HR),kind:"ref",text:"<b>Dr. Tran</b> sent a referral to <b>Dr. Raman</b>"},
+    {ts:t(1*DAY+3*HR),kind:"ref",text:"<b>Dr. Chen</b> accepted a referral from <b>Dr. Lindqvist</b>"},
+    {ts:t(2*DAY),kind:"join",text:"<b>Dr. Leila Haddad</b> (Obstetrics & Gynaecology, Edmonton) joined the network"},
+    {ts:t(3*DAY),kind:"ref",text:"<b>Dr. Lindqvist</b> accepted a referral from <b>Dr. Raman</b>"}
+  ].sort((a,b)=>b.ts-a.ts);
+  return {v:1,me:"d1",sim:true,seq:10494,doctors,threads,referrals,activity};
+}
+function isoDay(ms){const d=new Date(ms);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+
+let S = load() || seed();
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===1)return o;}}catch(e){}return null;}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+const ui = {thread:null, refTab:"inbound", refFilter:"all", q:"", spec:"", city:"", openOnly:false, tq:"", pop:null, typing:{}};
+
+/* ---------- Helpers ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const esc = (s)=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const doc = (id)=>S.doctors.find(d=>d.id===id);
+const me = ()=>doc(S.me);
+const full = (d)=> d.team ? "Phoenix Billing Team" : "Dr. "+d.first+" "+d.last;
+const short = (d)=> d.team ? "Phoenix Billing" : "Dr. "+d.last;
+const initials = (d)=> (d.first[0]+(d.last[0]||"")).toUpperCase();
+const av = (d,cls="")=> d.team ? '<span class="av team '+cls+'">'+LOGO+'</span>' : '<span class="av '+cls+'" style="--h:'+d.hue+'" aria-hidden="true">'+esc(initials(d))+'</span>';
+const members = ()=>S.doctors.filter(d=>!d.team);
+function ago(ts){
+  const s=Date.now()-ts; if(s<MIN) return "just now"; if(s<HR) return Math.floor(s/MIN)+"m ago"; if(s<DAY) return Math.floor(s/HR)+"h ago";
+  if(s<2*DAY) return "Yesterday"; if(s<7*DAY) return Math.floor(s/DAY)+"d ago";
+  return new Date(ts).toLocaleDateString("en-CA",{month:"short",day:"numeric"});
+}
+function clock(ts){return new Date(ts).toLocaleTimeString("en-CA",{hour:"numeric",minute:"2-digit"});}
+function dayLabel(ts){const d=new Date(ts),n=new Date();const y=new Date(n-DAY);if(d.toDateString()===n.toDateString())return"Today";if(d.toDateString()===y.toDateString())return"Yesterday";return d.toLocaleDateString("en-CA",{weekday:"long",month:"short",day:"numeric"});}
+function apptLabel(iso){if(!iso)return"";const [y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("en-CA",{weekday:"short",month:"short",day:"numeric"});}
+function other(t){return doc(t.members.find(m=>m!==S.me)||t.members[0]);}
+function myThreads(){return S.threads.filter(t=>t.members.includes(S.me)).sort((a,b)=>last(b).ts-last(a).ts);}
+function last(t){return t.messages[t.messages.length-1]||{ts:0,text:""};}
+function unreadIn(t){const r=(t.read&&t.read[S.me])||0;return t.messages.filter(m=>m.from!==S.me&&m.ts>r).length;}
+function unreadTotal(){return myThreads().reduce((n,t)=>n+(unreadIn(t)?1:0),0);}
+function inbound(){return S.referrals.filter(r=>r.to===S.me);}
+function outbound(){return S.referrals.filter(r=>r.from===S.me);}
+function threadWith(id,create){
+  let t=S.threads.find(t=>t.members.includes(S.me)&&t.members.includes(id)&&t.members.length===2);
+  if(!t&&create){t={id:"t"+Date.now(),members:[S.me,id],read:{},messages:[]};S.threads.push(t);}
+  return t;
+}
+function addActivity(kind,text){S.activity.unshift({ts:Date.now(),kind,text});S.activity=S.activity.slice(0,60);}
+function toast(html){const el=document.createElement("div");el.className="toast";el.innerHTML=html;$("#toasts").appendChild(el);setTimeout(()=>el.remove(),4200);}
+function route(){const h=(location.hash||"").slice(1);return ["hub","messages","referrals","directory"].includes(h)?h:"hub";}
+
+/* ---------- Chrome ---------- */
+function renderChrome(){
+  const r=route(), u=unreadTotal(), p=inbound().filter(x=>x.status==="pending").length;
+  const items=[["hub","Hub",I.hub,0],["messages","Messages",I.msg,u],["referrals","Referrals",I.ref,p],["directory","Directory",I.dir,0]];
+  $("#nav").innerHTML=items.map(([k,l,ic,c])=>'<a href="#'+k+'"'+(r===k?' aria-current="page"':'')+'>'+ic+'<span>'+l+'</span>'+(c?'<span class="count" aria-label="'+c+' new">'+c+'</span>':'')+'</a>').join("");
+  $("#pageTitle").textContent={hub:"Hub",messages:"Messages",referrals:"Referrals",directory:"Physician directory"}[r];
+  const m=me();
+  $("#railFoot").innerHTML='<strong class="mono">'+members().length+'</strong> physicians on the network<br>Billing by Phoenix Billing';
+  $("#demoBar").innerHTML='<b>Demo</b><span>Sample doctors and patients only. Use “Viewing as” to see the hub from any doctor’s side.</span>';
+  $("#persona").innerHTML='<button class="persona-btn" type="button" data-action="toggle-persona" aria-haspopup="true" aria-expanded="'+(ui.pop==="persona")+'">'+av(m,"sm")+'<span class="who"><b>'+esc(full(m))+'</b><span>Viewing as · '+esc(m.specialty)+'</span></span>'+I.chev+'</button>'+(ui.pop==="persona"?personaPop():"");
+}
+function personaPop(){
+  return '<div class="pop" role="menu"><div class="label">View the hub as</div>'+
+    members().map(d=>'<button class="pop-item" role="menuitemradio" aria-checked="'+(d.id===S.me)+'" data-action="switch-me" data-id="'+d.id+'">'+av(d,"sm")+'<span><b>'+esc(full(d))+'</b><small>'+esc(d.specialty)+' · '+esc(d.city)+'</small></span></button>').join("")+
+    '<hr><button class="pop-item" data-action="toggle-sim" role="menuitemcheckbox" aria-checked="'+S.sim+'"><span><b>'+(S.sim?"✓ ":"")+'Simulate colleague replies</b><small>Other doctors answer messages and accept referrals automatically</small></span></button>'+
+    '<button class="pop-item" data-action="reset"><span><b>Reset demo data</b><small>Restore the original sample network</small></span></button></div>';
+}
+
+/* ---------- Views ---------- */
+function render(){
+  renderChrome();
+  const r=route(), v=$("#view");
+  if(r==="hub") v.innerHTML=viewHub();
+  else if(r==="messages"){v.innerHTML=viewMessages();const b=$(".convo-b");if(b)b.scrollTop=b.scrollHeight;}
+  else if(r==="referrals") v.innerHTML=viewReferrals();
+  else v.innerHTML=viewDirectory();
+}
+
+function viewHub(){
+  const m=me(), hr=new Date().getHours();
+  const greet=hr<12?"Good morning":hr<18?"Good afternoon":"Good evening";
+  const pend=inbound().filter(r=>r.status==="pending");
+  const outProg=outbound().filter(r=>["pending","accepted","booked"].includes(r.status));
+  const unread=myThreads().filter(t=>unreadIn(t));
+  const weekNew=members().filter(d=>Date.now()-d.joined<7*DAY);
+  const today=new Date().toLocaleDateString("en-CA",{weekday:"long",month:"long",day:"numeric"});
+  let attention="";
+  pend.forEach(r=>{const f=doc(r.from);attention+='<div class="row">'+av(f)+'<div class="body"><div><b>'+esc(short(f))+'</b> referred <b>'+esc(r.patient)+'</b>, '+r.age+r.sex+' <span class="pill '+r.urgency+'">'+(r.urgency==="urgent"?"Urgent":"Routine")+'</span></div><div class="meta">'+esc(r.reason)+' · '+ago(r.created)+'</div><div class="acts"><button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept</button><button class="btn sm" data-action="ref-decline" data-id="'+r.id+'">Decline</button><a class="btn sm ghost" href="#referrals" data-action="goto-ref" data-tab="inbound">Details</a></div></div></div>';});
+  unread.forEach(t=>{const o=other(t),l=last(t);attention+='<div class="row">'+av(o)+'<div class="body"><div><b>'+esc(short(o))+'</b> sent you a message</div><div class="meta">“'+esc(l.text.length>110?l.text.slice(0,110)+"…":l.text)+'” · '+ago(l.ts)+'</div><div class="acts"><button class="btn sm" data-action="open-thread" data-id="'+t.id+'">Reply</button></div></div></div>';});
+  if(!attention) attention='<div class="empty">You’re all caught up. New referrals and messages will show up here.</div>';
+  const feed=S.activity.slice(0,8).map(a=>'<div class="row"><span class="dot k-'+a.kind+'"></span><div class="body">'+a.text+'<div class="meta">'+ago(a.ts)+'</div></div></div>').join("")||'<div class="empty">No network activity yet.</div>';
+  const newest=members().filter(d=>d.id!==S.me).sort((a,b)=>b.joined-a.joined).slice(0,3);
+  return '<div class="hello"><div><h2>'+greet+', '+esc(short(m))+'</h2><p>'+today+' · '+esc(m.clinic)+', '+esc(m.city)+'</p></div><div class="actions"><button class="btn primary" data-action="new-ref">'+I.ref+'New referral</button><button class="btn" data-action="new-msg">'+I.msg+'New message</button></div></div>'+
+  '<div class="stats">'+
+    stat("#messages",unread.length,"Unread conversations",unread.length?"Reply from Messages":"Inbox is clear",unread.length)+
+    stat("#referrals",pend.length,"Referrals awaiting you",pend.length?"Accept or decline":"Nothing pending",pend.length)+
+    stat("#referrals",outProg.length,"Your referrals in progress",outbound().filter(r=>r.status==="booked").length+" booked with specialists",0)+
+    stat("#directory",members().length,"Physicians on the network","+"+weekNew.length+" joined this week",0)+
+  '</div>'+
+  '<div class="grid2"><section class="panel"><div class="panel-h"><h3>Needs your attention</h3><span class="label">'+(pend.length+unread.length)+' items</span></div><div class="panel-b">'+attention+'</div></section>'+
+  '<section class="panel feed"><div class="panel-h"><h3>Network activity</h3><span class="label">Live</span></div><div class="panel-b">'+feed+'</div></section></div>'+
+  '<section class="panel" style="margin-top:18px"><div class="panel-h"><h3>New to the network</h3><a class="btn sm ghost" href="#directory">See all physicians</a></div><div class="newbies">'+newest.map(d=>'<div class="doc"><div class="doc-h">'+av(d)+'<div><b>'+esc(full(d))+'</b><span class="spec">'+esc(d.specialty)+'</span></div></div><div class="where"><span>'+esc(d.clinic)+' · '+esc(d.city)+'</span><span>Joined '+ago(d.joined)+'</span></div><div class="acts"><button class="btn sm" data-action="msg-doc" data-id="'+d.id+'">Say hello</button>'+(d.accepting?'<button class="btn sm" data-action="refer-doc" data-id="'+d.id+'">Refer</button>':'')+'</div></div>').join("")+'</div></section>';
+}
+function stat(href,n,label,sub,hot){return '<a class="stat'+(hot?" hot":"")+'" href="'+href+'"><span class="label">'+label+'</span><span class="n">'+n+'</span><span class="sub">'+esc(sub)+'</span></a>';}
+
+function viewDirectory(){
+  const cities=[...new Set(members().map(d=>d.city))].sort();
+  const specs=[...new Set(members().map(d=>d.specialty))].sort();
+  const q=ui.q.trim().toLowerCase();
+  const list=members().filter(d=>(!q||(full(d)+" "+d.specialty+" "+d.clinic+" "+d.city).toLowerCase().includes(q))&&(!ui.spec||d.specialty===ui.spec)&&(!ui.city||d.city===ui.city)&&(!ui.openOnly||d.accepting)).sort((a,b)=>a.last.localeCompare(b.last));
+  return '<div class="filters"><label class="search">'+I.search+'<input class="input" id="dirQ" type="search" placeholder="Search by name, specialty, clinic or city" value="'+esc(ui.q)+'" aria-label="Search physicians"></label>'+
+    '<select class="input" id="dirSpec" aria-label="Specialty"><option value="">All specialties</option>'+specs.map(s=>'<option'+(s===ui.spec?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
+    '<select class="input" id="dirCity" aria-label="City"><option value="">All cities</option>'+cities.map(s=>'<option'+(s===ui.city?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
+    '<label class="check"><input type="checkbox" id="dirOpen"'+(ui.openOnly?" checked":"")+'> Accepting referrals</label></div>'+
+    '<div class="count-line">'+list.length+' of '+members().length+' physicians</div>'+
+    (list.length?'<div class="cards">'+list.map(docCard).join("")+'</div>':'<div class="panel empty">No physicians match those filters. Try clearing the search.</div>');
+}
+function docCard(d){
+  const isMe=d.id===S.me;
+  return '<article class="doc"><div class="doc-h">'+av(d,"lg")+'<div><b>'+esc(full(d))+(isMe?'<span class="you">You</span>':'')+'</b><span class="spec">'+esc(d.specialty)+'</span></div></div>'+
+  '<div class="where"><span>'+esc(d.clinic)+'</span><span>'+esc(d.city)+', AB</span></div>'+
+  '<div class="tags"><span class="pill '+(d.accepting?"open":"closed")+'">'+(d.accepting?"Accepting referrals":"Not accepting")+'</span>'+(Date.now()-d.joined<7*DAY?'<span class="pill accepted">New</span>':'')+'</div>'+
+  (isMe?'':'<div class="acts"><button class="btn sm" data-action="msg-doc" data-id="'+d.id+'">'+I.msg+'Message</button><button class="btn sm primary" data-action="refer-doc" data-id="'+d.id+'"'+(d.accepting?'':' disabled title="Not accepting referrals right now"')+'>'+I.ref+'Refer</button></div>')+'</article>';
+}
+
+function viewMessages(){
+  const ts=myThreads().filter(t=>!ui.tq||full(other(t)).toLowerCase().includes(ui.tq.toLowerCase()));
+  const cur=ui.thread&&S.threads.find(t=>t.id===ui.thread&&t.members.includes(S.me));
+  if(!cur) ui.thread=null;
+  const list=ts.map(t=>{const o=other(t),l=last(t),u=unreadIn(t);return '<button class="titem'+(u?" unread":"")+'" data-action="open-thread" data-id="'+t.id+'" aria-current="'+(cur&&cur.id===t.id)+'">'+av(o)+'<span class="body"><span class="l1"><b>'+esc(full(o))+'</b><time>'+(l.ts?ago(l.ts):"")+'</time></span><span class="prev">'+(l.from===S.me?"You: ":"")+esc(l.text||"No messages yet")+'</span></span></button>';}).join("")||'<div class="empty">No conversations yet. Start one with any doctor on the network.</div>';
+  let convo;
+  if(cur){
+    const o=other(cur); let lastDay="", body="";
+    cur.messages.forEach(m=>{const dl=dayLabel(m.ts);if(dl!==lastDay){body+='<div class="day">'+dl+'</div>';lastDay=dl;}
+      body+='<div class="bub'+(m.from===S.me?" me":"")+(m.ref?" bref":"")+'">'+(m.ref?'<span class="refline">Referral '+esc(m.ref)+'</span>':'')+esc(m.text)+'<time>'+clock(m.ts)+'</time></div>';});
+    if(ui.typing[cur.id]) body+='<div class="typing"><i></i><i></i><i></i> '+esc(short(o))+' is typing</div>';
+    if(!cur.messages.length) body+='<div class="day">Say hello to '+esc(short(o))+'</div>';
+    convo='<div class="convo"><div class="convo-h"><button class="icon-btn back-btn" data-action="back-threads" aria-label="Back to conversations">'+I.back+'</button>'+av(o)+'<div class="who"><b>'+esc(full(o))+'</b><span>'+esc(o.specialty)+' · '+esc(o.clinic)+'</span></div>'+(!o.team&&o.accepting?'<button class="btn sm" data-action="refer-doc" data-id="'+o.id+'">'+I.ref+'Refer</button>':'')+'</div>'+
+      '<div class="convo-b">'+body+'</div><form class="composer" data-form="send"><textarea class="input" id="composer" name="text" rows="1" placeholder="Message '+esc(short(o))+'" aria-label="Message"></textarea><button class="btn primary" type="submit">'+I.send+'Send</button></form></div>';
+  } else convo='<div class="convo"><div class="convo-empty"><div><h3 style="margin-bottom:6px">Pick a conversation</h3><p style="margin:0 0 14px">Or start a new one with anyone on the network.</p><button class="btn primary" data-action="new-msg">'+I.plus+'New message</button></div></div></div>';
+  return '<div class="msgs'+(cur?" has-thread":"")+'"><div class="tlist"><div class="tlist-h"><label class="search">'+I.search+'<input class="input" id="tq" type="search" placeholder="Search" value="'+esc(ui.tq)+'" aria-label="Search conversations"></label><button class="icon-btn" data-action="new-msg" aria-label="New message">'+I.plus+'</button></div><div class="tlist-b">'+list+'</div></div>'+convo+'</div>';
+}
+
+function viewReferrals(){
+  const inb=inbound(), out=outbound();
+  const base=ui.refTab==="inbound"?inb:out;
+  const filters=[["all","All"],["pending","Awaiting response"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"],["declined","Declined"]];
+  const list=base.filter(r=>ui.refFilter==="all"||r.status===ui.refFilter).sort((a,b)=>(a.status==="pending"?0:1)-(b.status==="pending"?0:1)||b.created-a.created);
+  return '<div class="hello" style="margin-bottom:14px"><div><h2>Referrals</h2><p>Send patients to colleagues on the network and track every step until they’re seen.</p></div><div class="actions"><button class="btn primary" data-action="new-ref">'+I.plus+'New referral</button></div></div>'+
+  '<div class="tabs" role="tablist"><button class="tab" role="tab" data-action="ref-tab" data-tab="inbound" aria-selected="'+(ui.refTab==="inbound")+'">Received<span class="c">'+inb.length+'</span></button><button class="tab" role="tab" data-action="ref-tab" data-tab="outbound" aria-selected="'+(ui.refTab==="outbound")+'">Sent<span class="c">'+out.length+'</span></button></div>'+
+  '<div class="chips">'+filters.map(([k,l])=>{const n=k==="all"?base.length:base.filter(r=>r.status===k).length;return '<button class="chip" data-action="ref-filter" data-f="'+k+'" aria-pressed="'+(ui.refFilter===k)+'">'+l+' <span class="mono">'+n+'</span></button>';}).join("")+'</div>'+
+  (list.length?'<div class="refs">'+list.map(refCard).join("")+'</div>':'<div class="panel empty">'+(ui.refTab==="inbound"?"No referrals received here yet.":"You haven’t sent any referrals in this category.")+' <br><br><button class="btn primary" data-action="new-ref">'+I.plus+'New referral</button></div>');
+}
+function refCard(r){
+  const f=doc(r.from), t=doc(r.to), mine=r.to===S.me;
+  const idx=STEPS.findIndex(s=>s[0]===r.status);
+  const steps=r.status==="declined"?'':'<div class="steps" aria-label="Progress: '+STATUS_LABEL[r.status]+'">'+STEPS.map((s,i)=>(i?'<span class="bar'+(i<=idx?" done":"")+'"></span>':'')+'<span class="s'+(i<=idx?" done":"")+'"><i></i>'+s[1]+'</span>').join("")+'</div>';
+  let acts="";
+  if(mine){
+    if(r.status==="pending") acts='<button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept</button><button class="btn sm danger" data-action="ref-decline" data-id="'+r.id+'">Decline</button>';
+    else if(r.status==="accepted") acts='<button class="btn sm primary" data-action="ref-book" data-id="'+r.id+'">Book appointment</button>';
+    else if(r.status==="booked") acts='<button class="btn sm primary" data-action="ref-complete" data-id="'+r.id+'">Mark patient seen</button>';
+  }
+  acts+='<button class="btn sm" data-action="msg-doc" data-id="'+(mine?f.id:t.id)+'">'+I.msg+'Message</button>';
+  return '<article class="ref'+(r.urgency==="urgent"?" is-urgent":"")+'"><div style="min-width:0"><div class="ref-top"><span class="ref-id">'+r.id+'</span><span class="pill '+r.status+'">'+STATUS_LABEL[r.status]+'</span><span class="pill '+r.urgency+'">'+(r.urgency==="urgent"?"Urgent":"Routine")+'</span>'+(r.claim?'<span class="pill claim">Consult claim submitted by Phoenix</span>':'')+'</div>'+
+    '<h3>'+esc(r.patient)+' · '+r.age+r.sex+'</h3><p class="reason">'+esc(r.reason)+'</p>'+
+    '<div class="party">'+av(f,"sm")+'<span>'+esc(short(f))+(f.id===S.me?" (you)":"")+'</span><span class="arrow">→</span>'+av(t,"sm")+'<span>'+esc(short(t))+(t.id===S.me?" (you)":"")+' · '+esc(t.specialty)+'</span></div>'+
+    (r.note?'<div class="note"><span class="label">Clinical note</span><br>'+esc(r.note)+'</div>':'')+
+    (r.status==="declined"&&r.declineReason?'<div class="note"><span class="label">Reason declined</span><br>'+esc(r.declineReason)+'</div>':'')+
+  '</div><div class="side"><span class="meta muted" style="font-size:12.5px">Sent '+ago(r.created)+(r.appt?' · Appt '+apptLabel(r.appt):'')+'</span>'+steps+'<div class="acts">'+acts+'</div></div></article>';
+}
+
+/* ---------- Modals ---------- */
+function modal(title,inner){
+  $("#modalRoot").innerHTML='<div class="scrim" data-action="scrim"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="modal-h"><h2 id="mTitle">'+title+'</h2><button class="icon-btn" data-action="close-modal" aria-label="Close">'+I.x+'</button></div>'+inner+'</div></div>';
+  const f=$("#modalRoot input:not([type=radio]):not([type=checkbox]), #modalRoot select, #modalRoot textarea"); if(f) f.focus();
+}
+function closeModal(){$("#modalRoot").innerHTML="";}
+function doctorOptions(sel,filter){
+  const groups={};members().filter(d=>d.id!==S.me&&(!filter||filter(d))).forEach(d=>{(groups[d.specialty]=groups[d.specialty]||[]).push(d);});
+  return Object.keys(groups).sort().map(g=>'<optgroup label="'+esc(g)+'">'+groups[g].map(d=>'<option value="'+d.id+'"'+(d.id===sel?" selected":"")+'>'+esc(full(d))+' · '+esc(d.city)+'</option>').join("")+'</optgroup>').join("");
+}
+function openReferral(to){
+  modal("New referral",'<form data-form="referral">'+
+    '<label class="field"><span>Refer to</span><select class="input" name="to" id="rTo" required><option value="">Choose a physician accepting referrals</option>'+doctorOptions(to,d=>d.accepting)+'</select></label>'+
+    '<div class="two"><label class="field"><span>Patient initials</span><input class="input" name="patient" id="rPatient" required maxlength="6" placeholder="e.g. J.D."></label>'+
+    '<div class="two"><label class="field"><span>Age</span><input class="input" name="age" id="rAge" type="number" min="0" max="120" required placeholder="45"></label><label class="field"><span>Sex</span><select class="input" name="sex" id="rSex"><option>F</option><option>M</option><option value="X">X</option></select></label></div></div>'+
+    '<label class="field"><span>Reason for referral</span><input class="input" name="reason" id="rReason" required placeholder="e.g. Persistent microscopic hematuria, smoker"></label>'+
+    '<div class="field"><span>Urgency</span><div class="seg"><label><input type="radio" name="urgency" value="routine" checked> Routine</label><label><input type="radio" name="urgency" value="urgent"> Urgent</label></div></div>'+
+    '<label class="field"><span>Clinical note <span class="muted" style="font-weight:400">(optional)</span></span><textarea class="input" name="note" id="rNote" placeholder="Relevant history, meds, investigations done"></textarea></label>'+
+    '<p class="hint">Demo only: use initials, never real patient details. Phoenix attaches the referring practitioner number to the specialist’s consult claim automatically.</p>'+
+    '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">'+I.send+'Send referral</button></div></form>');
+}
+function openNewMessage(to){
+  modal("New message",'<form data-form="newmsg"><label class="field"><span>To</span><select class="input" name="to" id="mTo" required><option value="">Choose a physician</option>'+doctorOptions(to)+'</select></label>'+
+  '<label class="field"><span>Message</span><textarea class="input" name="text" id="mText" required placeholder="Write your message"></textarea></label>'+
+  '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">'+I.send+'Send</button></div></form>');
+}
+function openJoin(){
+  modal("Add a doctor to the network",'<form data-form="join"><p class="hint" style="font-size:13.5px">Every physician who signs up for Phoenix Billing gets a hub account. Add one here to see them appear in the directory.</p>'+
+  '<div class="two"><label class="field"><span>First name</span><input class="input" name="first" id="jFirst" required placeholder="Sarah"></label><label class="field"><span>Last name</span><input class="input" name="last" id="jLast" required placeholder="Kim"></label></div>'+
+  '<label class="field"><span>Specialty</span><select class="input" name="specialty" id="jSpec">'+SPECIALTIES.map(s=>'<option>'+esc(s)+'</option>').join("")+'</select></label>'+
+  '<div class="two"><label class="field"><span>Clinic</span><input class="input" name="clinic" id="jClinic" required placeholder="Summerside Medical"></label><label class="field"><span>City</span><input class="input" name="city" id="jCity" required value="Edmonton"></label></div>'+
+  '<label class="check"><input type="checkbox" name="accepting" id="jAcc" checked> Accepting referrals</label>'+
+  '<label class="check"><input type="checkbox" name="switch" id="jSwitch" checked> View the hub as this doctor after adding</label>'+
+  '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn accent" type="submit">'+I.plus+'Add to network</button></div></form>');
+}
+function openDecline(id){
+  modal("Decline referral "+esc(id),'<form data-form="decline" data-id="'+esc(id)+'"><label class="field"><span>Reason (shared with the referring doctor)</span><textarea class="input" name="reason" id="dReason" required placeholder="e.g. Outside my scope; Dr. Chen would be a better fit"></textarea></label><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Decline referral</button></div></form>');
+}
+function openBook(id){
+  modal("Book appointment",'<form data-form="book" data-id="'+esc(id)+'"><label class="field"><span>Appointment date</span><input class="input" type="date" name="date" id="bDate" required value="'+isoDay(Date.now()+5*DAY)+'"></label><p class="hint">The referring doctor is notified with the date.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Confirm booking</button></div></form>');
+}
+
+/* ---------- Mutations ---------- */
+function postMessage(t,from,text,extra){
+  const m=Object.assign({from,text,ts:Date.now()},extra||{}); t.messages.push(m);
+  t.read=t.read||{}; t.read[from]=m.ts; return m;
+}
+function sendMessage(t,text){
+  postMessage(t,S.me,text); save(); render();
+  const o=other(t); if(!S.sim||o.team) { if(o.team&&S.sim) simTeam(t); return; }
+  simReply(t,o.id);
+}
+const REPLIES=["Thanks, got it. I’ll take a look this afternoon.","Sounds good. Could you send the most recent labs when you have a moment?","Happy to help. We have openings next week.","Appreciate the heads up. I’ll have my MOA reach out to book.","Makes sense to me. Let’s touch base after the appointment.","Great, thanks for thinking of us."];
+function simReply(t,fromId,textOverride){
+  const sentAs=S.me;
+  setTimeout(()=>{ui.typing[t.id]=true; if(route()==="messages"&&ui.thread===t.id) render();},900);
+  setTimeout(()=>{
+    ui.typing[t.id]=false;
+    postMessage(t,fromId,textOverride||REPLIES[Math.floor(Math.random()*REPLIES.length)]); save();
+    if(S.me===sentAs&&!(route()==="messages"&&ui.thread===t.id)) toast('<b>'+esc(short(doc(fromId)))+'</b> replied');
+    if(route()==="messages"&&ui.thread===t.id){t.read[S.me]=Date.now();save();}
+    render();
+  },3200);
+}
+function simTeam(t){simReply(t,"phx","Thanks! A billing specialist will follow up within one business day.");}
+
+function createReferral(fd){
+  const r={id:"R-"+(++S.seq),from:S.me,to:fd.get("to"),patient:fd.get("patient").trim().toUpperCase(),age:Number(fd.get("age")),sex:fd.get("sex"),reason:fd.get("reason").trim(),urgency:fd.get("urgency")||"routine",status:"pending",created:Date.now(),note:(fd.get("note")||"").trim()};
+  r.history=[{status:"pending",ts:r.created,by:S.me}];
+  S.referrals.push(r);
+  const to=doc(r.to), t=threadWith(r.to,true);
+  postMessage(t,S.me,"Sent you a referral for "+r.patient+" ("+r.age+r.sex+"): "+r.reason+".",{ref:r.id});
+  addActivity("ref","<b>"+esc(short(me()))+"</b> sent a referral to <b>"+esc(short(to))+"</b>");
+  save(); closeModal(); toast("Referral <b>"+r.id+"</b> sent to "+esc(short(to)));
+  ui.refTab="outbound"; ui.refFilter="all";
+  if(route()!=="referrals") location.hash="#referrals"; else render();
+  if(S.sim){
+    const sentAs=S.me;
+    setTimeout(()=>{
+      if(r.status!=="pending") return;
+      setStatus(r,"accepted",r.to);
+      postMessage(t,r.to,"Accepted your referral for "+r.patient+". My office will call the patient to book.",{ref:r.id});
+      addActivity("ref","<b>"+esc(short(to))+"</b> accepted a referral from <b>"+esc(short(doc(sentAs)))+"</b>");
+      save(); if(S.me===sentAs) toast("<b>"+esc(short(to))+"</b> accepted "+r.id); render();
+    },6500);
+  }
+}
+function setStatus(r,status,by){r.status=status;(r.history=r.history||[]).push({status,ts:Date.now(),by});}
+function refAction(kind,id,extra){
+  const r=S.referrals.find(x=>x.id===id); if(!r) return;
+  const f=doc(r.from), t=threadWith(r.from,true);
+  if(kind==="accept"){setStatus(r,"accepted",S.me);postMessage(t,S.me,"Accepted your referral for "+r.patient+". We’ll be in touch to book.",{ref:r.id});addActivity("ref","<b>"+esc(short(me()))+"</b> accepted a referral from <b>"+esc(short(f))+"</b>");toast("Accepted <b>"+r.id+"</b>. "+esc(short(f))+" has been notified");}
+  if(kind==="decline"){setStatus(r,"declined",S.me);r.declineReason=extra;postMessage(t,S.me,"Unable to accept the referral for "+r.patient+": "+extra,{ref:r.id});toast("Declined <b>"+r.id+"</b>");}
+  if(kind==="book"){setStatus(r,"booked",S.me);r.appt=extra;postMessage(t,S.me,r.patient+" is booked for "+apptLabel(extra)+".",{ref:r.id});toast("Booked "+r.patient+" for "+apptLabel(extra));}
+  if(kind==="complete"){setStatus(r,"completed",S.me);r.claim=true;postMessage(t,S.me,"Saw "+r.patient+" today. Consult letter to follow.",{ref:r.id});addActivity("ref","<b>"+esc(short(me()))+"</b> saw a patient referred by <b>"+esc(short(f))+"</b>");toast("Marked seen. <b>Phoenix</b> is submitting the consult claim");}
+  save(); closeModal(); render();
+}
+function joinDoctor(fd){
+  const d={id:"d"+Date.now(),first:fd.get("first").trim(),last:fd.get("last").trim(),specialty:fd.get("specialty"),clinic:fd.get("clinic").trim(),city:fd.get("city").trim(),hue:Math.floor(Math.random()*360),joined:Date.now(),accepting:!!fd.get("accepting")};
+  S.doctors.push(d);
+  addActivity("join","<b>"+esc(full(d))+"</b> ("+esc(d.specialty)+", "+esc(d.city)+") joined the network");
+  const t={id:"t"+Date.now(),members:[d.id,"phx"],read:{},messages:[{from:"phx",text:"Welcome to the Phoenix Billing hub, "+short(d)+". You can now message and refer to "+(members().length-1)+" physicians on the network. Your billing onboarding call is booked for this week.",ts:Date.now()}]};
+  S.threads.push(t);
+  if(fd.get("switch")) S.me=d.id;
+  save(); closeModal(); toast("<b>"+esc(full(d))+"</b> joined the network");
+  if(fd.get("switch")){location.hash="#hub";} render();
+}
+
+/* ---------- Events ---------- */
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-action]");
+  if(ui.pop&&!e.target.closest(".pop")&&!(el&&el.dataset.action==="toggle-persona")){ui.pop=null;renderChrome();}
+  if(!el) return;
+  const a=el.dataset.action, id=el.dataset.id;
+  if(a==="scrim"){if(e.target===el) closeModal();return;}
+  if(a==="close-modal") return closeModal();
+  if(a==="toggle-persona"){ui.pop=ui.pop==="persona"?null:"persona";return renderChrome();}
+  if(a==="switch-me"){S.me=id;ui.pop=null;ui.thread=null;save();toast("Now viewing as <b>"+esc(full(doc(id)))+"</b>");return render();}
+  if(a==="toggle-sim"){S.sim=!S.sim;save();return renderChrome();}
+  if(a==="reset"){S=seed();ui.thread=null;ui.pop=null;save();toast("Demo data restored");location.hash="#hub";return render();}
+  if(a==="join") return openJoin();
+  if(a==="new-ref") return openReferral("");
+  if(a==="new-msg") return openNewMessage("");
+  if(a==="refer-doc") return openReferral(id);
+  if(a==="msg-doc"){const t=threadWith(id,true);ui.thread=t.id;t.read=t.read||{};t.read[S.me]=Date.now();save();if(route()!=="messages")location.hash="#messages";else render();return;}
+  if(a==="open-thread"){ui.thread=id;const t=S.threads.find(x=>x.id===id);if(t){t.read=t.read||{};t.read[S.me]=Date.now();save();}if(route()!=="messages")location.hash="#messages";else render();setTimeout(()=>{const c=$("#composer");if(c&&window.innerWidth>760)c.focus();},0);return;}
+  if(a==="back-threads"){ui.thread=null;return render();}
+  if(a==="ref-tab"){ui.refTab=el.dataset.tab;ui.refFilter="all";return render();}
+  if(a==="goto-ref"){ui.refTab=el.dataset.tab;ui.refFilter="pending";return;}
+  if(a==="ref-filter"){ui.refFilter=el.dataset.f;return render();}
+  if(a==="ref-accept") return refAction("accept",id);
+  if(a==="ref-decline") return openDecline(id);
+  if(a==="ref-book") return openBook(id);
+  if(a==="ref-complete") return refAction("complete",id);
+});
+document.addEventListener("submit",e=>{
+  const f=e.target.closest("form[data-form]"); if(!f) return; e.preventDefault();
+  const fd=new FormData(f), k=f.dataset.form;
+  if(k==="send"){const txt=(fd.get("text")||"").trim();const t=S.threads.find(x=>x.id===ui.thread);if(txt&&t)sendMessage(t,txt);return;}
+  if(k==="newmsg"){const t=threadWith(fd.get("to"),true);closeModal();ui.thread=t.id;if(route()!=="messages")location.hash="#messages";sendMessage(t,fd.get("text").trim());return;}
+  if(k==="referral") return createReferral(fd);
+  if(k==="join") return joinDoctor(fd);
+  if(k==="decline") return refAction("decline",f.dataset.id,fd.get("reason").trim());
+  if(k==="book") return refAction("book",f.dataset.id,fd.get("date"));
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){if($("#modalRoot").innerHTML)closeModal();else if(ui.pop){ui.pop=null;renderChrome();}}
+  if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="composer"){e.preventDefault();e.target.form.requestSubmit();}
+});
+document.addEventListener("input",e=>{
+  const id=e.target.id;
+  if(id==="dirQ"||id==="tq"){
+    if(id==="dirQ")ui.q=e.target.value; else ui.tq=e.target.value;
+    const pos=e.target.selectionStart; render(); const n=$("#"+id); if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(_){}}
+  }
+});
+document.addEventListener("change",e=>{
+  const id=e.target.id;
+  if(id==="dirSpec"){ui.spec=e.target.value;render();}
+  if(id==="dirCity"){ui.city=e.target.value;render();}
+  if(id==="dirOpen"){ui.openOnly=e.target.checked;render();}
+});
+window.addEventListener("hashchange",render);
+window.addEventListener("storage",e=>{if(e.key===KEY){const n=load();if(n){S=n;render();}}});
+setInterval(()=>{if(!$("#modalRoot").innerHTML&&!(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)))render();},60000);
+render();
+})();
+</script>
+
+</body>
+</html>
