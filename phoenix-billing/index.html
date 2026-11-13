@@ -4,311 +4,384 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-</head>
-<body>
-<title>Phoenix Billing Hub</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>Phoenix Practice Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap">
 <style>
-/* Layout: app shell. Left rail (bottom bar on phones), top bar with identity switcher, one work area per view. */
+/* Layout: indigo brand rail on the left (bottom bar on phones); soft cards on a pale sage ground. */
 :root{
-  --bg:#f2f5f6; --surface:#ffffff; --surface-2:#e8eef0; --ink:#10262b; --muted:#587076; --line:#d5dfe2;
-  --brand:#14454c; --on-brand:#ffffff; --brand-soft:#dcebec;
-  --accent:#cf5a25; --on-accent:#ffffff; --accent-soft:#fbe7dc;
-  --good:#2c7a4c; --good-soft:#dcf0e3; --warn:#9a6512; --warn-soft:#f8ecd2; --bad:#b0402f; --bad-soft:#f7e0dc;
-  --av-l:42%; --shadow:0 1px 2px rgba(16,38,43,.06),0 6px 24px rgba(16,38,43,.06);
-  --f-display:"Manrope",ui-sans-serif,system-ui,sans-serif;
-  --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --r:10px;
+  --indigo:#1d165b; --indigo-2:#2c2478; --green:#19711a; --lime:#84c21e; --lime-soft:#e5f4e0;
+  --bg:#f5f7f2; --surface:#ffffff; --surface-2:#eef2ea; --ink:#1d1a3a; --muted:#5f5d72; --line:#e1e6dc;
+  --brand:#1d165b; --on-brand:#ffffff; --brand-soft:#ebe9f7;
+  --link:#19711a; --green-ink:#19711a; --good:#19711a; --good-soft:#e5f4e0; --warn:#8a5a00; --warn-soft:#fbf0d6; --bad:#b03a2e; --bad-soft:#fbe4e0;
+  --rail:#1d165b; --rail-ink:#d9d6f2; --rail-active:#2c2478;
+  --av-l:46%; --shadow:0 1px 2px rgba(29,22,91,.05),0 8px 28px rgba(29,22,91,.07);
+  --f:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:16px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0c1618; --surface:#132226; --surface-2:#1a2d32; --ink:#e3eef0; --muted:#91a9ae; --line:#24393e;
-  --brand:#6fc3c6; --on-brand:#0c1618; --brand-soft:#173a3e;
-  --accent:#f08a50; --on-accent:#1a0d05; --accent-soft:#3a2216;
-  --good:#63c48b; --good-soft:#163526; --warn:#e3b156; --warn-soft:#3a2d13; --bad:#ee8676; --bad-soft:#3d1e1a;
-  --av-l:36%; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25); color-scheme:dark}}
+  --bg:#110e2b; --surface:#1a163d; --surface-2:#231e4d; --ink:#ecebf7; --muted:#a9a6c4; --line:#2e2960;
+  --brand:#a99ff0; --on-brand:#110e2b; --brand-soft:#2a2461;
+  --link:#9fd65a; --green-ink:#9fd65a; --good:#8fd16a; --good-soft:#1d3320; --warn:#e8b64f; --warn-soft:#3a2e12; --bad:#f08f80; --bad-soft:#40201c;
+  --lime-soft:#22361c; --rail:#0c0a22; --rail-ink:#c3bfe6; --rail-active:#231e4d;
+  --av-l:40%; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.3); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0c1618; --surface:#132226; --surface-2:#1a2d32; --ink:#e3eef0; --muted:#91a9ae; --line:#24393e;
-  --brand:#6fc3c6; --on-brand:#0c1618; --brand-soft:#173a3e;
-  --accent:#f08a50; --on-accent:#1a0d05; --accent-soft:#3a2216;
-  --good:#63c48b; --good-soft:#163526; --warn:#e3b156; --warn-soft:#3a2d13; --bad:#ee8676; --bad-soft:#3d1e1a;
-  --av-l:36%; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25); color-scheme:dark}
+  --bg:#110e2b; --surface:#1a163d; --surface-2:#231e4d; --ink:#ecebf7; --muted:#a9a6c4; --line:#2e2960;
+  --brand:#a99ff0; --on-brand:#110e2b; --brand-soft:#2a2461;
+  --link:#9fd65a; --green-ink:#9fd65a; --good:#8fd16a; --good-soft:#1d3320; --warn:#e8b64f; --warn-soft:#3a2e12; --bad:#f08f80; --bad-soft:#40201c;
+  --lime-soft:#22361c; --rail:#0c0a22; --rail-ink:#c3bfe6; --rail-active:#231e4d;
+  --av-l:40%; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.3); color-scheme:dark}
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.015em;font-weight:700}
+p{margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
-.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+a{color:var(--link)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:2px;border-radius:8px}
 .muted{color:var(--muted)}
-.label{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.caps{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green-ink)}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
 
-.shell{display:grid;grid-template-columns:232px 1fr;min-height:100%}
-.rail{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh}
-.brand{display:flex;align-items:center;gap:10px;padding:0 6px}
-.brand svg{width:30px;height:30px;flex:none}
-.brand b{font-family:var(--f-display);font-weight:800;font-size:17px;line-height:1.1;display:block}
-.brand small{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
-.nav{display:flex;flex-direction:column;gap:2px}
-.nav a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500}
-.nav a svg{width:19px;height:19px;flex:none}
-.nav a:hover{background:var(--surface-2);color:var(--ink)}
-.nav a[aria-current="page"]{background:var(--brand-soft);color:var(--brand);font-weight:600}
-.nav .count{margin-left:auto;background:var(--accent);color:var(--on-accent);font-size:11.5px;font-weight:600;border-radius:99px;padding:0 7px;min-width:20px;text-align:center;line-height:19px}
-.rail-foot{margin-top:auto;font-size:12.5px;color:var(--muted);padding:12px 8px 0;border-top:1px solid var(--line)}
-.rail-foot strong{color:var(--ink);font-weight:600}
+/* Shell */
+.shell{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100%}
+.rail{background:var(--rail);color:var(--rail-ink);padding:22px 14px 18px;display:flex;flex-direction:column;gap:26px;position:sticky;top:0;height:100vh}
+.wordmark{padding:2px 10px;line-height:1}
+.wordmark b{display:block;font-size:27px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.wordmark span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.32em;color:var(--lime);margin-top:5px}
+.nav{display:flex;flex-direction:column;gap:3px}
+.nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;text-decoration:none;color:var(--rail-ink);font-weight:500;position:relative}
+.nav a svg{width:20px;height:20px;flex:none}
+.nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav a[aria-current="page"]{background:var(--rail-active);color:#fff;font-weight:700}
+.nav a[aria-current="page"]::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:4px;border-radius:0 4px 4px 0;background:var(--lime)}
+.nav .count{margin-left:auto;background:var(--lime);color:#1d165b;font-size:12px;font-weight:800;border-radius:99px;min-width:21px;text-align:center;line-height:20px;padding:0 6px}
+.specialist{margin-top:auto;background:rgba(255,255,255,.06);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.specialist .who{display:flex;gap:10px;align-items:center}
+.specialist b{color:#fff;font-size:14.5px;display:block}
+.specialist small{font-size:12.5px;display:block}
+.specialist .online{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--lime)}
+.specialist .online::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lime)}
+.specialist button{background:var(--lime);color:#1d165b;border:0;border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}
+.specialist button:hover{filter:brightness(1.06)}
 
 .main{min-width:0;display:flex;flex-direction:column}
-.top{display:flex;align-items:center;gap:12px;padding:14px max(16px,env(safe-area-inset-right,0px)) 14px 28px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
-.top h1{font-size:19px;font-weight:700;margin-right:auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.top .mobile-brand{display:none}
-.view{padding:26px 28px 48px;max-width:1240px;width:100%}
+.top{display:flex;align-items:center;gap:12px;padding:14px max(16px,env(safe-area-inset-right,0px)) 14px 32px;background:var(--bg);position:sticky;top:env(safe-area-inset-top,0px);z-index:20;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.top .crumb{margin-right:auto;min-width:0;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .crumb strong{color:var(--ink)}
+.top .mini-mark{display:none;font-weight:800;font-size:20px;color:var(--brand);letter-spacing:-.02em}
+.view{padding:28px 32px 56px;max-width:1220px;width:100%}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 13px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;text-decoration:none}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 15px;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;text-decoration:none;color:var(--ink)}
 .btn:hover{background:var(--surface-2)}
-.btn svg{width:16px;height:16px}
-.btn.primary{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
-.btn.primary:hover{filter:brightness(1.08)}
-.btn.accent{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.btn.accent:hover{filter:brightness(1.06)}
-.btn.ghost{border-color:transparent;background:transparent}
+.btn svg{width:17px;height:17px;flex:none}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.btn.primary:hover{background:var(--indigo-2);border-color:var(--indigo-2)}
+:root:not([data-theme="light"]) .btn.primary:hover{filter:brightness(1.08)}
+.btn.lime{background:var(--lime);border-color:var(--lime);color:#1d165b}
+.btn.lime:hover{filter:brightness(1.05)}
+.btn.soft{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--link)}
 .btn.ghost:hover{background:var(--surface-2)}
-.btn.sm{padding:5px 10px;font-size:13px}
+.btn.sm{padding:6px 12px;font-size:13.5px;border-radius:10px}
 .btn.danger{color:var(--bad)}
-.icon-btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;display:inline-grid;place-items:center;cursor:pointer}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.icon-btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;width:40px;height:40px;display:inline-grid;place-items:center;cursor:pointer;flex:none}
 .icon-btn:hover{background:var(--surface-2)}
-.icon-btn svg{width:18px;height:18px}
+.icon-btn svg{width:19px;height:19px}
 
-.av{--h:190;display:inline-grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:hsl(var(--h) 42% var(--av-l));color:#fff;font-family:var(--f-display);font-weight:700;font-size:13px;letter-spacing:.02em}
-.av.lg{width:52px;height:52px;font-size:17px}
-.av.sm{width:28px;height:28px;font-size:11px}
-.av.team{background:var(--brand-soft)}
-.av.team svg{width:60%;height:60%}
+/* Avatars */
+.av{--h:250;display:inline-grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:hsl(var(--h) 45% var(--av-l));color:#fff;font-weight:700;font-size:14px;letter-spacing:.02em;box-shadow:0 0 0 3px var(--surface)}
+.av.lg{width:64px;height:64px;font-size:22px}
+.av.sm{width:30px;height:30px;font-size:11.5px;box-shadow:none}
+.av.xs{width:24px;height:24px;font-size:10px;box-shadow:none}
 
+/* Persona switcher */
 .persona{position:relative}
-.persona-btn{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:3px 12px 3px 3px;cursor:pointer;max-width:260px}
+.persona-btn{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 14px 4px 4px;cursor:pointer;max-width:280px}
 .persona-btn:hover{background:var(--surface-2)}
-.persona-btn .who{text-align:left;line-height:1.2;min-width:0}
-.persona-btn .who b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.persona-btn .who span{font-size:11.5px;color:var(--muted);white-space:nowrap}
-.pop{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);width:300px;max-width:calc(100vw - 32px);padding:8px;z-index:40;max-height:70vh;overflow:auto}
-.pop .label{padding:6px 8px 8px}
-.pop-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;padding:7px 8px;border-radius:8px;cursor:pointer}
+.persona-btn .who{text-align:left;line-height:1.25;min-width:0}
+.persona-btn .who b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.persona-btn .who span{font-size:12px;color:var(--muted);white-space:nowrap}
+.persona-btn .av{box-shadow:none}
+.pop{position:absolute;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);width:320px;max-width:calc(100vw - 32px);padding:8px;z-index:40;max-height:72vh;overflow:auto}
+.pop .caps{padding:8px 10px}
+.pop-item{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:10px;cursor:pointer}
 .pop-item:hover{background:var(--surface-2)}
-.pop-item[aria-checked="true"]{background:var(--brand-soft)}
-.pop-item small{display:block;color:var(--muted);font-size:12px}
+.pop-item[aria-checked="true"]{background:var(--lime-soft)}
+.pop-item small{display:block;color:var(--muted);font-size:12.5px}
 .pop hr{border:0;border-top:1px solid var(--line);margin:6px 0}
 
-.demo-bar{background:var(--accent-soft);color:var(--ink);font-size:13px;padding:7px max(16px,env(safe-area-inset-right,0px)) 7px 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.demo-bar b{color:var(--accent)}
+.demo-note{font-size:13px;color:var(--muted);background:var(--surface-2);padding:8px max(16px,env(safe-area-inset-right,0px)) 8px 32px}
+.demo-note b{color:var(--ink)}
 
-/* Dashboard */
-.hello{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
-.hello h2{font-size:clamp(22px,3vw,28px);font-weight:800}
-.hello p{margin:4px 0 0;color:var(--muted)}
-.hello .actions{display:flex;gap:8px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:22px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;text-decoration:none;display:flex;flex-direction:column;gap:6px;min-width:0}
-a.stat:hover{border-color:var(--brand)}
-.stat .n{font-family:var(--f-display);font-size:30px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
-.stat .sub{font-size:12.5px;color:var(--muted)}
-.stat.hot .n{color:var(--accent)}
-.grid2{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px;align-items:start}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
-.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
-.panel-h h3{font-size:15.5px;font-weight:700}
-.panel-b{padding:6px 0}
-.empty{padding:26px 16px;text-align:center;color:var(--muted);font-size:14px}
-.row{display:flex;gap:12px;align-items:flex-start;padding:11px 16px;min-width:0}
-.row + .row{border-top:1px solid var(--line)}
-.row .body{flex:1;min-width:0}
-.row .body b{font-weight:600}
-.row .meta{font-size:12.5px;color:var(--muted)}
-.row .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.feed .row{padding:9px 16px}
-.feed .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);margin-top:7px;flex:none}
-.feed .dot.k-ref{background:var(--accent)}
-.feed .dot.k-join{background:var(--good)}
-.feed .row .body{font-size:14px}
-.newbies{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:14px 16px}
+/* Cards and sections */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 6px}
+.card-h h3{font-size:17px}
+.card-b{padding:8px 20px 18px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.empty{padding:22px 4px;color:var(--muted);text-align:center}
+
+.welcome{background:var(--indigo);color:#fff;border-radius:22px;padding:28px 30px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;position:relative;overflow:hidden}
+.welcome::after{content:"";position:absolute;right:-60px;top:-80px;width:260px;height:260px;border-radius:50%;background:repeating-linear-gradient(180deg,var(--lime) 0 9px,transparent 9px 18px);opacity:.22;pointer-events:none}
+.welcome .caps{color:var(--lime)}
+.welcome h1{font-size:clamp(26px,3.4vw,36px);font-weight:800;margin:6px 0 8px;color:#fff}
+.welcome p{max-width:60ch;color:#d9d6f2;font-size:16.5px}
+.welcome p strong{color:#fff}
+.welcome .actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.welcome .btn{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff}
+.welcome .btn:hover{background:rgba(255,255,255,.16)}
+.welcome .btn.lime{background:var(--lime);color:#1d165b;border-color:var(--lime)}
+
+.todo{display:flex;gap:14px;align-items:flex-start;padding:14px 0;min-width:0}
+.todo + .todo{border-top:1px solid var(--line)}
+.todo .body{flex:1;min-width:0}
+.todo .body p{font-size:15px}
+.todo .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.todo .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.todo .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--lime-soft);color:var(--green-ink)}
+.todo .ic svg{width:20px;height:20px}
+.todo .ic.money{background:var(--warn-soft);color:var(--warn)}
+
+.money{display:flex;flex-direction:column;gap:12px}
+.money .big{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.money .delta{font-size:14px;color:var(--good);font-weight:600}
+.money .delta.down{color:var(--bad)}
+.bars{width:100%;max-width:440px;height:auto;display:block}
+.bars text{fill:var(--muted);font-size:11px;font-family:var(--f)}
+.bars rect.b{fill:var(--brand-soft)}
+.bars rect.b.cur{fill:var(--lime)}
+.bars text.v{fill:var(--ink);font-weight:700}
+
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.fact .n{font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.fact .l{font-size:13.5px;color:var(--muted)}
+.fact .hint{font-size:12.5px;color:var(--good);font-weight:600}
+
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.feed-item{display:flex;gap:12px;padding:10px 0;align-items:flex-start;font-size:14.5px}
+.feed-item + .feed-item{border-top:1px solid var(--line)}
+.feed-item .meta{font-size:12.5px;color:var(--muted)}
 
 /* Pills */
-.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:99px;padding:2px 9px;white-space:nowrap;line-height:18px}
-.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;border-radius:99px;padding:3px 10px;white-space:nowrap;line-height:18px}
 .pill.pending{background:var(--warn-soft);color:var(--warn)}
-.pill.accepted{background:var(--brand-soft);color:var(--brand)}
-.pill.booked{background:var(--brand-soft);color:var(--brand)}
-.pill.completed{background:var(--good-soft);color:var(--good)}
-.pill.declined{background:var(--bad-soft);color:var(--bad)}
-.pill.urgent{background:var(--accent-soft);color:var(--accent)}
-.pill.routine{background:var(--surface-2);color:var(--muted)}
-.pill.open{background:var(--good-soft);color:var(--good)}
-.pill.closed{background:var(--surface-2);color:var(--muted)}
-.pill.claim{background:var(--good-soft);color:var(--good)}
-.pill.claim::before{border-radius:2px}
+.pill.accepted,.pill.booked{background:var(--brand-soft);color:var(--brand)}
+.pill.completed,.pill.ok{background:var(--good-soft);color:var(--good)}
+.pill.declined,.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.urgent{background:var(--bad-soft);color:var(--bad)}
+.pill.plain{background:var(--surface-2);color:var(--muted)}
+.pill.cash{background:var(--warn-soft);color:var(--warn)}
+.pill.ins{background:var(--brand-soft);color:var(--brand)}
+.pill.new{background:var(--lime);color:#1d165b}
 
 /* Directory */
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-.field{display:flex;flex-direction:column;gap:5px;min-width:0}
-.field > span{font-size:13px;font-weight:600}
-.input,select.input,textarea.input{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 11px;min-width:0;width:100%}
-textarea.input{resize:vertical;min-height:84px}
-.input:focus{outline:2px solid var(--brand);outline-offset:-1px}
-.search{flex:1 1 240px;position:relative}
-.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
-.search .input{padding-left:34px}
-.filters select.input{width:auto;flex:0 1 auto}
-.check{display:inline-flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
-.check input{accent-color:var(--brand);width:16px;height:16px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
-.doc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.doc-h{display:flex;gap:12px;align-items:center;min-width:0}
-.doc-h > div{min-width:0}
-.doc-h b{display:block;font-family:var(--f-display);font-size:16px;font-weight:700}
-.doc-h .spec{color:var(--brand);font-weight:600;font-size:13.5px}
-.doc .where{font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
-.doc .tags{display:flex;gap:6px;flex-wrap:wrap}
-.doc .acts{display:flex;gap:8px;margin-top:auto}
-.doc .acts .btn{flex:1}
-.you{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-left:6px}
-.count-line{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.input,select.input,textarea.input{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 13px;width:100%;min-width:0}
+textarea.input{resize:vertical;min-height:90px;line-height:1.5}
+.input:focus{outline:2px solid var(--lime);outline-offset:0;border-color:transparent}
+.search{flex:1 1 260px;position:relative}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
+.search .input{padding-left:38px}
+.toolbar select.input{width:auto;flex:0 1 auto}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;cursor:pointer}
+.check input{accent-color:var(--green);width:17px;height:17px}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.page-head h1{font-size:clamp(24px,3vw,30px);font-weight:800}
+.page-head p{color:var(--muted);margin-top:4px;max-width:62ch}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.person.featured{border-color:var(--lime);box-shadow:0 0 0 3px var(--lime-soft)}
+.person-h{display:flex;gap:14px;align-items:center;min-width:0}
+.person-h > div{min-width:0}
+.person-h b{display:block;font-size:17px}
+.person-h .spec{color:var(--green-ink);font-weight:600;font-size:14px}
+.person .where{font-size:14px;color:var(--muted)}
+.person .bio{font-size:14.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.person .tags{display:flex;gap:6px;flex-wrap:wrap}
+.person .reply{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.person .reply::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lime)}
+.person .acts{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.person .acts .btn{flex:1}
+.you{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green-ink);margin-left:6px}
 
 /* Messages */
-.msgs{display:grid;grid-template-columns:320px minmax(0,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);height:calc(100vh - 190px);min-height:460px;overflow:hidden}
+.msgs{display:grid;grid-template-columns:330px minmax(0,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);height:calc(100vh - 200px);min-height:480px;overflow:hidden}
 .tlist{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
-.tlist-h{padding:12px;border-bottom:1px solid var(--line);display:flex;gap:8px}
-.tlist-h .search{flex:1}
-.tlist-b{overflow:auto;flex:1}
-.titem{display:flex;gap:11px;padding:12px 14px;border:0;background:none;width:100%;text-align:left;cursor:pointer;border-bottom:1px solid var(--line);min-width:0}
+.tlist-h{padding:14px;display:flex;gap:8px;border-bottom:1px solid var(--line)}
+.tlist-b{overflow:auto;flex:1;padding:6px}
+.titem{display:flex;gap:12px;padding:11px;border:0;background:none;width:100%;text-align:left;cursor:pointer;border-radius:12px;min-width:0}
 .titem:hover{background:var(--surface-2)}
-.titem[aria-current="true"]{background:var(--brand-soft)}
+.titem[aria-current="true"]{background:var(--lime-soft)}
+.titem .av{box-shadow:none}
 .titem .body{flex:1;min-width:0}
-.titem .l1{display:flex;justify-content:space-between;gap:8px}
-.titem .l1 b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titem .l1{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.titem .l1 b{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .titem .l1 time{font-size:12px;color:var(--muted);flex:none}
-.titem .prev{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.titem.unread .prev{color:var(--ink);font-weight:500}
-.titem.unread .l1 b::after{content:"";display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-left:7px;vertical-align:middle}
+.titem .prev{font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.titem.unread .prev{color:var(--ink);font-weight:600}
+.titem.unread .l1 b::after{content:"";display:inline-block;width:8px;height:8px;background:var(--lime);border-radius:50%;margin-left:7px;vertical-align:middle}
 .convo{display:flex;flex-direction:column;min-height:0;min-width:0}
-.convo-h{display:flex;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line)}
+.convo-h{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.convo-h .av{box-shadow:none}
 .convo-h .who{flex:1;min-width:0}
-.convo-h .who b{display:block;font-family:var(--f-display)}
+.convo-h .who b{display:block}
 .convo-h .who span{font-size:13px;color:var(--muted)}
-.convo-b{flex:1;overflow:auto;padding:18px 16px;display:flex;flex-direction:column;gap:6px;background:var(--bg)}
-.day{align-self:center;font-size:12px;color:var(--muted);padding:8px 0 4px}
-.bub{max-width:min(72%,520px);padding:9px 13px;border-radius:14px;background:var(--surface);border:1px solid var(--line);align-self:flex-start;white-space:pre-wrap;overflow-wrap:anywhere}
-.bub.me{align-self:flex-end;background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
-.bub time{display:block;font-size:11px;opacity:.7;margin-top:3px}
-.bub.bref{border-style:dashed}
-.bub.bref .refline{font-size:12px;font-weight:600;opacity:.85;display:block;margin-bottom:2px}
-.typing{align-self:flex-start;font-size:13px;color:var(--muted);padding:4px 6px}
-.typing i{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-right:3px;animation:blink 1.2s infinite}
+.convo-b{flex:1;overflow:auto;padding:20px 18px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.day{align-self:center;font-size:12.5px;color:var(--muted);padding:8px 0 2px;font-weight:600}
+.line{display:flex;gap:8px;align-items:flex-end;max-width:min(78%,560px)}
+.line.me{align-self:flex-end;flex-direction:row-reverse}
+.line .av{box-shadow:none}
+.bub{padding:10px 14px;border-radius:18px 18px 18px 6px;background:var(--surface);border:1px solid var(--line);white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}
+.line.me .bub{background:var(--brand);color:var(--on-brand);border-color:var(--brand);border-radius:18px 18px 6px 18px}
+.bub time{display:block;font-size:11.5px;opacity:.7;margin-top:3px}
+.bub .tag{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8;margin-bottom:2px}
+.typing{font-size:13px;color:var(--muted);padding:2px 4px}
+.typing i{display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:3px;animation:blink 1.2s infinite}
 .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
 .composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);align-items:flex-end}
-.composer textarea{flex:1;resize:none;min-height:42px;max-height:140px}
+.composer textarea{flex:1;resize:none;min-height:46px;max-height:140px}
 .convo-empty{flex:1;display:grid;place-items:center;text-align:center;color:var(--muted);padding:24px}
 
 /* Referrals */
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
-.tab{border:0;background:none;padding:10px 14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
-.tab[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand)}
-.tab .c{font-family:var(--f-mono);font-size:12px;background:var(--surface-2);border-radius:99px;padding:1px 7px;margin-left:6px}
+.tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--surface-2);padding:5px;border-radius:14px;width:max-content;max-width:100%;overflow-x:auto}
+.tab{border:0;background:none;padding:8px 16px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:10px;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(29,22,91,.1)}
+.tab .c{font-size:12px;background:var(--surface-2);border-radius:99px;padding:1px 7px;margin-left:6px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.refs{display:flex;flex-direction:column;gap:12px}
-.ref{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 20px;min-width:0}
-.ref.is-urgent{border-left:3px solid var(--accent)}
-.ref-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.ref-id{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
-.ref h3{font-size:16px;font-weight:700;margin-top:6px}
-.ref .reason{margin:4px 0 0;font-size:14px;overflow-wrap:anywhere}
-.ref .party{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-top:10px;flex-wrap:wrap}
-.ref .party .arrow{color:var(--muted)}
-.ref .note{margin-top:10px;font-size:13.5px;background:var(--surface-2);border-radius:8px;padding:8px 11px;overflow-wrap:anywhere}
-.ref .side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 13px;font-size:13.5px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.refs{display:flex;flex-direction:column;gap:14px}
+.ref{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;min-width:0}
+.ref-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ref h3{font-size:18px;margin-top:8px}
+.ref .reason{margin-top:3px;overflow-wrap:anywhere}
+.ref .party{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:12px;flex-wrap:wrap;color:var(--muted)}
+.ref .party b{color:var(--ink);font-weight:600}
+.ref .note{margin-top:12px;font-size:14.5px;background:var(--surface-2);border-radius:12px;padding:10px 14px;overflow-wrap:anywhere;font-style:italic}
+.ref .note .by{font-style:normal;font-size:12.5px;color:var(--muted);display:block;margin-top:4px}
+.ref .side{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
 .ref .side .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.steps{display:flex;align-items:center;gap:0;font-size:11.5px;color:var(--muted)}
+.ref .when{font-size:13px;color:var(--muted)}
+.steps{display:flex;align-items:center;font-size:12px;color:var(--muted)}
 .steps .s{display:flex;align-items:center;gap:5px}
-.steps .s i{width:9px;height:9px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
-.steps .s.done i{background:var(--brand);border-color:var(--brand)}
+.steps .s i{width:10px;height:10px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
 .steps .s.done{color:var(--ink)}
+.steps .s.done i{background:var(--lime);border-color:var(--lime)}
 .steps .bar{width:18px;height:2px;background:var(--line);margin:0 5px}
-.steps .bar.done{background:var(--brand)}
+.steps .bar.done{background:var(--lime)}
+
+/* Billing */
+.billing-top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.claim{display:flex;gap:14px;padding:14px 0;align-items:flex-start;min-width:0}
+.claim + .claim{border-top:1px solid var(--line)}
+.claim .body{flex:1;min-width:0}
+.claim .amt{font-weight:700;white-space:nowrap}
+.claim .meta{font-size:13px;color:var(--muted)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td.r,th.r{text-align:right}
+tr:last-child td{border-bottom:0}
+.services{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.service{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.service .ic{width:38px;height:38px;border-radius:11px;background:var(--lime-soft);color:var(--green);display:grid;place-items:center}
+.service .ic svg{width:20px;height:20px}
+.service h4{font-size:15.5px}
+.service p{font-size:14px;color:var(--muted);flex:1}
+.callout{background:var(--lime-soft);border-radius:var(--r);padding:20px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.callout > div{flex:1 1 300px;min-width:0}
+.callout h3{font-size:18px;margin-bottom:4px}
+.callout p{font-size:14.5px}
 
 /* Modal */
-.scrim{position:fixed;inset:0;background:rgba(8,20,23,.45);display:grid;place-items:center;padding:16px;z-index:60}
-.modal{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);width:min(560px,100%);max-height:calc(100% - 20px);overflow:auto;border:1px solid var(--line)}
-.modal-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface)}
-.modal-h h2{font-size:18px;font-weight:800}
-.modal form{padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px}
-.modal .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal .hint{font-size:12.5px;color:var(--muted);margin:0}
-.modal .foot{display:flex;justify-content:flex-end;gap:8px;padding-top:4px}
-.seg{display:flex;gap:8px}
-.seg label{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 11px;cursor:pointer;display:flex;gap:8px;align-items:center;font-size:14px}
-.seg input{accent-color:var(--brand)}
-.seg label:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+.scrim{position:fixed;inset:0;background:rgba(17,14,43,.5);display:grid;place-items:center;padding:16px;z-index:60}
+.modal{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);width:min(580px,100%);max-height:calc(100% - 20px);overflow:auto;border:1px solid var(--line)}
+.modal-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
+.modal-h h2{font-size:19px;font-weight:800}
+.modal form,.modal .pad{padding:20px 22px 22px;display:flex;flex-direction:column;gap:15px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field > span{font-size:14px;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{font-size:13px;color:var(--muted)}
+.notice{font-size:14px;background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:10px 14px}
+.notice b{color:var(--warn)}
+.foot{display:flex;justify-content:flex-end;gap:8px;padding-top:4px;flex-wrap:wrap}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg label{flex:1;border:1px solid var(--line);border-radius:12px;padding:9px 12px;cursor:pointer;display:flex;gap:8px;align-items:center;font-size:14.5px;min-width:120px}
+.seg input{accent-color:var(--green)}
+.seg label:has(input:checked){border-color:var(--green);background:var(--lime-soft)}
+.profile-h{display:flex;gap:16px;align-items:center}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:8px 14px;font-size:14.5px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
 
 .toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;z-index:80;max-width:calc(100vw - 32px)}
-.toast{background:var(--ink);color:var(--bg);padding:11px 15px;border-radius:10px;box-shadow:var(--shadow);font-size:14px;display:flex;gap:10px;align-items:center;animation:rise .25s ease-out}
-.toast b{color:var(--accent)}
+.toast{background:var(--indigo);color:#fff;padding:12px 16px;border-radius:14px;box-shadow:var(--shadow);font-size:14.5px;animation:rise .25s ease-out;border-left:4px solid var(--lime)}
+.toast b{color:var(--lime)}
 @keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-@media (max-width:1020px){
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid2{grid-template-columns:minmax(0,1fr)}
+@media (max-width:1060px){
+  .cols,.billing-top{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media (max-width:760px){
+@media (max-width:780px){
   .shell{grid-template-columns:minmax(0,1fr)}
-  .rail{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));border-right:0;border-top:1px solid var(--line);z-index:50;gap:0}
-  .rail .brand,.rail-foot{display:none}
+  .rail{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px));z-index:50;gap:0}
+  .wordmark,.specialist{display:none}
   .nav{flex-direction:row;flex:1;justify-content:space-around}
-  .nav a{flex-direction:column;gap:2px;font-size:11.5px;padding:6px 8px;position:relative}
-  .nav .count{position:absolute;top:0;right:6px;margin:0;font-size:10.5px;line-height:16px;min-width:16px;padding:0 4px}
+  .nav a{flex-direction:column;gap:2px;font-size:11.5px;padding:6px 6px;border-radius:10px}
+  .nav a[aria-current="page"]::before{left:30%;right:30%;top:auto;bottom:-6px;width:auto;height:3px;border-radius:3px 3px 0 0}
+  .nav .count{position:absolute;top:0;right:4px;margin:0;font-size:10.5px;line-height:16px;min-width:16px;padding:0 4px}
   .top{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-  .top .mobile-brand{display:block;width:26px;height:26px;flex:none}
-  .top .join-txt{display:none}
+  .top .mini-mark{display:block}
+  .top .crumb{display:none}
+  .top .spacer{flex:1}
   .persona-btn .who{display:none}
-  .persona-btn{padding:3px}
-  .demo-bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-  .view{padding:18px max(16px,env(safe-area-inset-right,0px)) 96px max(16px,env(safe-area-inset-left,0px))}
-  .msgs{grid-template-columns:minmax(0,1fr);height:calc(100vh - 210px)}
+  .persona-btn{padding:4px}
+  .demo-note{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .view{padding:18px max(16px,env(safe-area-inset-right,0px)) 100px max(16px,env(safe-area-inset-left,0px))}
+  .welcome{grid-template-columns:minmax(0,1fr);padding:22px}
+  .msgs{grid-template-columns:minmax(0,1fr);height:calc(100vh - 220px)}
   .msgs.has-thread .tlist{display:none}
   .msgs:not(.has-thread) .convo{display:none}
   .ref{grid-template-columns:minmax(0,1fr)}
   .ref .side{align-items:flex-start}
   .ref .side .acts{justify-content:flex-start}
-  .modal .two{grid-template-columns:1fr}
-  .bub{max-width:86%}
+  .two{grid-template-columns:1fr}
+  .line{max-width:90%}
+  .kv{grid-template-columns:1fr}
+  .kv dt{margin-top:6px}
 }
-@media (min-width:761px){.back-btn{display:none}}
+@media (min-width:781px){.back-btn{display:none}.top .spacer{display:none}}
+@media (max-width:420px){.facts{grid-template-columns:minmax(0,1fr)}}
 </style>
-
+</head>
+<body>
 <div class="shell">
   <aside class="rail">
-    <div class="brand">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c1.6 4.6 7.5 7.4 7.5 14.6a7.5 7.5 0 0 1-15 0c0-3.3 1.6-5.6 3.3-7.2-.1 2.7 1 4.4 2.7 5C13.2 10.6 14.3 6.6 16 2.5z" fill="var(--accent)"/><path d="M16 29.5c-2.7 0-4.4-1.9-4.4-4.3 0-2.7 2.2-3.9 4.4-6.6 2.2 2.7 4.4 3.9 4.4 6.6 0 2.4-1.7 4.3-4.4 4.3z" fill="var(--brand)"/></svg>
-      <div><b>Phoenix Billing</b><small>Physician Hub</small></div>
-    </div>
-    <nav class="nav" id="nav"></nav>
-    <div class="rail-foot" id="railFoot"></div>
+    <div class="wordmark"><b>Phoenix</b><span>MEDICAL BILLING</span></div>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+    <div class="specialist" id="specialist"></div>
   </aside>
   <div class="main">
     <header class="top">
-      <svg class="mobile-brand" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c1.6 4.6 7.5 7.4 7.5 14.6a7.5 7.5 0 0 1-15 0c0-3.3 1.6-5.6 3.3-7.2-.1 2.7 1 4.4 2.7 5C13.2 10.6 14.3 6.6 16 2.5z" fill="var(--accent)"/><path d="M16 29.5c-2.7 0-4.4-1.9-4.4-4.3 0-2.7 2.2-3.9 4.4-6.6 2.2 2.7 4.4 3.9 4.4 6.6 0 2.4-1.7 4.3-4.4 4.3z" fill="var(--brand)"/></svg>
-      <h1 id="pageTitle">Hub</h1>
-      <button class="btn accent" data-action="join" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="join-txt">Add a doctor</span></button>
+      <span class="mini-mark">Phoenix</span>
+      <div class="crumb" id="crumb"></div>
+      <span class="spacer"></span>
       <div class="persona" id="persona"></div>
     </header>
-    <div class="demo-bar" id="demoBar"></div>
+    <div class="demo-note" id="demoNote"></div>
     <main class="view" id="view"></main>
   </div>
 </div>
@@ -318,394 +391,445 @@ textarea.input{resize:vertical;min-height:84px}
 <script>
 (function(){
 "use strict";
-const KEY = "phoenix-hub-demo-v1";
-const MIN = 60000, HR = 60*MIN, DAY = 24*HR;
-const SPECIALTIES = ["Family Medicine","Cardiology","Dermatology","Endocrinology","Gastroenterology","General Surgery","Internal Medicine","Neurology","Obstetrics & Gynaecology","Ophthalmology","Orthopaedic Surgery","Paediatrics","Psychiatry","Respirology","Rheumatology","Urology"];
-const STEPS = [["pending","Sent"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"]];
-const STATUS_LABEL = {pending:"Awaiting response",accepted:"Accepted",booked:"Booked",completed:"Patient seen",declined:"Declined"};
-const LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2.5c1.6 4.6 7.5 7.4 7.5 14.6a7.5 7.5 0 0 1-15 0c0-3.3 1.6-5.6 3.3-7.2-.1 2.7 1 4.4 2.7 5C13.2 10.6 14.3 6.6 16 2.5z" fill="var(--accent)"/><path d="M16 29.5c-2.7 0-4.4-1.9-4.4-4.3 0-2.7 2.2-3.9 4.4-6.6 2.2 2.7 4.4 3.9 4.4 6.6 0 2.4-1.7 4.3-4.4 4.3z" fill="var(--brand)"/></svg>';
-const I = {
-  hub:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
-  msg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg>',
-  ref:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M12 6l6 6-6 6"/><path d="M20 4v16"/></svg>',
-  dir:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.8 3 2.6 3.5 5.2"/></svg>',
-  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
-  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
-  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg>',
-  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
-  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
-  chev:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>'
+const KEY="phoenix-practice-hub-v2";
+const MIN=60000,HR=60*MIN,DAY=24*HR;
+const SPECIALTIES=["Behavioral Health","Cardiology","Chiropractic","Dermatology","Endocrinology","Family Medicine","Gastroenterology","Internal Medicine","Neurology","Orthopedic Surgery","Pain Management","Pediatrics","Physical Therapy","Podiatry","Urgent Care"];
+const PAYERS=["Aetna","AHCCCS","Blue Cross Blue Shield of AZ","Cigna","Humana","Medicare","UnitedHealthcare"];
+const STEPS=[["pending","Sent"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"]];
+const STATUS={pending:"Waiting to hear back",accepted:"Accepted",booked:"Appointment booked",completed:"Patient seen",declined:"Not able to take"};
+const usd=(n)=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
+const usd2=(n)=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(n);
+const svg=(p,sw)=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||1.8)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
+const I={
+  home:svg('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>'),
+  bill:svg('<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/>'),
+  ref:svg('<path d="M15 4h5v5"/><path d="M20 4l-8 8"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>'),
+  msg:svg('<path d="M20 12a8 8 0 0 1-11.5 7.2L4 20.5l1.3-4.4A8 8 0 1 1 20 12z"/>'),
+  people:svg('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.8 3 2.6 3.5 5.2"/>'),
+  search:svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',2),
+  x:svg('<path d="M6 6l12 12M18 6L6 18"/>',2),
+  send:svg('<path d="M4 12l16-8-6 16-2.5-6.5z"/>',2),
+  back:svg('<path d="M15 5l-7 7 7 7"/>',2),
+  plus:svg('<path d="M12 5v14M5 12h14"/>',2),
+  chev:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>',
+  heart:svg('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'),
+  alert:svg('<path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/>'),
+  shield:svg('<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>'),
+  id:svg('<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M6 16c.6-1.5 1.7-2.2 3-2.2s2.4.7 3 2.2M14.5 10h4M14.5 13.5h3"/>'),
+  phone:svg('<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/>'),
+  mail:svg('<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/>'),
+  screen:svg('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'),
+  chart:svg('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'),
+  doc:svg('<path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>')
 };
 
-/* ---------- Seed data (relative to "now" so the demo always looks fresh) ---------- */
+/* ---------- Sample network (times are relative to "now" so the demo always looks current) ---------- */
 function seed(){
-  const now = Date.now();
-  const t = (ms)=> now - ms;
-  const doctors = [
-    {id:"phx",team:true,first:"Phoenix",last:"Billing Team",specialty:"Billing support",clinic:"Phoenix Billing",city:"Edmonton",hue:190,joined:t(400*DAY),accepting:false},
-    {id:"d1",first:"Priya",last:"Raman",specialty:"Family Medicine",clinic:"Riverbend Family Clinic",city:"Edmonton",hue:262,joined:t(210*DAY),accepting:true},
-    {id:"d2",first:"Marcus",last:"Chen",specialty:"Cardiology",clinic:"Capital Heart Associates",city:"Edmonton",hue:352,joined:t(180*DAY),accepting:true},
-    {id:"d3",first:"Aisha",last:"Okafor",specialty:"Dermatology",clinic:"Whyte Ave Skin Clinic",city:"Edmonton",hue:28,joined:t(150*DAY),accepting:true},
-    {id:"d4",first:"Daniel",last:"Fournier",specialty:"Orthopaedic Surgery",clinic:"Bow Valley Orthopaedics",city:"Calgary",hue:205,joined:t(140*DAY),accepting:true},
-    {id:"d5",first:"Hannah",last:"Lindqvist",specialty:"Endocrinology",clinic:"Sherwood Park Diabetes Centre",city:"Sherwood Park",hue:150,joined:t(120*DAY),accepting:true},
-    {id:"d6",first:"Tomás",last:"Alvarez",specialty:"Gastroenterology",clinic:"Northgate GI Clinic",city:"St. Albert",hue:45,joined:t(95*DAY),accepting:false},
-    {id:"d7",first:"Grace",last:"Whitford",specialty:"Psychiatry",clinic:"Parkland Mental Health",city:"Spruce Grove",hue:300,joined:t(80*DAY),accepting:true},
-    {id:"d8",first:"Ravi",last:"Sandhu",specialty:"Family Medicine",clinic:"Mill Woods Medical",city:"Edmonton",hue:120,joined:t(60*DAY),accepting:true},
-    {id:"d9",first:"Emily",last:"Tran",specialty:"Paediatrics",clinic:"Kids First Paediatrics",city:"Red Deer",hue:180,joined:t(34*DAY),accepting:true},
-    {id:"d10",first:"Owen",last:"MacLeod",specialty:"Ophthalmology",clinic:"Prairie Eye Centre",city:"Lethbridge",hue:225,joined:t(9*DAY),accepting:true},
-    {id:"d11",first:"Leila",last:"Haddad",specialty:"Obstetrics & Gynaecology",clinic:"Windermere Women's Health",city:"Edmonton",hue:330,joined:t(2*DAY),accepting:true},
-    {id:"d12",first:"Benjamin",last:"Osei",specialty:"Respirology",clinic:"Calgary Lung & Sleep",city:"Calgary",hue:95,joined:t(20*HR),accepting:true}
+  const now=Date.now(), t=(ms)=>now-ms;
+  const doctors=[
+    {id:"phx",team:true,first:"Maria",last:"Delgado",cred:"",specialty:"Billing specialist",clinic:"Phoenix Medical Billing",city:"Glendale",hue:95,joined:t(900*DAY)},
+    {id:"d1",first:"Elena",last:"Ruiz",cred:"MD",specialty:"Family Medicine",clinic:"Desert Bloom Family Practice",city:"Glendale",hue:262,joined:t(400*DAY),accepting:true,pay:"insurance",payers:["Aetna","AHCCCS","Blue Cross Blue Shield of AZ","Medicare","UnitedHealthcare"],languages:["English","Spanish"],years:14,reply:"within a couple of hours",bio:"Family doctor for the West Valley since 2011. I see whole families, from newborns to great-grandparents, and I like to know who I'm sending my patients to.",goodFor:["Chronic disease management","Women's health","Spanish-speaking families"]},
+    {id:"d2",first:"Craig",last:"Zimmerman",cred:"DC",specialty:"Chiropractic",clinic:"LaserTech Pain & Back Relief Center",city:"Scottsdale",hue:205,joined:t(2*DAY),accepting:true,pay:"cash",payers:[],languages:["English"],years:40,reply:"same day",real:true,bio:"Board-certified chiropractic physician since 1985, serving the Valley since 2006. Drug-free care for chronic pain using multi-wave laser therapy, spinal decompression and shockwave therapy.",goodFor:["Neuropathy","Herniated and degenerative discs","Sciatica and back pain","Knee and shoulder pain","Auto and sports injuries"]},
+    {id:"d3",first:"Nisha",last:"Patel",cred:"MD",specialty:"Internal Medicine",clinic:"Arrowhead Internal Medicine",city:"Peoria",hue:330,joined:t(300*DAY),accepting:true,pay:"insurance",payers:["Aetna","Cigna","Humana","Medicare","UnitedHealthcare"],languages:["English","Hindi","Gujarati"],years:11,reply:"within an hour",bio:"Internist with a soft spot for complicated patients: diabetes, kidney disease and the people juggling ten medications.",goodFor:["Diabetes","Medicare annual wellness","Complex medication lists"]},
+    {id:"d4",first:"James",last:"Whitaker",cred:"DO",specialty:"Orthopedic Surgery",clinic:"Camelback Orthopedics",city:"Phoenix",hue:20,joined:t(260*DAY),accepting:true,pay:"insurance",payers:["Aetna","Blue Cross Blue Shield of AZ","Cigna","UnitedHealthcare"],languages:["English"],years:18,reply:"within a day",bio:"Knees, hips and shoulders. I'd rather try everything conservative first, and I'm happy to share care with chiropractors and PTs.",goodFor:["Joint replacement","Sports medicine","Second opinions"]},
+    {id:"d5",first:"Sofia",last:"Nguyen",cred:"MD",specialty:"Pain Management",clinic:"Sonoran Pain Institute",city:"Tempe",hue:170,joined:t(190*DAY),accepting:true,pay:"both",payers:["Aetna","Blue Cross Blue Shield of AZ","Medicare"],languages:["English","Vietnamese"],years:9,reply:"within a few hours",bio:"Interventional pain doctor. I work closely with chiropractors and physical therapists so patients don't bounce between offices.",goodFor:["Spinal injections","Nerve blocks","Chronic pain plans"]},
+    {id:"d6",first:"Marcus",last:"Bell",cred:"DPM",specialty:"Podiatry",clinic:"Valley Foot & Ankle",city:"Mesa",hue:45,joined:t(150*DAY),accepting:true,pay:"insurance",payers:["AHCCCS","Humana","Medicare","UnitedHealthcare"],languages:["English"],years:12,reply:"within a day",bio:"Diabetic foot care, heel pain and everything below the ankle.",goodFor:["Diabetic foot exams","Plantar fasciitis","Wound care"]},
+    {id:"d7",first:"Kayla",last:"Morgan",cred:"PT, DPT",specialty:"Physical Therapy",clinic:"Move Well Physical Therapy",city:"Scottsdale",hue:300,joined:t(95*DAY),accepting:true,pay:"both",payers:["Aetna","Cigna","UnitedHealthcare"],languages:["English"],years:7,reply:"within an hour",bio:"Hands-on PT for people who want to get back to hiking Camelback, not just get through the day.",goodFor:["Post-op rehab","Low back pain","Running injuries"]},
+    {id:"d8",first:"Aaron",last:"Goldberg",cred:"MD",specialty:"Neurology",clinic:"Chandler Neurology Associates",city:"Chandler",hue:225,joined:t(70*DAY),accepting:false,pay:"insurance",payers:["Aetna","Blue Cross Blue Shield of AZ","Medicare"],languages:["English","Hebrew"],years:21,reply:"within two days",bio:"General neurology with a focus on headache and peripheral neuropathy. Waitlist currently closed to new referrals until January.",goodFor:["Migraine","Neuropathy workup","EMG"]},
+    {id:"d9",first:"Lauren",last:"Hayes",cred:"PsyD",specialty:"Behavioral Health",clinic:"Mesquite Counseling",city:"Gilbert",hue:130,joined:t(40*DAY),accepting:true,pay:"both",payers:["AHCCCS","Cigna","UnitedHealthcare"],languages:["English"],years:10,reply:"same day",bio:"Therapy for anxiety, depression and chronic pain. Living with pain is hard, and talking about it helps more than people expect.",goodFor:["Pain-related anxiety","CBT","Telehealth"]},
+    {id:"d10",first:"Tyler",last:"Brooks",cred:"DC",specialty:"Chiropractic",clinic:"Brooks Family Chiropractic",city:"Goodyear",hue:15,joined:t(12*DAY),accepting:true,pay:"insurance",payers:["Aetna","Blue Cross Blue Shield of AZ","UnitedHealthcare"],languages:["English","Spanish"],years:6,reply:"within a few hours",bio:"In-network family chiropractic in the West Valley. Kids, pregnancy and weekend warriors.",goodFor:["Pregnancy care","Sports adjustments","Families"]},
+    {id:"d11",first:"Omar",last:"Haddad",cred:"MD",specialty:"Endocrinology",clinic:"Saguaro Diabetes & Endocrine",city:"Surprise",hue:350,joined:t(6*DAY),accepting:true,pay:"insurance",payers:["Aetna","AHCCCS","Humana","Medicare"],languages:["English","Arabic"],years:15,reply:"within a day",bio:"Diabetes, thyroid and bone health. Happy to co-manage with primary care.",goodFor:["Insulin pumps","Thyroid nodules","Osteoporosis"]}
   ];
-  const threads = [
-    {id:"t1",members:["d1","d2"],read:{d1:t(3*HR),d2:t(40*MIN)},messages:[
-      {from:"d1",text:"Hi Marcus, sending over K.L. (58M). Exertional chest tightness for 3 weeks, new T-wave changes on today's ECG.",ts:t(26*HR)},
-      {from:"d2",text:"Thanks Priya. Saw the referral come through. We can fit him in Thursday morning for a stress echo.",ts:t(25*HR)},
-      {from:"d1",text:"Perfect. I've started him on ASA 81 and nitro PRN in the meantime.",ts:t(24*HR)},
-      {from:"d2",text:"Good call. Echo is booked for Thursday 8:30. I'll send a consult letter after.",ts:t(52*MIN)}]},
-    {id:"t2",members:["d1","d3"],read:{d1:t(2*DAY),d3:t(2*DAY)},messages:[
-      {from:"d3",text:"Your patient M.S. is booked for Nov 21. Can your MOA send the dermoscopy photos ahead of time?",ts:t(2*DAY+3*HR)},
-      {from:"d1",text:"Will do, they'll be over by end of day.",ts:t(2*DAY+2*HR)}]},
-    {id:"t3",members:["d1","d8"],read:{d1:t(6*HR),d8:t(20*MIN)},messages:[
-      {from:"d8",text:"Priya, any chance you can cover my Saturday walk-in shift on the 22nd? Happy to swap for December.",ts:t(4*HR)},
-      {from:"d8",text:"Also, have you used the Phoenix claim reconciliation report yet? Saved me about two hours this week.",ts:t(3*HR+50*MIN)}]},
-    {id:"t4",members:["d1","phx"],read:{d1:t(5*DAY)},messages:[
-      {from:"phx",text:"October remittance is reconciled: 412 claims paid, 6 held for missing referring-practitioner numbers. We've fixed 5 and need your sign-off on 1.",ts:t(5*DAY+2*HR)},
-      {from:"d1",text:"Thanks! Signing off on it now.",ts:t(5*DAY)}]},
-    {id:"t5",members:["d2","d5"],read:{d2:t(1*DAY),d5:t(1*DAY)},messages:[
-      {from:"d5",text:"Marcus, sending you a shared T2DM patient with new HFrEF. Would value your input on SGLT2 timing.",ts:t(1*DAY+4*HR)},
-      {from:"d2",text:"Absolutely. Send the referral and I'll prioritize.",ts:t(1*DAY+3*HR)}]}
+  const threads=[
+    {id:"t1",members:["d1","phx"],read:{d1:t(3*DAY),phx:t(1*HR)},messages:[
+      {from:"phx",text:"Morning Dr. Ruiz! October is all closed out: 386 claims paid, 98% went through on the first try.",ts:t(3*DAY+2*HR)},
+      {from:"d1",text:"That's great, thank you Maria!",ts:t(3*DAY)},
+      {from:"phx",text:"Quick one: Aetna is asking for a prior auth number on a November visit for patient T.R. I've put it in your billing page under \"Needs you\" whenever you have a minute.",ts:t(55*MIN)}]},
+    {id:"t2",members:["d1","d3"],read:{d1:t(1*DAY),d3:t(1*DAY)},messages:[
+      {from:"d3",text:"Elena, thanks for sending Mrs. G over. Her A1c is down to 7.1. I'll send my notes this week.",ts:t(1*DAY+2*HR)},
+      {from:"d1",text:"So glad to hear it. She was nervous about the new meds, so thank you for taking the time with her.",ts:t(1*DAY)}]},
+    {id:"t3",members:["d1","d5"],read:{d1:t(5*HR),d5:t(2*HR)},messages:[
+      {from:"d5",text:"Hi Elena, have you met Dr. Zimmerman yet? He just joined the hub. I've had good results co-managing neuropathy patients with laser therapy, worth a look for your back pain folks.",ts:t(2*HR)}]},
+    {id:"t4",members:["d2","phx"],read:{d2:t(2*DAY)},messages:[
+      {from:"phx",text:"Welcome to the hub, Dr. Zimmerman! I'm Maria and I'll be your billing specialist. Doctors on the network can now see your clinic and send you patients directly. When you're ready, I can walk you through superbills and what accepting a few insurance plans would look like.",ts:t(2*DAY)}]},
+    {id:"t5",members:["d4","d7"],read:{d4:t(1*DAY),d7:t(1*DAY)},messages:[
+      {from:"d4",text:"Kayla, your post-op knee plans are excellent. Sending two more your way next week.",ts:t(1*DAY+5*HR)},
+      {from:"d7",text:"Thank you! We'll take good care of them.",ts:t(1*DAY+4*HR)}]}
   ];
-  const mk = (o)=>Object.assign({history:[{status:"pending",ts:o.created,by:o.from}]},o);
-  const referrals = [
-    mk({id:"R-10482",from:"d1",to:"d2",patient:"K.L.",age:58,sex:"M",reason:"Exertional chest tightness, new T-wave inversion V4–V6",urgency:"urgent",status:"booked",created:t(26*HR),note:"Started ASA 81 mg and nitro PRN. Troponin negative x2.",appt:isoDay(now+2*DAY)}),
-    mk({id:"R-10477",from:"d1",to:"d3",patient:"M.S.",age:34,sex:"F",reason:"Changing pigmented lesion, left shoulder, 8 mm, irregular border",urgency:"routine",status:"booked",created:t(6*DAY),note:"Dermoscopy photos to follow from clinic.",appt:isoDay(now+8*DAY)}),
-    mk({id:"R-10469",from:"d1",to:"d4",patient:"R.T.",age:67,sex:"M",reason:"Right knee OA, failed 6 months of physio and injections",urgency:"routine",status:"completed",created:t(30*DAY),note:"X-ray shows Kellgren-Lawrence grade 4.",claim:true}),
-    mk({id:"R-10491",from:"d9",to:"d1",patient:"J.W.",age:17,sex:"F",reason:"Transfer of care: well-controlled asthma, turning 18 next month",urgency:"routine",status:"pending",created:t(5*HR),note:"Family recently moved to Edmonton. Records attached in chart summary."}),
-    mk({id:"R-10493",from:"d7",to:"d1",patient:"D.P.",age:42,sex:"M",reason:"Shared care: lithium monitoring, needs local labs every 3 months",urgency:"urgent",status:"pending",created:t(90*MIN),note:"Stable on lithium 900 mg. Last level 0.7."}),
-    mk({id:"R-10486",from:"d1",to:"d5",patient:"S.N.",age:29,sex:"F",reason:"Suspected Graves' disease, TSH < 0.01, palpitations",urgency:"routine",status:"accepted",created:t(3*DAY)}),
-    mk({id:"R-10474",from:"d8",to:"d6",patient:"A.B.",age:45,sex:"M",reason:"Screening colonoscopy, first-degree relative with CRC at 52",urgency:"routine",status:"declined",created:t(9*DAY),declineReason:"Our waitlist is closed until January. Please re-refer in the new year or try another GI on the network."}),
-    mk({id:"R-10488",from:"d5",to:"d2",patient:"L.F.",age:61,sex:"F",reason:"T2DM with new HFrEF (EF 35%), SGLT2 timing",urgency:"routine",status:"accepted",created:t(1*DAY+3*HR)}),
-    mk({id:"R-10461",from:"d8",to:"d2",patient:"G.H.",age:72,sex:"M",reason:"New atrial fibrillation, CHA₂DS₂-VASc 4",urgency:"urgent",status:"completed",created:t(12*DAY),claim:true})
+  const mk=(o)=>Object.assign({history:[{status:"pending",ts:o.created,by:o.from}]},o);
+  const referrals=[
+    mk({id:"R-2041",from:"d1",to:"d2",patient:"D.M.",age:56,sex:"M",reason:"Chronic low back pain with sciatica, 8 months. Finished 6 weeks of PT with little change.",urgency:"routine",coverage:"Self-pay",status:"pending",created:t(3*HR),note:"He wants to avoid injections and surgery if he can. He's open to paying out of pocket for the right care."}),
+    mk({id:"R-2039",from:"d3",to:"d2",patient:"R.K.",age:68,sex:"F",reason:"Diabetic peripheral neuropathy, both feet, burning pain at night",urgency:"routine",coverage:"Medicare",status:"pending",created:t(20*HR),note:"Sugars are well controlled now. Gabapentin made her too drowsy. Asked about laser therapy."}),
+    mk({id:"R-2036",from:"d1",to:"d4",patient:"S.L.",age:63,sex:"F",reason:"Right knee osteoarthritis, failed injections and PT",urgency:"routine",coverage:"Blue Cross Blue Shield of AZ",status:"booked",created:t(9*DAY),appt:isoDay(now+4*DAY),note:"She's ready to talk about a replacement."}),
+    mk({id:"R-2031",from:"d1",to:"d3",patient:"M.G.",age:59,sex:"F",reason:"Type 2 diabetes, A1c 9.4 despite metformin",urgency:"routine",coverage:"Aetna",status:"completed",created:t(26*DAY),claim:true,thanked:true}),
+    mk({id:"R-2044",from:"d5",to:"d1",patient:"J.A.",age:47,sex:"M",reason:"Needs a primary care home. New to Glendale, on long-term pain plan.",urgency:"routine",coverage:"UnitedHealthcare",status:"pending",created:t(1*HR),note:"Lovely guy, very organized. He just needs a PCP close to home."}),
+    mk({id:"R-2038",from:"d1",to:"d9",patient:"A.T.",age:34,sex:"F",reason:"Anxiety and poor sleep after car accident",urgency:"urgent",coverage:"Cigna",status:"accepted",created:t(2*DAY)}),
+    mk({id:"R-2027",from:"d6",to:"d8",patient:"H.W.",age:71,sex:"M",reason:"Progressive numbness both feet, needs EMG",urgency:"routine",coverage:"Medicare",status:"declined",created:t(14*DAY),declineReason:"Our waitlist is closed until January. Dr. Haddad or a pain specialist on the hub may be able to see him sooner."}),
+    mk({id:"R-2033",from:"d4",to:"d7",patient:"P.N.",age:52,sex:"M",reason:"Post-op rehab, left total knee replacement",urgency:"routine",coverage:"Cigna",status:"completed",created:t(20*DAY),claim:true})
   ];
-  const activity = [
-    {ts:t(20*HR),kind:"join",text:"<b>Dr. Benjamin Osei</b> (Respirology, Calgary) joined the network"},
-    {ts:t(52*MIN),kind:"msg",text:"<b>Dr. Chen</b> booked K.L. for a stress echo on Thursday"},
-    {ts:t(90*MIN),kind:"ref",text:"<b>Dr. Whitford</b> sent a referral to <b>Dr. Raman</b>"},
-    {ts:t(5*HR),kind:"ref",text:"<b>Dr. Tran</b> sent a referral to <b>Dr. Raman</b>"},
-    {ts:t(1*DAY+3*HR),kind:"ref",text:"<b>Dr. Chen</b> accepted a referral from <b>Dr. Lindqvist</b>"},
-    {ts:t(2*DAY),kind:"join",text:"<b>Dr. Leila Haddad</b> (Obstetrics & Gynaecology, Edmonton) joined the network"},
-    {ts:t(3*DAY),kind:"ref",text:"<b>Dr. Lindqvist</b> accepted a referral from <b>Dr. Raman</b>"}
-  ].sort((a,b)=>b.ts-a.ts);
-  return {v:1,me:"d1",sim:true,seq:10494,doctors,threads,referrals,activity};
+  const activity=[
+    {ts:t(1*HR),who:"d5",text:"<b>Dr. Nguyen</b> sent a patient to <b>Dr. Ruiz</b>"},
+    {ts:t(3*HR),who:"d1",text:"<b>Dr. Ruiz</b> sent a patient to <b>Dr. Zimmerman</b>"},
+    {ts:t(20*HR),who:"d3",text:"<b>Dr. Patel</b> sent a patient to <b>Dr. Zimmerman</b>"},
+    {ts:t(2*DAY),who:"d2",text:"<b>Dr. Craig Zimmerman</b> joined from LaserTech Pain & Back Relief Center, Scottsdale"},
+    {ts:t(6*DAY),who:"d11",text:"<b>Dr. Omar Haddad</b> joined from Saguaro Diabetes & Endocrine, Surprise"},
+    {ts:t(8*DAY),who:"d1",text:"<b>Dr. Ruiz</b> thanked <b>Dr. Patel</b> for seeing a patient"}
+  ];
+  return {v:2,me:"d1",sim:true,seq:2045,doctors,threads,referrals,activity,fixed:{},reminded:{}};
 }
 function isoDay(ms){const d=new Date(ms);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 
-let S = load() || seed();
-function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===1)return o;}}catch(e){}return null;}
+let S=load()||seed();
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===2)return o;}}catch(e){}return null;}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
-
-const ui = {thread:null, refTab:"inbound", refFilter:"all", q:"", spec:"", city:"", openOnly:false, tq:"", pop:null, typing:{}};
+const ui={thread:null,refTab:"inbound",refFilter:"all",q:"",spec:"",city:"",pay:"",openOnly:false,tq:"",pop:null,typing:{}};
 
 /* ---------- Helpers ---------- */
-const $ = (s,r=document)=>r.querySelector(s);
-const esc = (s)=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const doc = (id)=>S.doctors.find(d=>d.id===id);
-const me = ()=>doc(S.me);
-const full = (d)=> d.team ? "Phoenix Billing Team" : "Dr. "+d.first+" "+d.last;
-const short = (d)=> d.team ? "Phoenix Billing" : "Dr. "+d.last;
-const initials = (d)=> (d.first[0]+(d.last[0]||"")).toUpperCase();
-const av = (d,cls="")=> d.team ? '<span class="av team '+cls+'">'+LOGO+'</span>' : '<span class="av '+cls+'" style="--h:'+d.hue+'" aria-hidden="true">'+esc(initials(d))+'</span>';
-const members = ()=>S.doctors.filter(d=>!d.team);
-function ago(ts){
-  const s=Date.now()-ts; if(s<MIN) return "just now"; if(s<HR) return Math.floor(s/MIN)+"m ago"; if(s<DAY) return Math.floor(s/HR)+"h ago";
-  if(s<2*DAY) return "Yesterday"; if(s<7*DAY) return Math.floor(s/DAY)+"d ago";
-  return new Date(ts).toLocaleDateString("en-CA",{month:"short",day:"numeric"});
-}
-function clock(ts){return new Date(ts).toLocaleTimeString("en-CA",{hour:"numeric",minute:"2-digit"});}
-function dayLabel(ts){const d=new Date(ts),n=new Date();const y=new Date(n-DAY);if(d.toDateString()===n.toDateString())return"Today";if(d.toDateString()===y.toDateString())return"Yesterday";return d.toLocaleDateString("en-CA",{weekday:"long",month:"short",day:"numeric"});}
-function apptLabel(iso){if(!iso)return"";const [y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("en-CA",{weekday:"short",month:"short",day:"numeric"});}
+const $=(s)=>document.querySelector(s);
+const esc=(s)=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const doc=(id)=>S.doctors.find(d=>d.id===id);
+const me=()=>doc(S.me);
+const team=()=>doc("phx");
+const full=(d)=>d.team?d.first+" "+d.last:"Dr. "+d.first+" "+d.last;
+const withCred=(d)=>d.team?full(d):d.first+" "+d.last+(d.cred?", "+d.cred:"");
+const short=(d)=>d.team?d.first:"Dr. "+d.last;
+const initials=(d)=>(d.first[0]+(d.last[0]||"")).toUpperCase();
+const av=(d,cls)=>'<span class="av '+(cls||"")+'" style="--h:'+d.hue+'" aria-hidden="true">'+esc(initials(d))+'</span>';
+const members=()=>S.doctors.filter(d=>!d.team);
+function ago(ts){const s=Date.now()-ts;if(s<MIN)return"just now";if(s<HR)return Math.floor(s/MIN)+" min ago";if(s<DAY){const h=Math.floor(s/HR);return h+(h===1?" hour ago":" hours ago");}if(s<2*DAY)return"yesterday";if(s<7*DAY)return Math.floor(s/DAY)+" days ago";return new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric"});}
+function clock(ts){return new Date(ts).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});}
+function dayLabel(ts){const d=new Date(ts),n=new Date(),y=new Date(n-DAY);if(d.toDateString()===n.toDateString())return"Today";if(d.toDateString()===y.toDateString())return"Yesterday";return d.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"});}
+function apptLabel(iso){if(!iso)return"";const [y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});}
+function payLabel(d){return d.pay==="cash"?"Cash-pay only":d.pay==="both"?"Insurance + self-pay":"Takes insurance";}
+function payPill(d){return '<span class="pill '+(d.pay==="cash"?"cash":"ins")+'">'+payLabel(d)+'</span>';}
 function other(t){return doc(t.members.find(m=>m!==S.me)||t.members[0]);}
-function myThreads(){return S.threads.filter(t=>t.members.includes(S.me)).sort((a,b)=>last(b).ts-last(a).ts);}
 function last(t){return t.messages[t.messages.length-1]||{ts:0,text:""};}
+function myThreads(){return S.threads.filter(t=>t.members.includes(S.me)).sort((a,b)=>last(b).ts-last(a).ts);}
 function unreadIn(t){const r=(t.read&&t.read[S.me])||0;return t.messages.filter(m=>m.from!==S.me&&m.ts>r).length;}
-function unreadTotal(){return myThreads().reduce((n,t)=>n+(unreadIn(t)?1:0),0);}
-function inbound(){return S.referrals.filter(r=>r.to===S.me);}
-function outbound(){return S.referrals.filter(r=>r.from===S.me);}
-function threadWith(id,create){
-  let t=S.threads.find(t=>t.members.includes(S.me)&&t.members.includes(id)&&t.members.length===2);
-  if(!t&&create){t={id:"t"+Date.now(),members:[S.me,id],read:{},messages:[]};S.threads.push(t);}
-  return t;
+function unreadThreads(){return myThreads().filter(t=>unreadIn(t));}
+const inbound=()=>S.referrals.filter(r=>r.to===S.me);
+const outbound=()=>S.referrals.filter(r=>r.from===S.me);
+function threadWith(id,create){let t=S.threads.find(x=>x.members.length===2&&x.members.includes(S.me)&&x.members.includes(id));if(!t&&create){t={id:"t"+Date.now()+Math.floor(Math.random()*999),members:[S.me,id],read:{},messages:[]};S.threads.push(t);}return t;}
+function addActivity(text){S.activity.unshift({ts:Date.now(),text});S.activity=S.activity.slice(0,50);}
+function toast(html){const el=document.createElement("div");el.className="toast";el.innerHTML=html;$("#toasts").appendChild(el);setTimeout(()=>el.remove(),4500);}
+function route(){const h=(location.hash||"").slice(1);return["home","billing","referrals","messages","network"].includes(h)?h:"home";}
+function list(arr){return arr.length<=1?arr.join(""):arr.slice(0,-1).join(", ")+" and "+arr[arr.length-1];}
+
+/* ---------- Sample billing figures, generated per doctor so every account has believable numbers ---------- */
+function rng(seedStr){let h=1779033703^seedStr.length;for(let i=0;i<seedStr.length;i++){h=Math.imul(h^seedStr.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return function(){h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);h^=h>>>16;return (h>>>0)/4294967296;};}
+const BASE={"Family Medicine":52000,"Internal Medicine":58000,"Orthopedic Surgery":118000,"Pain Management":94000,"Podiatry":46000,"Physical Therapy":38000,"Neurology":72000,"Behavioral Health":31000,"Chiropractic":34000,"Endocrinology":61000,"Cardiology":105000,"Dermatology":66000,"Gastroenterology":88000,"Pediatrics":44000,"Urgent Care":70000};
+function billing(d){
+  const r=rng(d.id+d.last), base=BASE[d.specialty]||50000, cash=d.pay==="cash";
+  const now=new Date(), months=[];
+  for(let i=5;i>=0;i--){const m=new Date(now.getFullYear(),now.getMonth()-i,1);let v=base*(0.82+r()*0.3)*(1+(5-i)*0.025);if(i===0)v=v*Math.min(1,(now.getDate()+4)/30);months.push({label:m.toLocaleDateString("en-US",{month:"short"}),v:Math.round(v/10)*10});}
+  const cur=months[5].v, prevSame=Math.round(cur/(1.03+r()*0.08)/10)*10;
+  const pts=["T.R.","B.C.","L.M.","K.O.","W.S.","E.F.","N.D.","G.P."];
+  const day=(n)=>new Date(Date.now()-n*DAY).toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  if(cash){
+    const balances=[0,1,2,3].map(i=>({id:d.id+"-b"+i,patient:pts[i+2],visit:["Laser therapy package (10 visits)","Spinal decompression session","New patient exam + X-ray","Shockwave therapy (3 sessions)"][i],amount:[1450,185,240,375][i],due:day(6+i*5)}));
+    const paid=[0,1,2,3,4].map(i=>({who:pts[(i+3)%8],what:["Laser therapy visit","Text-to-pay invoice","Decompression session","Package deposit","New patient exam"][i],method:["Card on file","Text-to-pay","Card in office","Text-to-pay","HSA card"][i],amount:[95,420,185,700,240][i],date:day(i)}));
+    return {cash:true,months,cur,prevSame,visits:Math.round(cur/118),avgVisit:118,superbills:Math.round(cur/118*0.38),outstanding:balances.reduce((a,b)=>a+b.amount,0),balances,paid};
+  }
+  const claims=Math.round(cur/142), clean=94+Math.floor(r()*5), ar=19+Math.floor(r()*12), waiting=Math.round(cur*0.34/10)*10;
+  const issues=[
+    {payer:"Aetna",problem:"Aetna needs a prior authorization number before they'll pay this visit.",ask:"Prior authorization number",ph:"e.g. A123456789"},
+    {payer:"Blue Cross Blue Shield of AZ",problem:"The referring doctor's NPI is missing. If this patient came through the hub we'll fill it in automatically.",ask:"Referring doctor or NPI",ph:"e.g. Dr. Ruiz, or 1234567890"},
+    {payer:"UnitedHealthcare",problem:"The patient's plan ended on Sep 30. We need their new insurance details.",ask:"New insurance and member ID",ph:"e.g. Cigna, member U1234567"},
+    {payer:"Medicare",problem:"The diagnosis code doesn't support this level of visit. A quick note from you will let our coder fix it.",ask:"Note for our coder",ph:"What made this visit more involved?"}
+  ].slice(0,2+Math.floor(r()*3)).map((x,i)=>Object.assign({id:d.id+"-c"+i,patient:pts[i],dos:day(5+i*4),amount:[184,312,96,248][i]},x));
+  const payments=[0,1,2,3,4,5].map(i=>{const p=d.payers.length?d.payers[i%d.payers.length]:PAYERS[i];return {payer:p,claims:3+Math.floor(r()*22),amount:Math.round((900+r()*7200)/5)*5,date:day(i)};});
+  return {cash:false,months,cur,prevSame,claims,clean,ar,waiting,issues,payments};
 }
-function addActivity(kind,text){S.activity.unshift({ts:Date.now(),kind,text});S.activity=S.activity.slice(0,60);}
-function toast(html){const el=document.createElement("div");el.className="toast";el.innerHTML=html;$("#toasts").appendChild(el);setTimeout(()=>el.remove(),4200);}
-function route(){const h=(location.hash||"").slice(1);return ["hub","messages","referrals","directory"].includes(h)?h:"hub";}
+function openIssues(b){return b.cash?b.balances.filter(x=>!S.reminded[x.id]):b.issues.filter(x=>!S.fixed[x.id]);}
 
 /* ---------- Chrome ---------- */
 function renderChrome(){
-  const r=route(), u=unreadTotal(), p=inbound().filter(x=>x.status==="pending").length;
-  const items=[["hub","Hub",I.hub,0],["messages","Messages",I.msg,u],["referrals","Referrals",I.ref,p],["directory","Directory",I.dir,0]];
-  $("#nav").innerHTML=items.map(([k,l,ic,c])=>'<a href="#'+k+'"'+(r===k?' aria-current="page"':'')+'>'+ic+'<span>'+l+'</span>'+(c?'<span class="count" aria-label="'+c+' new">'+c+'</span>':'')+'</a>').join("");
-  $("#pageTitle").textContent={hub:"Hub",messages:"Messages",referrals:"Referrals",directory:"Physician directory"}[r];
-  const m=me();
-  $("#railFoot").innerHTML='<strong class="mono">'+members().length+'</strong> physicians on the network<br>Billing by Phoenix Billing';
-  $("#demoBar").innerHTML='<b>Demo</b><span>Sample doctors and patients only. Use “Viewing as” to see the hub from any doctor’s side.</span>';
-  $("#persona").innerHTML='<button class="persona-btn" type="button" data-action="toggle-persona" aria-haspopup="true" aria-expanded="'+(ui.pop==="persona")+'">'+av(m,"sm")+'<span class="who"><b>'+esc(full(m))+'</b><span>Viewing as · '+esc(m.specialty)+'</span></span>'+I.chev+'</button>'+(ui.pop==="persona"?personaPop():"");
+  const r=route(), u=unreadThreads().length, p=inbound().filter(x=>x.status==="pending").length, b=openIssues(billing(me())).length;
+  const items=[["home","Home",I.home,0],["billing","Billing",I.bill,b],["referrals","Referrals",I.ref,p],["messages","Messages",I.msg,u],["network","Network",I.people,0]];
+  $("#nav").innerHTML=items.map(([k,l,ic,c])=>'<a href="#'+k+'"'+(r===k?' aria-current="page"':'')+'>'+ic+'<span>'+l+'</span>'+(c?'<span class="count">'+c+'</span>':'')+'</a>').join("");
+  const m=me(), tm=team();
+  $("#crumb").innerHTML=esc(m.clinic)+' · <strong>'+{home:"Home",billing:"Billing",referrals:"Referrals",messages:"Messages",network:"Network"}[r]+'</strong>';
+  $("#specialist").innerHTML='<div class="who">'+av(tm,"sm")+'<div><small>Your billing specialist</small><b>'+esc(full(tm))+'</b><span class="online">Online now</span></div></div><button type="button" data-action="msg-doc" data-id="phx">Message Maria</button>';
+  $("#demoNote").innerHTML='<b>Demo.</b> Patients, claims and dollar amounts are made up. Use the menu at the top right to see the hub as any doctor.';
+  $("#persona").innerHTML='<button class="persona-btn" type="button" data-action="toggle-persona" aria-haspopup="true" aria-expanded="'+(ui.pop==="persona")+'">'+av(m,"sm")+'<span class="who"><b>'+esc(full(m))+'</b><span>'+esc(m.specialty)+'</span></span>'+I.chev+'</button>'+(ui.pop==="persona"?personaPop():"");
 }
 function personaPop(){
-  return '<div class="pop" role="menu"><div class="label">View the hub as</div>'+
+  return '<div class="pop" role="menu"><div class="caps">See the hub as</div>'+
     members().map(d=>'<button class="pop-item" role="menuitemradio" aria-checked="'+(d.id===S.me)+'" data-action="switch-me" data-id="'+d.id+'">'+av(d,"sm")+'<span><b>'+esc(full(d))+'</b><small>'+esc(d.specialty)+' · '+esc(d.city)+'</small></span></button>').join("")+
-    '<hr><button class="pop-item" data-action="toggle-sim" role="menuitemcheckbox" aria-checked="'+S.sim+'"><span><b>'+(S.sim?"✓ ":"")+'Simulate colleague replies</b><small>Other doctors answer messages and accept referrals automatically</small></span></button>'+
-    '<button class="pop-item" data-action="reset"><span><b>Reset demo data</b><small>Restore the original sample network</small></span></button></div>';
+    '<hr><button class="pop-item" data-action="join"><span><b>+ Add a new doctor</b><small>Show a new Phoenix client joining the hub</small></span></button>'+
+    '<button class="pop-item" data-action="toggle-sim" role="menuitemcheckbox" aria-checked="'+S.sim+'"><span><b>'+(S.sim?"✓ ":"")+'Colleagues reply on their own</b><small>Other doctors answer messages and accept referrals</small></span></button>'+
+    '<button class="pop-item" data-action="reset"><span><b>Start the demo over</b><small>Restore the original sample data</small></span></button></div>';
 }
 
 /* ---------- Views ---------- */
 function render(){
   renderChrome();
   const r=route(), v=$("#view");
-  if(r==="hub") v.innerHTML=viewHub();
-  else if(r==="messages"){v.innerHTML=viewMessages();const b=$(".convo-b");if(b)b.scrollTop=b.scrollHeight;}
-  else if(r==="referrals") v.innerHTML=viewReferrals();
-  else v.innerHTML=viewDirectory();
+  v.innerHTML=r==="home"?viewHome():r==="billing"?viewBilling():r==="referrals"?viewReferrals():r==="messages"?viewMessages():viewNetwork();
+  if(r==="messages"){const b=$(".convo-b");if(b)b.scrollTop=b.scrollHeight;}
 }
 
-function viewHub(){
-  const m=me(), hr=new Date().getHours();
-  const greet=hr<12?"Good morning":hr<18?"Good afternoon":"Good evening";
-  const pend=inbound().filter(r=>r.status==="pending");
-  const outProg=outbound().filter(r=>["pending","accepted","booked"].includes(r.status));
-  const unread=myThreads().filter(t=>unreadIn(t));
-  const weekNew=members().filter(d=>Date.now()-d.joined<7*DAY);
-  const today=new Date().toLocaleDateString("en-CA",{weekday:"long",month:"long",day:"numeric"});
-  let attention="";
-  pend.forEach(r=>{const f=doc(r.from);attention+='<div class="row">'+av(f)+'<div class="body"><div><b>'+esc(short(f))+'</b> referred <b>'+esc(r.patient)+'</b>, '+r.age+r.sex+' <span class="pill '+r.urgency+'">'+(r.urgency==="urgent"?"Urgent":"Routine")+'</span></div><div class="meta">'+esc(r.reason)+' · '+ago(r.created)+'</div><div class="acts"><button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept</button><button class="btn sm" data-action="ref-decline" data-id="'+r.id+'">Decline</button><a class="btn sm ghost" href="#referrals" data-action="goto-ref" data-tab="inbound">Details</a></div></div></div>';});
-  unread.forEach(t=>{const o=other(t),l=last(t);attention+='<div class="row">'+av(o)+'<div class="body"><div><b>'+esc(short(o))+'</b> sent you a message</div><div class="meta">“'+esc(l.text.length>110?l.text.slice(0,110)+"…":l.text)+'” · '+ago(l.ts)+'</div><div class="acts"><button class="btn sm" data-action="open-thread" data-id="'+t.id+'">Reply</button></div></div></div>';});
-  if(!attention) attention='<div class="empty">You’re all caught up. New referrals and messages will show up here.</div>';
-  const feed=S.activity.slice(0,8).map(a=>'<div class="row"><span class="dot k-'+a.kind+'"></span><div class="body">'+a.text+'<div class="meta">'+ago(a.ts)+'</div></div></div>').join("")||'<div class="empty">No network activity yet.</div>';
+function viewHome(){
+  const m=me(), b=billing(m), hr=new Date().getHours();
+  const greet=hr<12?"Good morning":hr<17?"Good afternoon":"Good evening";
+  const pend=inbound().filter(r=>r.status==="pending"), unread=unreadThreads(), issues=openIssues(b);
+  const bits=[];
+  if(pend.length) bits.push('<strong>'+(pend.length===1?"one colleague sent you a patient":pend.length+" colleagues sent you patients")+'</strong>');
+  if(unread.length) bits.push((unread.length===1?"one person is":unread.length+" people are")+" waiting on a reply");
+  if(issues.length) bits.push(b.cash?issues.length+" patient balances are still open":issues.length+(issues.length===1?" claim needs":" claims need")+" a quick look");
+  const summary=bits.length?"Since you were last here, "+list(bits)+".":"You're all caught up. Nice work.";
+  const firstName=m.cred==="DC"||m.cred==="MD"||m.cred==="DO"?m.first:m.first;
+  let todos="";
+  pend.forEach(r=>{const f=doc(r.from);todos+='<div class="todo">'+av(f)+'<div class="body"><p><b>'+esc(short(f))+'</b> would like you to see <b>'+esc(r.patient)+'</b>, '+r.age+r.sex+'</p><div class="meta">'+esc(r.reason)+' · '+esc(r.coverage)+' · '+ago(r.created)+'</div>'+(r.note?'<div class="meta" style="font-style:italic;margin-top:4px">“'+esc(r.note)+'”</div>':'')+'<div class="acts"><button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept patient</button><button class="btn sm" data-action="ref-decline" data-id="'+r.id+'">Can’t take them</button></div></div></div>';});
+  unread.forEach(t=>{const o=other(t),l=last(t);todos+='<div class="todo">'+av(o)+'<div class="body"><p><b>'+esc(full(o))+'</b> sent you a message</p><div class="meta">“'+esc(l.text.length>120?l.text.slice(0,120)+"…":l.text)+'” · '+ago(l.ts)+'</div><div class="acts"><button class="btn sm" data-action="open-thread" data-id="'+t.id+'">Reply</button></div></div></div>';});
+  issues.slice(0,2).forEach(x=>{todos+=b.cash?'<div class="todo"><span class="ic money">'+I.bill+'</span><div class="body"><p><b>'+esc(x.patient)+'</b> still owes '+usd(x.amount)+'</p><div class="meta">'+esc(x.visit)+' · since '+x.due+'</div><div class="acts"><button class="btn sm" data-action="remind" data-id="'+x.id+'">Text them a payment link</button></div></div></div>':'<div class="todo"><span class="ic money">'+I.alert+'</span><div class="body"><p><b>'+esc(x.payer)+'</b> is holding a '+usd(x.amount)+' claim</p><div class="meta">'+esc(x.problem)+'</div><div class="acts"><button class="btn sm" data-action="fix" data-id="'+x.id+'">Help Maria fix it</button></div></div></div>';});
+  if(!todos) todos='<div class="empty">Nothing waiting on you right now. New patients and messages will show up here.</div>';
+  const delta=b.cur-b.prevSame;
   const newest=members().filter(d=>d.id!==S.me).sort((a,b)=>b.joined-a.joined).slice(0,3);
-  return '<div class="hello"><div><h2>'+greet+', '+esc(short(m))+'</h2><p>'+today+' · '+esc(m.clinic)+', '+esc(m.city)+'</p></div><div class="actions"><button class="btn primary" data-action="new-ref">'+I.ref+'New referral</button><button class="btn" data-action="new-msg">'+I.msg+'New message</button></div></div>'+
-  '<div class="stats">'+
-    stat("#messages",unread.length,"Unread conversations",unread.length?"Reply from Messages":"Inbox is clear",unread.length)+
-    stat("#referrals",pend.length,"Referrals awaiting you",pend.length?"Accept or decline":"Nothing pending",pend.length)+
-    stat("#referrals",outProg.length,"Your referrals in progress",outbound().filter(r=>r.status==="booked").length+" booked with specialists",0)+
-    stat("#directory",members().length,"Physicians on the network","+"+weekNew.length+" joined this week",0)+
-  '</div>'+
-  '<div class="grid2"><section class="panel"><div class="panel-h"><h3>Needs your attention</h3><span class="label">'+(pend.length+unread.length)+' items</span></div><div class="panel-b">'+attention+'</div></section>'+
-  '<section class="panel feed"><div class="panel-h"><h3>Network activity</h3><span class="label">Live</span></div><div class="panel-b">'+feed+'</div></section></div>'+
-  '<section class="panel" style="margin-top:18px"><div class="panel-h"><h3>New to the network</h3><a class="btn sm ghost" href="#directory">See all physicians</a></div><div class="newbies">'+newest.map(d=>'<div class="doc"><div class="doc-h">'+av(d)+'<div><b>'+esc(full(d))+'</b><span class="spec">'+esc(d.specialty)+'</span></div></div><div class="where"><span>'+esc(d.clinic)+' · '+esc(d.city)+'</span><span>Joined '+ago(d.joined)+'</span></div><div class="acts"><button class="btn sm" data-action="msg-doc" data-id="'+d.id+'">Say hello</button>'+(d.accepting?'<button class="btn sm" data-action="refer-doc" data-id="'+d.id+'">Refer</button>':'')+'</div></div>').join("")+'</div></section>';
+  const sent=outbound(), seen=sent.filter(r=>r.status==="completed").length;
+  return '<div class="stack">'+
+  '<section class="welcome"><div><span class="caps">'+new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})+'</span><h1>'+greet+', '+esc(firstName)+'.</h1><p>'+summary+'</p></div><div class="actions"><button class="btn lime" data-action="new-ref">'+I.ref+'Send a patient</button><button class="btn" data-action="new-msg">'+I.msg+'Message a colleague</button></div></section>'+
+  '<div class="cols"><section class="card"><div class="card-h"><h3>Waiting on you</h3></div><div class="card-b">'+todos+'</div></section>'+
+  '<div class="stack"><a class="card" href="#billing" style="text-decoration:none;color:inherit"><div class="card-h"><h3>'+(b.cash?"Patient payments":"Money in")+' this month</h3><span class="btn sm ghost">See billing</span></div><div class="card-b money"><div><div class="big num">'+usd(b.cur)+'</div><div class="delta'+(delta<0?" down":"")+'">'+(delta>=0?"▲ ":"▼ ")+usd(Math.abs(delta))+' compared with this point last month</div></div>'+bars(b.months)+'</div></a>'+
+  '<section class="card"><div class="card-h"><h3>Your referral circle</h3></div><div class="card-b"><p class="muted" style="font-size:14.5px">'+(sent.length?"You’ve sent <b style='color:var(--ink)'>"+sent.length+" patients</b> to colleagues on the hub, and <b style='color:var(--ink)'>"+seen+"</b> have been seen so far.":"You haven’t sent anyone a patient yet. The colleagues below are a good place to start.")+' You’ve received <b style="color:var(--ink)">'+inbound().length+'</b>.</p></div></section></div></div>'+
+  '<section><div class="page-head" style="margin-bottom:12px"><div><h2 style="font-size:20px">New faces on the hub</h2><p>Doctors who recently joined Phoenix Medical Billing. Say hello.</p></div><a class="btn sm ghost" href="#network">Meet everyone</a></div><div class="people">'+newest.map(d=>personCard(d,true)).join("")+'</div></section>'+
+  '<section class="card"><div class="card-h"><h3>Around the hub</h3></div><div class="card-b">'+S.activity.slice(0,6).map(a=>{const w=a.who&&doc(a.who);return '<div class="feed-item">'+(w?av(w,"sm"):'<span class="av sm" style="--h:95">PM</span>')+'<div>'+a.text+'<div class="meta">'+ago(a.ts)+'</div></div></div>';}).join("")+'</div></section>'+
+  '</div>';
 }
-function stat(href,n,label,sub,hot){return '<a class="stat'+(hot?" hot":"")+'" href="'+href+'"><span class="label">'+label+'</span><span class="n">'+n+'</span><span class="sub">'+esc(sub)+'</span></a>';}
+function bars(months){
+  const W=320,H=120,pad=18,bw=34,gap=(W-months.length*bw)/(months.length+1),max=Math.max(...months.map(m=>m.v))*1.15;
+  return '<svg class="bars" viewBox="0 0 '+W+' '+(H+pad)+'" role="img" aria-label="Collections for the last six months">'+months.map((m,i)=>{const h=Math.max(4,m.v/max*H),x=gap+i*(bw+gap),y=H-h;return '<rect class="b'+(i===months.length-1?" cur":"")+'" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw+'" height="'+h.toFixed(1)+'" rx="6"></rect><text x="'+(x+bw/2).toFixed(1)+'" y="'+(H+14)+'" text-anchor="middle">'+m.label+'</text>'+(i===months.length-1?'<text class="v" x="'+(x+bw/2).toFixed(1)+'" y="'+(y-6).toFixed(1)+'" text-anchor="middle">'+(Math.round(m.v/100)/10)+'k</text>':'');}).join("")+'</svg>';
+}
 
-function viewDirectory(){
-  const cities=[...new Set(members().map(d=>d.city))].sort();
-  const specs=[...new Set(members().map(d=>d.specialty))].sort();
-  const q=ui.q.trim().toLowerCase();
-  const list=members().filter(d=>(!q||(full(d)+" "+d.specialty+" "+d.clinic+" "+d.city).toLowerCase().includes(q))&&(!ui.spec||d.specialty===ui.spec)&&(!ui.city||d.city===ui.city)&&(!ui.openOnly||d.accepting)).sort((a,b)=>a.last.localeCompare(b.last));
-  return '<div class="filters"><label class="search">'+I.search+'<input class="input" id="dirQ" type="search" placeholder="Search by name, specialty, clinic or city" value="'+esc(ui.q)+'" aria-label="Search physicians"></label>'+
-    '<select class="input" id="dirSpec" aria-label="Specialty"><option value="">All specialties</option>'+specs.map(s=>'<option'+(s===ui.spec?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
-    '<select class="input" id="dirCity" aria-label="City"><option value="">All cities</option>'+cities.map(s=>'<option'+(s===ui.city?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
-    '<label class="check"><input type="checkbox" id="dirOpen"'+(ui.openOnly?" checked":"")+'> Accepting referrals</label></div>'+
-    '<div class="count-line">'+list.length+' of '+members().length+' physicians</div>'+
-    (list.length?'<div class="cards">'+list.map(docCard).join("")+'</div>':'<div class="panel empty">No physicians match those filters. Try clearing the search.</div>');
+function viewBilling(){
+  const m=me(), b=billing(m), tm=team(), delta=b.cur-b.prevSame, iss=openIssues(b);
+  const head='<div class="page-head"><div><span class="caps">Billing</span><h1>'+(b.cash?"Your patient payments":"Your billing at a glance")+'</h1><p>'+(b.cash?"You run a cash-pay practice, so we focus on getting patients paid up quickly and giving them superbills for their insurer.":"Maria and the Phoenix team send your claims, chase payers and post every payment. Here’s where things stand.")+'</p></div><button class="btn primary" data-action="msg-doc" data-id="phx">'+I.msg+'Ask Maria a question</button></div>';
+  const hero='<div class="billing-top"><section class="card"><div class="card-h"><h3>'+(b.cash?"Collected from patients":"Collected")+' in '+new Date().toLocaleDateString("en-US",{month:"long"})+'</h3></div><div class="card-b money"><div><div class="big num">'+usd(b.cur)+'</div><div class="delta'+(delta<0?" down":"")+'">'+(delta>=0?"▲ ":"▼ ")+usd(Math.abs(delta))+' compared with this point last month</div></div>'+bars(b.months)+'</div></section>'+
+    '<section class="card"><div class="card-h"><h3>Your specialist</h3></div><div class="card-b" style="display:flex;flex-direction:column;gap:14px"><div class="profile-h">'+av(tm,"lg")+'<div><b style="font-size:17px">'+esc(full(tm))+'</b><div class="muted" style="font-size:14px">Phoenix Medical Billing · Glendale</div><div class="muted" style="font-size:13.5px">Usually replies within the hour</div></div></div><p style="font-size:14.5px">“'+(b.cash?"I’ll keep an eye on open balances and send superbills the same day. When you’re ready, I can show you what adding a few insurance plans would mean for your numbers.":"I check your claims every morning. If a payer pushes back I’ll fix it myself, and I’ll only bother you when I really need something from you.")+'”</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn soft sm" data-action="msg-doc" data-id="phx">'+I.msg+'Message</button><button class="btn sm" data-action="service" data-s="Book a call">Book a call</button></div></div></section></div>';
+  let facts, body;
+  if(b.cash){
+    facts='<div class="facts">'+fact(b.visits,"Paid visits this month","")+fact(usd(b.avgVisit),"Average per visit","")+fact(b.superbills,"Superbills sent to patients","So patients can claim it back")+fact(usd(b.outstanding),"Still owed by patients",iss.length+" open balances")+'</div>';
+    body='<div class="cols"><section class="card"><div class="card-h"><h3>Open patient balances</h3><span class="muted" style="font-size:13.5px">'+iss.length+' open</span></div><div class="card-b">'+(b.balances.map(x=>'<div class="claim"><span class="av sm" style="--h:40">'+esc(x.patient.replace(/\./g,""))+'</span><div class="body"><b>'+esc(x.patient)+'</b> · '+esc(x.visit)+'<div class="meta">Owed since '+x.due+'</div></div><div style="text-align:right"><div class="amt num">'+usd(x.amount)+'</div>'+(S.reminded[x.id]?'<span class="pill ok">Link sent</span>':'<button class="btn sm" data-action="remind" data-id="'+x.id+'">Text a pay link</button>')+'</div></div>').join(""))+'</div></section>'+
+      '<section class="card"><div class="card-h"><h3>Recent payments</h3></div><div class="card-b table-wrap"><table><thead><tr><th>Patient</th><th>How</th><th class="r">Amount</th></tr></thead><tbody>'+b.paid.map(p=>'<tr><td><b>'+esc(p.who)+'</b><div class="muted" style="font-size:12.5px">'+esc(p.what)+' · '+p.date+'</div></td><td>'+esc(p.method)+'</td><td class="r num"><b>'+usd(p.amount)+'</b></td></tr>').join("")+'</tbody></table></div></section></div>'+
+      '<section class="callout"><div><span class="caps">Thinking about insurance?</span><h3>Most patients on the hub have insurance.</h3><p>'+insuranceDemand(m)+' Phoenix can get you credentialed with the plans that matter, or keep you cash-pay and send every patient a superbill.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-action="service" data-s="Credentialing">Explore credentialing</button><button class="btn" data-action="service" data-s="Superbills">Set up superbills</button></div></section>';
+  } else {
+    facts='<div class="facts">'+fact(b.claims,"Claims sent this month","")+fact(b.clean+"%","Paid on the first try","Industry average is about 85%")+fact(b.ar+" days","Average time to get paid","")+fact(usd(b.waiting),"Waiting on insurance","Normal for this time of month")+'</div>';
+    body='<div class="cols"><section class="card"><div class="card-h"><h3>Needs you</h3><span class="muted" style="font-size:13.5px">'+(iss.length?iss.length+" claim"+(iss.length>1?"s":""):"All clear")+'</span></div><div class="card-b">'+(b.issues.map(x=>'<div class="claim"><span class="todo" style="padding:0"><span class="ic money">'+I.alert+'</span></span><div class="body"><b>'+esc(x.payer)+'</b> · '+esc(x.patient)+', seen '+x.dos+'<div class="meta">'+esc(x.problem)+'</div></div><div style="text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end"><div class="amt num">'+usd(x.amount)+'</div>'+(S.fixed[x.id]?'<span class="pill ok">With Maria</span>':'<button class="btn sm primary" data-action="fix" data-id="'+x.id+'">Fix it</button>')+'</div></div>').join(""))+'</div></section>'+
+      '<section class="card"><div class="card-h"><h3>Payments posted</h3></div><div class="card-b table-wrap"><table><thead><tr><th>Payer</th><th class="r">Claims</th><th class="r">Amount</th></tr></thead><tbody>'+b.payments.map(p=>'<tr><td><b>'+esc(p.payer)+'</b><div class="muted" style="font-size:12.5px">'+p.date+'</div></td><td class="r num">'+p.claims+'</td><td class="r num"><b>'+usd(p.amount)+'</b></td></tr>').join("")+'</tbody></table></div></section></div>';
+  }
+  const services=[["Credentialing",I.id,"Get in-network with the plans your patients carry."],["Patient payments",I.phone,"Text-to-pay links, card on file and payment plans."],["Patient reminders",I.mail,"Postcards, birthday cards and automated recall campaigns."],["HIPAA check-up",I.shield,"A yearly review so you’re never caught off guard."],["EMR help",I.screen,"We work with any system. No switching required."],["Practice analysis",I.chart,"A free review of where money is slipping through."]];
+  return '<div class="stack">'+head+hero+facts+body+'<section><div class="page-head" style="margin-bottom:12px"><div><h2 style="font-size:20px">More ways Phoenix can help</h2><p>Everything beyond billing, in the same place. Tap one and Maria will get back to you.</p></div></div><div class="services">'+services.map(([n,ic,d])=>'<div class="service"><span class="ic">'+ic+'</span><h4>'+n+'</h4><p>'+d+'</p><button class="btn sm soft" data-action="service" data-s="'+esc(n)+'">Ask about this</button></div>').join("")+'</div></section></div>';
 }
-function docCard(d){
-  const isMe=d.id===S.me;
-  return '<article class="doc"><div class="doc-h">'+av(d,"lg")+'<div><b>'+esc(full(d))+(isMe?'<span class="you">You</span>':'')+'</b><span class="spec">'+esc(d.specialty)+'</span></div></div>'+
-  '<div class="where"><span>'+esc(d.clinic)+'</span><span>'+esc(d.city)+', AB</span></div>'+
-  '<div class="tags"><span class="pill '+(d.accepting?"open":"closed")+'">'+(d.accepting?"Accepting referrals":"Not accepting")+'</span>'+(Date.now()-d.joined<7*DAY?'<span class="pill accepted">New</span>':'')+'</div>'+
-  (isMe?'':'<div class="acts"><button class="btn sm" data-action="msg-doc" data-id="'+d.id+'">'+I.msg+'Message</button><button class="btn sm primary" data-action="refer-doc" data-id="'+d.id+'"'+(d.accepting?'':' disabled title="Not accepting referrals right now"')+'>'+I.ref+'Refer</button></div>')+'</article>';
+function fact(n,l,hint){return '<div class="fact"><span class="n num">'+n+'</span><span class="l">'+l+'</span>'+(hint?'<span class="hint">'+hint+'</span>':'')+'</div>';}
+function insuranceDemand(m){const rs=inbound();const ins=rs.filter(r=>r.coverage&&r.coverage!=="Self-pay").length;return rs.length?"Of the "+rs.length+" patients colleagues have sent you, "+ins+" have insurance.":"Most patients referred through the hub carry Aetna, BCBS of Arizona, UnitedHealthcare or Medicare.";}
+
+function personCard(d,featuredIfNew){
+  const isMe=d.id===S.me, isNew=Date.now()-d.joined<7*DAY;
+  return '<article class="person'+(featuredIfNew&&isNew&&d.real?" featured":"")+'"><div class="person-h">'+av(d,"lg")+'<div><b>'+esc(withCred(d))+(isMe?'<span class="you">You</span>':'')+'</b><span class="spec">'+esc(d.specialty)+'</span><div class="where">'+esc(d.clinic)+' · '+esc(d.city)+', AZ</div></div></div>'+
+  '<p class="bio">'+esc(d.bio)+'</p>'+
+  '<div class="tags">'+(isNew?'<span class="pill new">New this week</span>':'')+payPill(d)+(d.accepting?'':'<span class="pill plain">Not taking referrals</span>')+'</div>'+
+  '<span class="reply">Usually replies '+esc(d.reply)+'</span>'+
+  (isMe?'':'<div class="acts"><button class="btn sm" data-action="profile" data-id="'+d.id+'">Profile</button><button class="btn sm" data-action="msg-doc" data-id="'+d.id+'">Message</button><button class="btn sm primary" data-action="refer-doc" data-id="'+d.id+'"'+(d.accepting?'':' disabled')+'>Send a patient</button></div>')+'</article>';
+}
+function viewNetwork(){
+  const cities=[...new Set(members().map(d=>d.city))].sort(), specs=[...new Set(members().map(d=>d.specialty))].sort(), q=ui.q.trim().toLowerCase();
+  const rows=members().filter(d=>(!q||[full(d),d.specialty,d.clinic,d.city,(d.goodFor||[]).join(" "),d.bio].join(" ").toLowerCase().includes(q))&&(!ui.spec||d.specialty===ui.spec)&&(!ui.city||d.city===ui.city)&&(!ui.pay||(ui.pay==="cash"?d.pay!=="insurance":d.payers.includes(ui.pay)))&&(!ui.openOnly||d.accepting)).sort((a,b)=>(b.joined>Date.now()-7*DAY)-(a.joined>Date.now()-7*DAY)||a.last.localeCompare(b.last));
+  return '<div class="page-head"><div><span class="caps">The Phoenix network</span><h1>'+members().length+' doctors who bill with Phoenix</h1><p>Every practice that joins Phoenix Medical Billing is listed here. Find the right person for your patient, then send them over in a minute.</p></div><button class="btn lime" data-action="join">'+I.plus+'Add a doctor</button></div>'+
+  '<div class="toolbar"><label class="search">'+I.search+'<input class="input" id="dirQ" type="search" placeholder="Try “sciatica”, “Scottsdale” or “Spanish”" value="'+esc(ui.q)+'" aria-label="Search doctors"></label>'+
+  '<select class="input" id="dirSpec" aria-label="Specialty"><option value="">Any specialty</option>'+specs.map(s=>'<option'+(s===ui.spec?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
+  '<select class="input" id="dirCity" aria-label="City"><option value="">Any city</option>'+cities.map(s=>'<option'+(s===ui.city?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
+  '<select class="input" id="dirPay" aria-label="Payment"><option value="">Any payment</option><option value="cash"'+(ui.pay==="cash"?" selected":"")+'>Sees self-pay patients</option>'+PAYERS.map(p=>'<option'+(p===ui.pay?" selected":"")+'>'+esc(p)+'</option>').join("")+'</select>'+
+  '<label class="check"><input type="checkbox" id="dirOpen"'+(ui.openOnly?" checked":"")+'> Taking new patients</label></div>'+
+  (rows.length?'<div class="people">'+rows.map(d=>personCard(d,true)).join("")+'</div>':'<div class="card empty">No one matches that yet. Try a different word or clear a filter.</div>');
 }
 
 function viewMessages(){
   const ts=myThreads().filter(t=>!ui.tq||full(other(t)).toLowerCase().includes(ui.tq.toLowerCase()));
-  const cur=ui.thread&&S.threads.find(t=>t.id===ui.thread&&t.members.includes(S.me));
-  if(!cur) ui.thread=null;
-  const list=ts.map(t=>{const o=other(t),l=last(t),u=unreadIn(t);return '<button class="titem'+(u?" unread":"")+'" data-action="open-thread" data-id="'+t.id+'" aria-current="'+(cur&&cur.id===t.id)+'">'+av(o)+'<span class="body"><span class="l1"><b>'+esc(full(o))+'</b><time>'+(l.ts?ago(l.ts):"")+'</time></span><span class="prev">'+(l.from===S.me?"You: ":"")+esc(l.text||"No messages yet")+'</span></span></button>';}).join("")||'<div class="empty">No conversations yet. Start one with any doctor on the network.</div>';
+  const cur=ui.thread&&S.threads.find(t=>t.id===ui.thread&&t.members.includes(S.me)); if(!cur) ui.thread=null;
+  const listHtml=ts.map(t=>{const o=other(t),l=last(t),u=unreadIn(t);return '<button class="titem'+(u?" unread":"")+'" data-action="open-thread" data-id="'+t.id+'" aria-current="'+(!!cur&&cur.id===t.id)+'">'+av(o)+'<span class="body"><span class="l1"><b>'+esc(full(o))+'</b><time>'+(l.ts?ago(l.ts):"")+'</time></span><span class="prev">'+(l.from===S.me?"You: ":"")+esc(l.text||"Say hello")+'</span></span></button>';}).join("")||'<div class="empty">No conversations yet.</div>';
   let convo;
   if(cur){
-    const o=other(cur); let lastDay="", body="";
-    cur.messages.forEach(m=>{const dl=dayLabel(m.ts);if(dl!==lastDay){body+='<div class="day">'+dl+'</div>';lastDay=dl;}
-      body+='<div class="bub'+(m.from===S.me?" me":"")+(m.ref?" bref":"")+'">'+(m.ref?'<span class="refline">Referral '+esc(m.ref)+'</span>':'')+esc(m.text)+'<time>'+clock(m.ts)+'</time></div>';});
-    if(ui.typing[cur.id]) body+='<div class="typing"><i></i><i></i><i></i> '+esc(short(o))+' is typing</div>';
-    if(!cur.messages.length) body+='<div class="day">Say hello to '+esc(short(o))+'</div>';
-    convo='<div class="convo"><div class="convo-h"><button class="icon-btn back-btn" data-action="back-threads" aria-label="Back to conversations">'+I.back+'</button>'+av(o)+'<div class="who"><b>'+esc(full(o))+'</b><span>'+esc(o.specialty)+' · '+esc(o.clinic)+'</span></div>'+(!o.team&&o.accepting?'<button class="btn sm" data-action="refer-doc" data-id="'+o.id+'">'+I.ref+'Refer</button>':'')+'</div>'+
-      '<div class="convo-b">'+body+'</div><form class="composer" data-form="send"><textarea class="input" id="composer" name="text" rows="1" placeholder="Message '+esc(short(o))+'" aria-label="Message"></textarea><button class="btn primary" type="submit">'+I.send+'Send</button></form></div>';
-  } else convo='<div class="convo"><div class="convo-empty"><div><h3 style="margin-bottom:6px">Pick a conversation</h3><p style="margin:0 0 14px">Or start a new one with anyone on the network.</p><button class="btn primary" data-action="new-msg">'+I.plus+'New message</button></div></div></div>';
-  return '<div class="msgs'+(cur?" has-thread":"")+'"><div class="tlist"><div class="tlist-h"><label class="search">'+I.search+'<input class="input" id="tq" type="search" placeholder="Search" value="'+esc(ui.tq)+'" aria-label="Search conversations"></label><button class="icon-btn" data-action="new-msg" aria-label="New message">'+I.plus+'</button></div><div class="tlist-b">'+list+'</div></div>'+convo+'</div>';
+    const o=other(cur); let lastDay="",body="";
+    cur.messages.forEach(m=>{const dl=dayLabel(m.ts);if(dl!==lastDay){body+='<div class="day">'+dl+'</div>';lastDay=dl;}const mine=m.from===S.me,who=doc(m.from);
+      body+='<div class="line'+(mine?" me":"")+'">'+(mine?"":av(who,"xs"))+'<div class="bub">'+(m.tag?'<span class="tag">'+esc(m.tag)+'</span><br>':'')+esc(m.text)+'<time>'+clock(m.ts)+'</time></div></div>';});
+    if(!cur.messages.length) body+='<div class="day">This is the start of your conversation with '+esc(short(o))+'.</div>';
+    if(ui.typing[cur.id]) body+='<div class="typing"><i></i><i></i><i></i> '+esc(short(o))+' is typing…</div>';
+    convo='<div class="convo"><div class="convo-h"><button class="icon-btn back-btn" data-action="back-threads" aria-label="Back to conversations">'+I.back+'</button>'+av(o)+'<div class="who"><b>'+esc(full(o))+'</b><span>'+esc(o.specialty)+' · '+esc(o.clinic)+'</span></div>'+(!o.team&&o.accepting?'<button class="btn sm" data-action="refer-doc" data-id="'+o.id+'">Send a patient</button>':'')+'</div><div class="convo-b">'+body+'</div><form class="composer" data-form="send"><textarea class="input" id="composer" name="text" rows="1" placeholder="Write to '+esc(short(o))+'…" aria-label="Message"></textarea><button class="btn primary" type="submit">'+I.send+'Send</button></form></div>';
+  } else convo='<div class="convo"><div class="convo-empty"><div><h3 style="margin-bottom:6px;color:var(--ink)">Pick up a conversation</h3><p style="margin-bottom:14px">Or reach out to anyone on the hub.</p><button class="btn primary" data-action="new-msg">'+I.plus+'New message</button></div></div></div>';
+  return '<div class="msgs'+(cur?" has-thread":"")+'"><div class="tlist"><div class="tlist-h"><label class="search">'+I.search+'<input class="input" id="tq" type="search" placeholder="Search people" value="'+esc(ui.tq)+'" aria-label="Search conversations"></label><button class="icon-btn" data-action="new-msg" aria-label="New message">'+I.plus+'</button></div><div class="tlist-b">'+listHtml+'</div></div>'+convo+'</div>';
 }
 
 function viewReferrals(){
-  const inb=inbound(), out=outbound();
-  const base=ui.refTab==="inbound"?inb:out;
-  const filters=[["all","All"],["pending","Awaiting response"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"],["declined","Declined"]];
-  const list=base.filter(r=>ui.refFilter==="all"||r.status===ui.refFilter).sort((a,b)=>(a.status==="pending"?0:1)-(b.status==="pending"?0:1)||b.created-a.created);
-  return '<div class="hello" style="margin-bottom:14px"><div><h2>Referrals</h2><p>Send patients to colleagues on the network and track every step until they’re seen.</p></div><div class="actions"><button class="btn primary" data-action="new-ref">'+I.plus+'New referral</button></div></div>'+
-  '<div class="tabs" role="tablist"><button class="tab" role="tab" data-action="ref-tab" data-tab="inbound" aria-selected="'+(ui.refTab==="inbound")+'">Received<span class="c">'+inb.length+'</span></button><button class="tab" role="tab" data-action="ref-tab" data-tab="outbound" aria-selected="'+(ui.refTab==="outbound")+'">Sent<span class="c">'+out.length+'</span></button></div>'+
-  '<div class="chips">'+filters.map(([k,l])=>{const n=k==="all"?base.length:base.filter(r=>r.status===k).length;return '<button class="chip" data-action="ref-filter" data-f="'+k+'" aria-pressed="'+(ui.refFilter===k)+'">'+l+' <span class="mono">'+n+'</span></button>';}).join("")+'</div>'+
-  (list.length?'<div class="refs">'+list.map(refCard).join("")+'</div>':'<div class="panel empty">'+(ui.refTab==="inbound"?"No referrals received here yet.":"You haven’t sent any referrals in this category.")+' <br><br><button class="btn primary" data-action="new-ref">'+I.plus+'New referral</button></div>');
+  const inb=inbound(), out=outbound(), base=ui.refTab==="inbound"?inb:out;
+  const filters=[["all","All"],["pending","Waiting"],["accepted","Accepted"],["booked","Booked"],["completed","Seen"],["declined","Not taken"]];
+  const rows=base.filter(r=>ui.refFilter==="all"||r.status===ui.refFilter).sort((a,b)=>(a.status==="pending"?0:1)-(b.status==="pending"?0:1)||b.created-a.created);
+  return '<div class="page-head"><div><span class="caps">Referrals</span><h1>Patients you’ve sent and received</h1><p>Every referral stays visible from the moment it’s sent until the patient is seen, so nobody falls through the cracks.</p></div><button class="btn primary" data-action="new-ref">'+I.plus+'Send a patient</button></div>'+
+  '<div class="tabs" role="tablist"><button class="tab" role="tab" data-action="ref-tab" data-tab="inbound" aria-selected="'+(ui.refTab==="inbound")+'">Sent to me<span class="c">'+inb.length+'</span></button><button class="tab" role="tab" data-action="ref-tab" data-tab="outbound" aria-selected="'+(ui.refTab==="outbound")+'">I sent<span class="c">'+out.length+'</span></button></div>'+
+  '<div class="chips">'+filters.map(([k,l])=>{const n=k==="all"?base.length:base.filter(r=>r.status===k).length;return '<button class="chip" data-action="ref-filter" data-f="'+k+'" aria-pressed="'+(ui.refFilter===k)+'">'+l+' · '+n+'</button>';}).join("")+'</div>'+
+  (rows.length?'<div class="refs">'+rows.map(refCard).join("")+'</div>':'<div class="card empty">'+(ui.refTab==="inbound"?"No patients here yet. When a colleague sends you someone, they’ll appear here.":"Nothing here yet.")+'<br><br><button class="btn primary" data-action="new-ref">'+I.plus+'Send a patient</button></div>');
 }
 function refCard(r){
-  const f=doc(r.from), t=doc(r.to), mine=r.to===S.me;
-  const idx=STEPS.findIndex(s=>s[0]===r.status);
-  const steps=r.status==="declined"?'':'<div class="steps" aria-label="Progress: '+STATUS_LABEL[r.status]+'">'+STEPS.map((s,i)=>(i?'<span class="bar'+(i<=idx?" done":"")+'"></span>':'')+'<span class="s'+(i<=idx?" done":"")+'"><i></i>'+s[1]+'</span>').join("")+'</div>';
+  const f=doc(r.from), t=doc(r.to), mine=r.to===S.me, idx=STEPS.findIndex(s=>s[0]===r.status);
+  const steps=r.status==="declined"?'':'<div class="steps" aria-label="Progress: '+STATUS[r.status]+'">'+STEPS.map((s,i)=>(i?'<span class="bar'+(i<=idx?" done":"")+'"></span>':'')+'<span class="s'+(i<=idx?" done":"")+'"><i></i>'+s[1]+'</span>').join("")+'</div>';
   let acts="";
   if(mine){
-    if(r.status==="pending") acts='<button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept</button><button class="btn sm danger" data-action="ref-decline" data-id="'+r.id+'">Decline</button>';
+    if(r.status==="pending") acts='<button class="btn sm primary" data-action="ref-accept" data-id="'+r.id+'">Accept patient</button><button class="btn sm danger" data-action="ref-decline" data-id="'+r.id+'">Can’t take them</button>';
     else if(r.status==="accepted") acts='<button class="btn sm primary" data-action="ref-book" data-id="'+r.id+'">Book appointment</button>';
-    else if(r.status==="booked") acts='<button class="btn sm primary" data-action="ref-complete" data-id="'+r.id+'">Mark patient seen</button>';
-  }
-  acts+='<button class="btn sm" data-action="msg-doc" data-id="'+(mine?f.id:t.id)+'">'+I.msg+'Message</button>';
-  return '<article class="ref'+(r.urgency==="urgent"?" is-urgent":"")+'"><div style="min-width:0"><div class="ref-top"><span class="ref-id">'+r.id+'</span><span class="pill '+r.status+'">'+STATUS_LABEL[r.status]+'</span><span class="pill '+r.urgency+'">'+(r.urgency==="urgent"?"Urgent":"Routine")+'</span>'+(r.claim?'<span class="pill claim">Consult claim submitted by Phoenix</span>':'')+'</div>'+
-    '<h3>'+esc(r.patient)+' · '+r.age+r.sex+'</h3><p class="reason">'+esc(r.reason)+'</p>'+
-    '<div class="party">'+av(f,"sm")+'<span>'+esc(short(f))+(f.id===S.me?" (you)":"")+'</span><span class="arrow">→</span>'+av(t,"sm")+'<span>'+esc(short(t))+(t.id===S.me?" (you)":"")+' · '+esc(t.specialty)+'</span></div>'+
-    (r.note?'<div class="note"><span class="label">Clinical note</span><br>'+esc(r.note)+'</div>':'')+
-    (r.status==="declined"&&r.declineReason?'<div class="note"><span class="label">Reason declined</span><br>'+esc(r.declineReason)+'</div>':'')+
-  '</div><div class="side"><span class="meta muted" style="font-size:12.5px">Sent '+ago(r.created)+(r.appt?' · Appt '+apptLabel(r.appt):'')+'</span>'+steps+'<div class="acts">'+acts+'</div></div></article>';
+    else if(r.status==="booked") acts='<button class="btn sm primary" data-action="ref-complete" data-id="'+r.id+'">Mark as seen</button>';
+  } else if(r.status==="completed"&&!r.thanked) acts='<button class="btn sm lime" data-action="thank" data-id="'+r.id+'">'+I.heart+'Say thanks</button>';
+  acts+='<button class="btn sm" data-action="msg-doc" data-id="'+(mine?f.id:t.id)+'">Message</button>';
+  const cashMismatch=t.pay==="cash"&&r.coverage&&r.coverage!=="Self-pay";
+  return '<article class="ref"><div style="min-width:0"><div class="ref-top"><span class="pill '+r.status+'">'+STATUS[r.status]+'</span>'+(r.urgency==="urgent"?'<span class="pill urgent">Urgent</span>':'')+'<span class="pill plain">'+esc(r.coverage||"Coverage unknown")+'</span>'+(r.claim?'<span class="pill ok">Billed by Phoenix</span>':'')+(r.thanked&&!mine?'<span class="pill ok">♥ Thanked</span>':'')+'</div>'+
+    '<h3>'+esc(r.patient)+', '+r.age+r.sex+'</h3><p class="reason">'+esc(r.reason)+'</p>'+
+    '<div class="party">'+av(f,"xs")+'<span><b>'+esc(f.id===S.me?"You":short(f))+'</b></span><span>sent to</span>'+av(t,"xs")+'<span><b>'+esc(t.id===S.me?"you":short(t))+'</b> · '+esc(t.specialty)+'</span></div>'+
+    (r.note?'<div class="note">“'+esc(r.note)+'”<span class="by">— '+esc(full(f))+'</span></div>':'')+
+    (cashMismatch&&r.status!=="declined"?'<div class="notice" style="margin-top:10px"><b>Cash-pay clinic.</b> Phoenix will give this patient a superbill so they can ask '+esc(r.coverage)+' to pay them back.</div>':'')+
+    (r.status==="declined"&&r.declineReason?'<div class="note">“'+esc(r.declineReason)+'”<span class="by">— '+esc(full(t))+'</span></div>':'')+
+  '</div><div class="side"><span class="when">Sent '+ago(r.created)+(r.appt?' · Appointment '+apptLabel(r.appt):'')+'</span>'+steps+'<div class="acts">'+acts+'</div></div></article>';
 }
 
 /* ---------- Modals ---------- */
 function modal(title,inner){
   $("#modalRoot").innerHTML='<div class="scrim" data-action="scrim"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="modal-h"><h2 id="mTitle">'+title+'</h2><button class="icon-btn" data-action="close-modal" aria-label="Close">'+I.x+'</button></div>'+inner+'</div></div>';
-  const f=$("#modalRoot input:not([type=radio]):not([type=checkbox]), #modalRoot select, #modalRoot textarea"); if(f) f.focus();
+  const f=document.querySelector("#modalRoot form input:not([type=radio]):not([type=checkbox]), #modalRoot form select, #modalRoot form textarea"); if(f) f.focus();
 }
 function closeModal(){$("#modalRoot").innerHTML="";}
 function doctorOptions(sel,filter){
-  const groups={};members().filter(d=>d.id!==S.me&&(!filter||filter(d))).forEach(d=>{(groups[d.specialty]=groups[d.specialty]||[]).push(d);});
-  return Object.keys(groups).sort().map(g=>'<optgroup label="'+esc(g)+'">'+groups[g].map(d=>'<option value="'+d.id+'"'+(d.id===sel?" selected":"")+'>'+esc(full(d))+' · '+esc(d.city)+'</option>').join("")+'</optgroup>').join("");
+  const g={};members().filter(d=>d.id!==S.me&&(!filter||filter(d))).forEach(d=>{(g[d.specialty]=g[d.specialty]||[]).push(d);});
+  return Object.keys(g).sort().map(k=>'<optgroup label="'+esc(k)+'">'+g[k].map(d=>'<option value="'+d.id+'"'+(d.id===sel?" selected":"")+'>'+esc(full(d))+' · '+esc(d.city)+(d.pay==="cash"?" (cash-pay)":"")+'</option>').join("")+'</optgroup>').join("");
 }
 function openReferral(to){
-  modal("New referral",'<form data-form="referral">'+
-    '<label class="field"><span>Refer to</span><select class="input" name="to" id="rTo" required><option value="">Choose a physician accepting referrals</option>'+doctorOptions(to,d=>d.accepting)+'</select></label>'+
-    '<div class="two"><label class="field"><span>Patient initials</span><input class="input" name="patient" id="rPatient" required maxlength="6" placeholder="e.g. J.D."></label>'+
-    '<div class="two"><label class="field"><span>Age</span><input class="input" name="age" id="rAge" type="number" min="0" max="120" required placeholder="45"></label><label class="field"><span>Sex</span><select class="input" name="sex" id="rSex"><option>F</option><option>M</option><option value="X">X</option></select></label></div></div>'+
-    '<label class="field"><span>Reason for referral</span><input class="input" name="reason" id="rReason" required placeholder="e.g. Persistent microscopic hematuria, smoker"></label>'+
-    '<div class="field"><span>Urgency</span><div class="seg"><label><input type="radio" name="urgency" value="routine" checked> Routine</label><label><input type="radio" name="urgency" value="urgent"> Urgent</label></div></div>'+
-    '<label class="field"><span>Clinical note <span class="muted" style="font-weight:400">(optional)</span></span><textarea class="input" name="note" id="rNote" placeholder="Relevant history, meds, investigations done"></textarea></label>'+
-    '<p class="hint">Demo only: use initials, never real patient details. Phoenix attaches the referring practitioner number to the specialist’s consult claim automatically.</p>'+
+  modal("Send a patient",'<form data-form="referral">'+
+    '<label class="field"><span>Who are you sending them to?</span><select class="input" name="to" id="rTo" required><option value="">Choose a doctor</option>'+doctorOptions(to,d=>d.accepting)+'</select></label>'+
+    '<div class="two"><label class="field"><span>Patient initials</span><input class="input" name="patient" id="rPatient" required maxlength="6" placeholder="J.D."></label><div class="two"><label class="field"><span>Age</span><input class="input" name="age" id="rAge" type="number" min="0" max="120" required placeholder="52"></label><label class="field"><span>Sex</span><select class="input" name="sex" id="rSex"><option>F</option><option>M</option><option value="X">X</option></select></label></div></div>'+
+    '<label class="field"><span>What’s going on?</span><input class="input" name="reason" id="rReason" required placeholder="e.g. Neck pain and headaches since a car accident in August"></label>'+
+    '<label class="field"><span>How will they pay?</span><select class="input" name="coverage" id="rCov"><option>Self-pay</option>'+PAYERS.map(p=>'<option>'+esc(p)+'</option>').join("")+'</select></label>'+
+    '<div id="rCashNote" class="notice" hidden></div>'+
+    '<div class="field"><span>How soon?</span><div class="seg"><label><input type="radio" name="urgency" value="routine" checked> Whenever they can</label><label><input type="radio" name="urgency" value="urgent"> Please see them soon</label></div></div>'+
+    '<label class="field"><span>A note to your colleague <span class="muted" style="font-weight:400">(optional)</span></span><textarea class="input" name="note" id="rNote" placeholder="Anything that will help them help your patient"></textarea></label>'+
+    '<p class="hint">Demo only, so please use initials. When the patient is seen, Phoenix adds your NPI to the claim automatically.</p>'+
     '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">'+I.send+'Send referral</button></div></form>');
+  updateCashNote();
+}
+function updateCashNote(){
+  const sel=$("#rTo"), cov=$("#rCov"), n=$("#rCashNote"); if(!sel||!n) return;
+  const d=sel.value&&doc(sel.value);
+  if(d&&d.pay==="cash"&&cov.value!=="Self-pay"){n.hidden=false;n.innerHTML='<b>'+esc(short(d))+' is cash-pay.</b> The patient pays at the visit, and Phoenix sends them a superbill to submit to '+esc(cov.value)+'.';}
+  else if(d&&d.pay==="insurance"&&cov.value==="Self-pay"){n.hidden=false;n.innerHTML='<b>Heads up:</b> '+esc(short(d))+' mostly sees insured patients. Their office will share self-pay rates when they call.';}
+  else n.hidden=true;
 }
 function openNewMessage(to){
-  modal("New message",'<form data-form="newmsg"><label class="field"><span>To</span><select class="input" name="to" id="mTo" required><option value="">Choose a physician</option>'+doctorOptions(to)+'</select></label>'+
-  '<label class="field"><span>Message</span><textarea class="input" name="text" id="mText" required placeholder="Write your message"></textarea></label>'+
-  '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">'+I.send+'Send</button></div></form>');
+  modal("New message",'<form data-form="newmsg"><label class="field"><span>To</span><select class="input" name="to" id="mTo" required><option value="">Choose someone</option><option value="phx"'+(to==="phx"?" selected":"")+'>Maria Delgado · Your billing specialist</option>'+doctorOptions(to)+'</select></label><label class="field"><span>Message</span><textarea class="input" name="text" id="mText" required placeholder="Hi! …"></textarea></label><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">'+I.send+'Send</button></div></form>');
+}
+function openProfile(id){
+  const d=doc(id);
+  modal(esc(withCred(d)),'<div class="pad"><div class="profile-h">'+av(d,"lg")+'<div><b style="font-size:18px">'+esc(full(d))+'</b><div style="color:var(--green-ink);font-weight:600">'+esc(d.specialty)+'</div><div class="muted">'+esc(d.clinic)+' · '+esc(d.city)+', AZ</div></div></div><p>'+esc(d.bio)+'</p>'+
+  '<dl class="kv"><dt>Good fit for</dt><dd>'+esc((d.goodFor||[]).join(", "))+'</dd><dt>Payment</dt><dd>'+payLabel(d)+(d.payers.length?": "+esc(d.payers.join(", ")):"")+'</dd><dt>Languages</dt><dd>'+esc((d.languages||[]).join(", "))+'</dd><dt>In practice</dt><dd>'+d.years+' years</dd><dt>Replies</dt><dd>Usually '+esc(d.reply)+'</dd><dt>On the hub since</dt><dd>'+new Date(d.joined).toLocaleDateString("en-US",{month:"long",year:"numeric"})+'</dd></dl>'+
+  '<div class="foot"><button class="btn" data-action="msg-doc" data-id="'+d.id+'">Message</button>'+(d.accepting?'<button class="btn primary" data-action="refer-doc" data-id="'+d.id+'">Send a patient</button>':'')+'</div></div>');
 }
 function openJoin(){
-  modal("Add a doctor to the network",'<form data-form="join"><p class="hint" style="font-size:13.5px">Every physician who signs up for Phoenix Billing gets a hub account. Add one here to see them appear in the directory.</p>'+
+  modal("Welcome a new doctor",'<form data-form="join"><p class="hint" style="font-size:14px">Every practice that signs up with Phoenix Medical Billing gets a spot on the hub. Fill this in to show how it looks.</p>'+
   '<div class="two"><label class="field"><span>First name</span><input class="input" name="first" id="jFirst" required placeholder="Sarah"></label><label class="field"><span>Last name</span><input class="input" name="last" id="jLast" required placeholder="Kim"></label></div>'+
-  '<label class="field"><span>Specialty</span><select class="input" name="specialty" id="jSpec">'+SPECIALTIES.map(s=>'<option>'+esc(s)+'</option>').join("")+'</select></label>'+
-  '<div class="two"><label class="field"><span>Clinic</span><input class="input" name="clinic" id="jClinic" required placeholder="Summerside Medical"></label><label class="field"><span>City</span><input class="input" name="city" id="jCity" required value="Edmonton"></label></div>'+
-  '<label class="check"><input type="checkbox" name="accepting" id="jAcc" checked> Accepting referrals</label>'+
-  '<label class="check"><input type="checkbox" name="switch" id="jSwitch" checked> View the hub as this doctor after adding</label>'+
-  '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn accent" type="submit">'+I.plus+'Add to network</button></div></form>');
+  '<div class="two"><label class="field"><span>Specialty</span><select class="input" name="specialty" id="jSpec">'+SPECIALTIES.map(s=>'<option>'+esc(s)+'</option>').join("")+'</select></label><label class="field"><span>Credentials</span><input class="input" name="cred" id="jCred" value="MD"></label></div>'+
+  '<div class="two"><label class="field"><span>Practice name</span><input class="input" name="clinic" id="jClinic" required placeholder="Arcadia Family Health"></label><label class="field"><span>City</span><input class="input" name="city" id="jCity" required value="Phoenix"></label></div>'+
+  '<label class="field"><span>How do patients pay?</span><select class="input" name="pay" id="jPay"><option value="insurance">Insurance</option><option value="both">Insurance and self-pay</option><option value="cash">Cash-pay only</option></select></label>'+
+  '<label class="field"><span>A line about them</span><input class="input" name="bio" id="jBio" placeholder="What they love treating"></label>'+
+  '<label class="check"><input type="checkbox" name="switch" id="jSwitch" checked> Show me the hub as this doctor</label>'+
+  '<div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn lime" type="submit">'+I.plus+'Add to the hub</button></div></form>');
 }
-function openDecline(id){
-  modal("Decline referral "+esc(id),'<form data-form="decline" data-id="'+esc(id)+'"><label class="field"><span>Reason (shared with the referring doctor)</span><textarea class="input" name="reason" id="dReason" required placeholder="e.g. Outside my scope; Dr. Chen would be a better fit"></textarea></label><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Decline referral</button></div></form>');
-}
-function openBook(id){
-  modal("Book appointment",'<form data-form="book" data-id="'+esc(id)+'"><label class="field"><span>Appointment date</span><input class="input" type="date" name="date" id="bDate" required value="'+isoDay(Date.now()+5*DAY)+'"></label><p class="hint">The referring doctor is notified with the date.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Confirm booking</button></div></form>');
+function openDecline(id){modal("Can’t take this patient?",'<form data-form="decline" data-id="'+esc(id)+'"><label class="field"><span>Let your colleague know why</span><textarea class="input" name="reason" id="dReason" required placeholder="e.g. We’re booked out until January. Dr. Nguyen might be able to see them sooner."></textarea></label><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Send</button></div></form>');}
+function openBook(id){modal("Book the appointment",'<form data-form="book" data-id="'+esc(id)+'"><label class="field"><span>Date</span><input class="input" type="date" name="date" id="bDate" required value="'+isoDay(Date.now()+5*DAY)+'"></label><p class="hint">We’ll let the referring doctor know.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Cancel</button><button class="btn primary" type="submit">Book it</button></div></form>');}
+function openFix(id){
+  const x=billing(me()).issues.find(i=>i.id===id); if(!x) return;
+  modal("Help Maria fix this claim",'<form data-form="fix" data-id="'+esc(id)+'"><dl class="kv"><dt>Payer</dt><dd>'+esc(x.payer)+'</dd><dt>Patient</dt><dd>'+esc(x.patient)+', seen '+x.dos+'</dd><dt>Amount</dt><dd>'+usd2(x.amount)+'</dd></dl><div class="notice">'+esc(x.problem)+'</div><label class="field"><span>'+esc(x.ask)+'</span><input class="input" name="answer" id="fAnswer" required placeholder="'+esc(x.ph)+'"></label><p class="hint">Maria will update the claim and resubmit it today.</p><div class="foot"><button class="btn" type="button" data-action="close-modal">Not now</button><button class="btn primary" type="submit">Send to Maria</button></div></form>');
 }
 
-/* ---------- Mutations ---------- */
-function postMessage(t,from,text,extra){
-  const m=Object.assign({from,text,ts:Date.now()},extra||{}); t.messages.push(m);
-  t.read=t.read||{}; t.read[from]=m.ts; return m;
+/* ---------- Actions ---------- */
+function postMessage(t,from,text,extra){const m=Object.assign({from,text,ts:Date.now()},extra||{});t.messages.push(m);t.read=t.read||{};t.read[from]=m.ts;return m;}
+const REPLIES=["Thanks for this! I’ll take a look this afternoon.","Got it. Could you send over the most recent notes when you get a chance?","Happy to help. We have openings next week.","Thank you, I’ll have my front desk reach out to the patient today.","Sounds good. Let’s catch up after the visit.","Really appreciate you thinking of us."];
+function simReply(t,fromId,text){
+  setTimeout(()=>{ui.typing[t.id]=true;if(route()==="messages"&&ui.thread===t.id)render();},900);
+  setTimeout(()=>{ui.typing[t.id]=false;postMessage(t,fromId,text||REPLIES[Math.floor(Math.random()*REPLIES.length)]);
+    const viewing=route()==="messages"&&ui.thread===t.id;
+    if(viewing){t.read[S.me]=Date.now();} else if(t.members.includes(S.me)) toast('<b>'+esc(short(doc(fromId)))+'</b> replied to you');
+    save();render();},3300);
 }
 function sendMessage(t,text){
-  postMessage(t,S.me,text); save(); render();
-  const o=other(t); if(!S.sim||o.team) { if(o.team&&S.sim) simTeam(t); return; }
-  simReply(t,o.id);
+  postMessage(t,S.me,text);save();render();
+  if(!S.sim) return; const o=other(t);
+  simReply(t,o.id,o.team?"Thanks, Dr. "+me().last+"! I’m on it and will message you as soon as it’s done.":null);
 }
-const REPLIES=["Thanks, got it. I’ll take a look this afternoon.","Sounds good. Could you send the most recent labs when you have a moment?","Happy to help. We have openings next week.","Appreciate the heads up. I’ll have my MOA reach out to book.","Makes sense to me. Let’s touch base after the appointment.","Great, thanks for thinking of us."];
-function simReply(t,fromId,textOverride){
-  const sentAs=S.me;
-  setTimeout(()=>{ui.typing[t.id]=true; if(route()==="messages"&&ui.thread===t.id) render();},900);
-  setTimeout(()=>{
-    ui.typing[t.id]=false;
-    postMessage(t,fromId,textOverride||REPLIES[Math.floor(Math.random()*REPLIES.length)]); save();
-    if(S.me===sentAs&&!(route()==="messages"&&ui.thread===t.id)) toast('<b>'+esc(short(doc(fromId)))+'</b> replied');
-    if(route()==="messages"&&ui.thread===t.id){t.read[S.me]=Date.now();save();}
-    render();
-  },3200);
-}
-function simTeam(t){simReply(t,"phx","Thanks! A billing specialist will follow up within one business day.");}
-
 function createReferral(fd){
-  const r={id:"R-"+(++S.seq),from:S.me,to:fd.get("to"),patient:fd.get("patient").trim().toUpperCase(),age:Number(fd.get("age")),sex:fd.get("sex"),reason:fd.get("reason").trim(),urgency:fd.get("urgency")||"routine",status:"pending",created:Date.now(),note:(fd.get("note")||"").trim()};
-  r.history=[{status:"pending",ts:r.created,by:S.me}];
-  S.referrals.push(r);
-  const to=doc(r.to), t=threadWith(r.to,true);
-  postMessage(t,S.me,"Sent you a referral for "+r.patient+" ("+r.age+r.sex+"): "+r.reason+".",{ref:r.id});
-  addActivity("ref","<b>"+esc(short(me()))+"</b> sent a referral to <b>"+esc(short(to))+"</b>");
-  save(); closeModal(); toast("Referral <b>"+r.id+"</b> sent to "+esc(short(to)));
-  ui.refTab="outbound"; ui.refFilter="all";
-  if(route()!=="referrals") location.hash="#referrals"; else render();
-  if(S.sim){
-    const sentAs=S.me;
-    setTimeout(()=>{
-      if(r.status!=="pending") return;
-      setStatus(r,"accepted",r.to);
-      postMessage(t,r.to,"Accepted your referral for "+r.patient+". My office will call the patient to book.",{ref:r.id});
-      addActivity("ref","<b>"+esc(short(to))+"</b> accepted a referral from <b>"+esc(short(doc(sentAs)))+"</b>");
-      save(); if(S.me===sentAs) toast("<b>"+esc(short(to))+"</b> accepted "+r.id); render();
-    },6500);
-  }
+  const r={id:"R-"+(++S.seq),from:S.me,to:fd.get("to"),patient:fd.get("patient").trim().toUpperCase(),age:Number(fd.get("age")),sex:fd.get("sex"),reason:fd.get("reason").trim(),coverage:fd.get("coverage"),urgency:fd.get("urgency")||"routine",status:"pending",created:Date.now(),note:(fd.get("note")||"").trim()};
+  r.history=[{status:"pending",ts:r.created,by:S.me}];S.referrals.push(r);
+  const to=doc(r.to), t=threadWith(r.to,true), sender=me();
+  postMessage(t,S.me,"I’ve sent you "+r.patient+" ("+r.age+r.sex+"): "+r.reason+(r.note?"\n\n"+r.note:""),{tag:"Referral "+r.id});
+  addActivity("<b>"+esc(short(sender))+"</b> sent a patient to <b>"+esc(short(to))+"</b>");
+  save();closeModal();toast("Sent! <b>"+esc(short(to))+"</b> has your referral for "+esc(r.patient));
+  ui.refTab="outbound";ui.refFilter="all";if(route()!=="referrals")location.hash="#referrals";else render();
+  if(S.sim) setTimeout(()=>{if(r.status!=="pending")return;setStatus(r,"accepted",r.to);postMessage(t,r.to,"Thanks for sending "+r.patient+" our way! We’ll call them today to get them booked.",{tag:"Referral "+r.id});addActivity("<b>"+esc(short(to))+"</b> accepted a patient from <b>"+esc(short(sender))+"</b>");save();if(S.me===sender.id)toast("<b>"+esc(short(to))+"</b> accepted "+esc(r.patient));render();},7000);
 }
-function setStatus(r,status,by){r.status=status;(r.history=r.history||[]).push({status,ts:Date.now(),by});}
+function setStatus(r,s,by){r.status=s;(r.history=r.history||[]).push({status:s,ts:Date.now(),by});}
 function refAction(kind,id,extra){
-  const r=S.referrals.find(x=>x.id===id); if(!r) return;
-  const f=doc(r.from), t=threadWith(r.from,true);
-  if(kind==="accept"){setStatus(r,"accepted",S.me);postMessage(t,S.me,"Accepted your referral for "+r.patient+". We’ll be in touch to book.",{ref:r.id});addActivity("ref","<b>"+esc(short(me()))+"</b> accepted a referral from <b>"+esc(short(f))+"</b>");toast("Accepted <b>"+r.id+"</b>. "+esc(short(f))+" has been notified");}
-  if(kind==="decline"){setStatus(r,"declined",S.me);r.declineReason=extra;postMessage(t,S.me,"Unable to accept the referral for "+r.patient+": "+extra,{ref:r.id});toast("Declined <b>"+r.id+"</b>");}
-  if(kind==="book"){setStatus(r,"booked",S.me);r.appt=extra;postMessage(t,S.me,r.patient+" is booked for "+apptLabel(extra)+".",{ref:r.id});toast("Booked "+r.patient+" for "+apptLabel(extra));}
-  if(kind==="complete"){setStatus(r,"completed",S.me);r.claim=true;postMessage(t,S.me,"Saw "+r.patient+" today. Consult letter to follow.",{ref:r.id});addActivity("ref","<b>"+esc(short(me()))+"</b> saw a patient referred by <b>"+esc(short(f))+"</b>");toast("Marked seen. <b>Phoenix</b> is submitting the consult claim");}
-  save(); closeModal(); render();
+  const r=S.referrals.find(x=>x.id===id);if(!r)return;const f=doc(r.from),t=threadWith(r.from,true),m=me(),tag={tag:"Referral "+r.id};
+  if(kind==="accept"){setStatus(r,"accepted",S.me);postMessage(t,S.me,"Thanks for sending "+r.patient+"! We’ll reach out to get them booked.",tag);addActivity("<b>"+esc(short(m))+"</b> accepted a patient from <b>"+esc(short(f))+"</b>");toast("You accepted <b>"+esc(r.patient)+"</b>. We let "+esc(short(f))+" know.");}
+  if(kind==="decline"){setStatus(r,"declined",S.me);r.declineReason=extra;postMessage(t,S.me,"I’m sorry, I can’t take "+r.patient+" right now. "+extra,tag);toast("We let "+esc(short(f))+" know.");}
+  if(kind==="book"){setStatus(r,"booked",S.me);r.appt=extra;postMessage(t,S.me,r.patient+" is booked for "+apptLabel(extra)+".",tag);toast("Booked "+esc(r.patient)+" for "+apptLabel(extra));}
+  if(kind==="complete"){setStatus(r,"completed",S.me);r.claim=true;postMessage(t,S.me,"Saw "+r.patient+" today. Thanks again for the referral. Notes to follow.",tag);addActivity("<b>"+esc(short(m))+"</b> saw a patient sent by <b>"+esc(short(f))+"</b>");toast("Marked as seen. <b>Phoenix</b> is billing the visit.");}
+  save();closeModal();render();
+}
+function thank(id){
+  const r=S.referrals.find(x=>x.id===id);if(!r)return;const t=doc(r.to),th=threadWith(r.to,true);
+  r.thanked=true;postMessage(th,S.me,"Thank you for taking such good care of "+r.patient+". It means a lot to me and to them.",{tag:"Thank you"});
+  addActivity("<b>"+esc(short(me()))+"</b> thanked <b>"+esc(short(t))+"</b> for seeing a patient");save();toast("Thank-you sent to <b>"+esc(short(t))+"</b>");render();
 }
 function joinDoctor(fd){
-  const d={id:"d"+Date.now(),first:fd.get("first").trim(),last:fd.get("last").trim(),specialty:fd.get("specialty"),clinic:fd.get("clinic").trim(),city:fd.get("city").trim(),hue:Math.floor(Math.random()*360),joined:Date.now(),accepting:!!fd.get("accepting")};
-  S.doctors.push(d);
-  addActivity("join","<b>"+esc(full(d))+"</b> ("+esc(d.specialty)+", "+esc(d.city)+") joined the network");
-  const t={id:"t"+Date.now(),members:[d.id,"phx"],read:{},messages:[{from:"phx",text:"Welcome to the Phoenix Billing hub, "+short(d)+". You can now message and refer to "+(members().length-1)+" physicians on the network. Your billing onboarding call is booked for this week.",ts:Date.now()}]};
-  S.threads.push(t);
-  if(fd.get("switch")) S.me=d.id;
-  save(); closeModal(); toast("<b>"+esc(full(d))+"</b> joined the network");
-  if(fd.get("switch")){location.hash="#hub";} render();
+  const pay=fd.get("pay");
+  const d={id:"d"+Date.now(),first:fd.get("first").trim(),last:fd.get("last").trim(),cred:fd.get("cred").trim(),specialty:fd.get("specialty"),clinic:fd.get("clinic").trim(),city:fd.get("city").trim(),hue:Math.floor(Math.random()*360),joined:Date.now(),accepting:true,pay,payers:pay==="cash"?[]:["Aetna","Blue Cross Blue Shield of AZ","UnitedHealthcare"],languages:["English"],years:1+Math.floor(Math.random()*20),reply:"within a day",bio:(fd.get("bio")||"").trim()||"New to the Phoenix network and looking forward to working with you.",goodFor:[fd.get("specialty")]};
+  S.doctors.push(d);addActivity("<b>"+esc(full(d))+"</b> joined from "+esc(d.clinic)+", "+esc(d.city));
+  S.threads.push({id:"t"+Date.now(),members:[d.id,"phx"],read:{},messages:[{from:"phx",text:"Welcome to the hub, "+short(d)+"! I’m Maria, your billing specialist. You’re now visible to "+(members().length-1)+" doctors across the Valley who can send you patients. Let’s set up a quick onboarding call this week.",ts:Date.now()}]});
+  if(fd.get("switch"))S.me=d.id;save();closeModal();toast("<b>"+esc(full(d))+"</b> is on the hub");if(fd.get("switch"))location.hash="#home";render();
 }
 
 /* ---------- Events ---------- */
 document.addEventListener("click",e=>{
   const el=e.target.closest("[data-action]");
   if(ui.pop&&!e.target.closest(".pop")&&!(el&&el.dataset.action==="toggle-persona")){ui.pop=null;renderChrome();}
-  if(!el) return;
-  const a=el.dataset.action, id=el.dataset.id;
-  if(a==="scrim"){if(e.target===el) closeModal();return;}
-  if(a==="close-modal") return closeModal();
+  if(!el)return;const a=el.dataset.action,id=el.dataset.id;
+  if(a==="scrim"){if(e.target===el)closeModal();return;}
+  if(a==="close-modal")return closeModal();
   if(a==="toggle-persona"){ui.pop=ui.pop==="persona"?null:"persona";return renderChrome();}
-  if(a==="switch-me"){S.me=id;ui.pop=null;ui.thread=null;save();toast("Now viewing as <b>"+esc(full(doc(id)))+"</b>");return render();}
+  if(a==="switch-me"){S.me=id;ui.pop=null;ui.thread=null;ui.refTab="inbound";ui.refFilter="all";save();toast("You’re now seeing the hub as <b>"+esc(full(doc(id)))+"</b>");return render();}
   if(a==="toggle-sim"){S.sim=!S.sim;save();return renderChrome();}
-  if(a==="reset"){S=seed();ui.thread=null;ui.pop=null;save();toast("Demo data restored");location.hash="#hub";return render();}
-  if(a==="join") return openJoin();
-  if(a==="new-ref") return openReferral("");
-  if(a==="new-msg") return openNewMessage("");
-  if(a==="refer-doc") return openReferral(id);
-  if(a==="msg-doc"){const t=threadWith(id,true);ui.thread=t.id;t.read=t.read||{};t.read[S.me]=Date.now();save();if(route()!=="messages")location.hash="#messages";else render();return;}
-  if(a==="open-thread"){ui.thread=id;const t=S.threads.find(x=>x.id===id);if(t){t.read=t.read||{};t.read[S.me]=Date.now();save();}if(route()!=="messages")location.hash="#messages";else render();setTimeout(()=>{const c=$("#composer");if(c&&window.innerWidth>760)c.focus();},0);return;}
+  if(a==="reset"){S=seed();ui.thread=null;ui.pop=null;save();toast("Demo restored");location.hash="#home";return render();}
+  if(a==="join"){ui.pop=null;renderChrome();return openJoin();}
+  if(a==="new-ref")return openReferral("");
+  if(a==="new-msg")return openNewMessage("");
+  if(a==="refer-doc")return openReferral(id);
+  if(a==="profile")return openProfile(id);
+  if(a==="msg-doc"){closeModal();const t=threadWith(id,true);ui.thread=t.id;t.read=t.read||{};t.read[S.me]=Date.now();save();if(route()!=="messages")location.hash="#messages";else render();return;}
+  if(a==="open-thread"){ui.thread=id;const t=S.threads.find(x=>x.id===id);if(t){t.read=t.read||{};t.read[S.me]=Date.now();save();}if(route()!=="messages")location.hash="#messages";else render();setTimeout(()=>{const c=$("#composer");if(c&&innerWidth>780)c.focus();},0);return;}
   if(a==="back-threads"){ui.thread=null;return render();}
   if(a==="ref-tab"){ui.refTab=el.dataset.tab;ui.refFilter="all";return render();}
-  if(a==="goto-ref"){ui.refTab=el.dataset.tab;ui.refFilter="pending";return;}
   if(a==="ref-filter"){ui.refFilter=el.dataset.f;return render();}
-  if(a==="ref-accept") return refAction("accept",id);
-  if(a==="ref-decline") return openDecline(id);
-  if(a==="ref-book") return openBook(id);
-  if(a==="ref-complete") return refAction("complete",id);
+  if(a==="ref-accept")return refAction("accept",id);
+  if(a==="ref-decline")return openDecline(id);
+  if(a==="ref-book")return openBook(id);
+  if(a==="ref-complete")return refAction("complete",id);
+  if(a==="thank")return thank(id);
+  if(a==="fix")return openFix(id);
+  if(a==="remind"){S.reminded[id]=true;save();toast("Payment link texted to the patient");return render();}
+  if(a==="service"){const s=el.dataset.s,t=threadWith("phx",true);ui.thread=t.id;postMessage(t,S.me,"Hi Maria, I’d like to hear more about "+s.toLowerCase()+".");save();if(route()!=="messages")location.hash="#messages";else render();if(S.sim)simReply(t,"phx","Absolutely! I’ll put together what "+s.toLowerCase()+" would look like for your practice and send you a couple of times to talk this week.");return;}
 });
 document.addEventListener("submit",e=>{
-  const f=e.target.closest("form[data-form]"); if(!f) return; e.preventDefault();
-  const fd=new FormData(f), k=f.dataset.form;
-  if(k==="send"){const txt=(fd.get("text")||"").trim();const t=S.threads.find(x=>x.id===ui.thread);if(txt&&t)sendMessage(t,txt);return;}
+  const f=e.target.closest("form[data-form]");if(!f)return;e.preventDefault();const fd=new FormData(f),k=f.dataset.form;
+  if(k==="send"){const txt=(fd.get("text")||"").trim(),t=S.threads.find(x=>x.id===ui.thread);if(txt&&t)sendMessage(t,txt);return;}
   if(k==="newmsg"){const t=threadWith(fd.get("to"),true);closeModal();ui.thread=t.id;if(route()!=="messages")location.hash="#messages";sendMessage(t,fd.get("text").trim());return;}
-  if(k==="referral") return createReferral(fd);
-  if(k==="join") return joinDoctor(fd);
-  if(k==="decline") return refAction("decline",f.dataset.id,fd.get("reason").trim());
-  if(k==="book") return refAction("book",f.dataset.id,fd.get("date"));
+  if(k==="referral")return createReferral(fd);
+  if(k==="join")return joinDoctor(fd);
+  if(k==="decline")return refAction("decline",f.dataset.id,fd.get("reason").trim());
+  if(k==="book")return refAction("book",f.dataset.id,fd.get("date"));
+  if(k==="fix"){const id=f.dataset.id,x=billing(me()).issues.find(i=>i.id===id);S.fixed[id]=true;const t=threadWith("phx",true);postMessage(t,S.me,"Here’s what you need for "+x.patient+"’s "+x.payer+" claim: "+fd.get("answer").trim(),{tag:"Claim fix"});save();closeModal();toast("Thanks! <b>Maria</b> will resubmit it today.");render();if(S.sim)simReply(t,"phx","Perfect, that’s all I needed. Resubmitting now, and I’ll let you know when "+x.payer+" pays.");}
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){if($("#modalRoot").innerHTML)closeModal();else if(ui.pop){ui.pop=null;renderChrome();}}
@@ -713,16 +837,15 @@ document.addEventListener("keydown",e=>{
 });
 document.addEventListener("input",e=>{
   const id=e.target.id;
-  if(id==="dirQ"||id==="tq"){
-    if(id==="dirQ")ui.q=e.target.value; else ui.tq=e.target.value;
-    const pos=e.target.selectionStart; render(); const n=$("#"+id); if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(_){}}
-  }
+  if(id==="dirQ"||id==="tq"){if(id==="dirQ")ui.q=e.target.value;else ui.tq=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById(id);if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(_){}}}
 });
 document.addEventListener("change",e=>{
   const id=e.target.id;
   if(id==="dirSpec"){ui.spec=e.target.value;render();}
   if(id==="dirCity"){ui.city=e.target.value;render();}
+  if(id==="dirPay"){ui.pay=e.target.value;render();}
   if(id==="dirOpen"){ui.openOnly=e.target.checked;render();}
+  if(id==="rTo"||id==="rCov")updateCashNote();
 });
 window.addEventListener("hashchange",render);
 window.addEventListener("storage",e=>{if(e.key===KEY){const n=load();if(n){S=n;render();}}});
@@ -730,6 +853,5 @@ setInterval(()=>{if(!$("#modalRoot").innerHTML&&!(document.activeElement&&/INPUT
 render();
 })();
 </script>
-
 </body>
 </html>
