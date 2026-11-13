@@ -31,6 +31,7 @@ A demo web app for **Phoenix Medical Billing** (Glendale, AZ — phxmedicalbilli
 - `index.html` — the entire app: one static file with vanilla JS and no build step. State lives in `localStorage` under key `phoenix-practice-hub-v3`. Bump the version in `KEY`, `load()` and `seed()` whenever the seed data shape changes.
 - `tools/make_artifact.py` — writes an Artifact-ready copy (strips the html/head/body wrapper).
 - `README.md` — demo instructions, hosting steps for demo.keydate.ca, and notes on what a production version needs.
+- `netlify.toml` — Netlify build config (publishes only `index.html`, adds noindex header). Netlify base directory = `phoenix-billing`.
 
 ## Code map (inside index.html)
 
@@ -51,7 +52,7 @@ A demo web app for **Phoenix Medical Billing** (Glendale, AZ — phxmedicalbilli
 ## Roadmap ideas (one thread each)
 
 - Shared live data (for example Supabase) so two people on different devices can message and refer in real time.
-- Host at demo.keydate.ca (Netlify plus a DNS CNAME).
+- Host at demo.keydate.ca: config done (`netlify.toml`); the user connects Netlify and adds the DNS CNAME (steps in README).
 - Move to its own repository.
 - Sign-in screen and a Phoenix admin view (all practices, onboarding pipeline).
 - Referral analytics ("patients you sent and received this quarter") and printable superbills.

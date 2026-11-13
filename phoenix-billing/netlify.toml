@@ -1,0 +1,18 @@
+# Netlify config for the Phoenix Practice Hub demo (demo.keydate.ca).
+# In Netlify, set "Base directory" to phoenix-billing so only this folder
+# is built; Netlify then reads this file. Nothing outside the folder is used.
+
+[build]
+  # Publish only the app itself, so CLAUDE.md, README.md and tools/ stay private.
+  command = "rm -rf dist && mkdir dist && cp index.html dist/"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Backs up the <meta name="robots" content="noindex"> tag in index.html.
+    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
