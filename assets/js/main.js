@@ -789,4 +789,14 @@
   if (fab && reelSection && "IntersectionObserver" in window) {
     new IntersectionObserver(function (en) { fab.classList.toggle("hide-reel", en[0].isIntersecting); }, { threshold: 0.15 }).observe(reelSection);
   }
+  // Hide it while the hero buttons are on screen so it never covers them (e.g. Get tickets on phones).
+  var heroCtas = document.querySelectorAll(".hero-cta");
+  if (fab && heroCtas.length && "IntersectionObserver" in window) {
+    var ctasShowing = new Set();
+    var ctaObserver = new IntersectionObserver(function (en) {
+      en.forEach(function (e) { if (e.isIntersecting) ctasShowing.add(e.target); else ctasShowing.delete(e.target); });
+      fab.classList.toggle("hide-hero", ctasShowing.size > 0);
+    });
+    heroCtas.forEach(function (el) { ctaObserver.observe(el); });
+  }
 })();
