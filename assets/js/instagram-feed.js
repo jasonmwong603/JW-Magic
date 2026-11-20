@@ -7,6 +7,13 @@ window.JW_INSTAGRAM = {
   "handle": "jwmagic_",
   "posts": [
     {
+      "url": "https://www.instagram.com/p/Df8FbtpAZB4/",
+      "image": "assets/img/instagram/Df8FbtpAZB4.jpg",
+      "type": "carousel",
+      "caption": "Fractured playing cards. Created by Jason Wong, a professional magician and cardistry artist, these cards are simple but beautiful. Accor…",
+      "date": "2026-11-19"
+    },
+    {
       "url": "https://www.instagram.com/p/DficgdjEdrp/",
       "image": "assets/img/instagram/DficgdjEdrp.jpg",
       "type": "photo",
@@ -40,13 +47,6 @@ window.JW_INSTAGRAM = {
       "type": "video",
       "caption": "See you all at @asiafest.yeg",
       "date": "2026-09-25"
-    },
-    {
-      "url": "https://www.instagram.com/reel/DdrBQpQhWaQ/",
-      "image": "assets/img/instagram/DdrBQpQhWaQ.jpg",
-      "type": "video",
-      "caption": "RATE ME.",
-      "date": "2026-09-24"
     }
   ]
 };
