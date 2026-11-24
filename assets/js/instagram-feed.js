@@ -7,6 +7,20 @@ window.JW_INSTAGRAM = {
   "handle": "jwmagic_",
   "posts": [
     {
+      "url": "https://www.instagram.com/reel/DgF3nUrxPLS/",
+      "image": "assets/img/instagram/DgF3nUrxPLS.jpg",
+      "type": "video",
+      "caption": "Thank you @yegremaxelite for having me at their Christmas party event. It was truly a blast and my absolute pleasure to be part of your c…",
+      "date": "2026-11-23"
+    },
+    {
+      "url": "https://www.instagram.com/reel/DgD2FLJsdTd/",
+      "image": "assets/img/instagram/DgD2FLJsdTd.jpg",
+      "type": "video",
+      "caption": "TICKET LINK IN BIO",
+      "date": "2026-11-22"
+    },
+    {
       "url": "https://www.instagram.com/p/Df8FbtpAZB4/",
       "image": "assets/img/instagram/Df8FbtpAZB4.jpg",
       "type": "carousel",
@@ -33,20 +47,6 @@ window.JW_INSTAGRAM = {
       "type": "video",
       "caption": "Thank you once again to @centralsocialhall and @sparrowcowork for having me be a part of their respective parties!",
       "date": "2026-11-03"
-    },
-    {
-      "url": "https://www.instagram.com/p/Dd-yNOolOLZ/",
-      "image": "assets/img/instagram/Dd-yNOolOLZ.jpg",
-      "type": "carousel",
-      "caption": "Thank you @asiafest.yeg for giving me the stage, and @wmcng_official for the amazing shots",
-      "date": "2026-10-02"
-    },
-    {
-      "url": "https://www.instagram.com/reel/DdtP-EKBMW2/",
-      "image": "assets/img/instagram/DdtP-EKBMW2.jpg",
-      "type": "video",
-      "caption": "See you all at @asiafest.yeg",
-      "date": "2026-09-25"
     }
   ]
 };
